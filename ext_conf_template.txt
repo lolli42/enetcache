@@ -1,0 +1,2 @@
+# cat=basic/enable/6; type=int; label=Default lifetime of content element cache entries (seconds)
+defaultLifetime = 86400

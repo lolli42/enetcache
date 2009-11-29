@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for extension 'enetcache'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="scheduler.gccachebackends.name">Garbage collection for cache backends</label>
+			<label index="scheduler.gccachebackends.description">Iterate over configured cache backends do garbage collection</label>
+			<label index="scheduler.gccachebackends.availableBackends">Select cache backends for garbage collection</label>
+		</languageKey>
+	</data>
+</T3locallang>
