@@ -49,7 +49,7 @@ class tx_enetcache_backendContentCacheAction implements backend_cacheActionsHook
 			'id'	=>	'clearContentCache',
 			'title'	=>	'Clear plugin cache',
 			'href'  =>  $GLOBALS['BACK_PATH'].'ajax.php?ajaxID=enetcache::clearContentCache',
-			'icon'	=>	'<img width="16" height="16" title="Clear content element cache" alt="Clear content cache" src="../typo3conf/ext/enetcache/delete_pi.png" />'
+			'icon'	=>	'<img width="16" height="16" title="Clear content element cache" alt="Clear content cache" src="../typo3conf/ext/enetcache/res/delete_pi.png" />'
 		);
 		$optionValues[] = 'clearContentCache';
 	}
