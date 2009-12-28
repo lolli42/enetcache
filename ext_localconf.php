@@ -3,15 +3,17 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-	// Add a new cache configuration for our plugin
-$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'] = array(
-	'frontend' => 't3lib_cache_frontend_StringFrontend',
-	'backend' => 't3lib_cache_backend_DbBackend',
-	'options' => array(
-		'cacheTable' => 'tx_enetcache_contentcache',
-		'tagsTable' => 'tx_enetcache_contentcache_tags',
-	),
-);
+	// Add a new cache configuration if not already set in localconf.php
+if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'])) {
+	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'] = array(
+		'frontend' => 't3lib_cache_frontend_StringFrontend',
+		'backend' => 't3lib_cache_backend_DbBackend',
+		'options' => array(
+			'cacheTable' => 'tx_enetcache_contentcache',
+			'tagsTable' => 'tx_enetcache_contentcache_tags',
+		),
+	);
+}
 
 	// Define caches that have to be tagged and dropped
 $TYPO3_CONF_VARS['EXTCONF']['enetcache']['TAG_CACHES'] = array(
