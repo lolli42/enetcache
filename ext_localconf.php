@@ -3,6 +3,11 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
+	// Register new compressed db backend
+	// @TODO: Solve core bug #13304 to use 'EXT:enetcache' like syntax
+$TYPO3_CONF_VARS['SYS']['caching']['cacheBackends']['tx_enetcache_cache_backend_CompressedDbBackend']
+	= 'typo3conf/ext/enetcache/classes/class.tx_enetcache_cache_backend_compresseddbbackend.php:tx_enetcache_cache_backend_CompressedDbBackend';
+
 	// Add a new cache configuration if not already set in localconf.php
 if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'])) {
 	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'] = array(

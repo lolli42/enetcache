@@ -7,6 +7,7 @@ return array(
 	'tx_enetcache' => $extensionPath . 'classes/class.tx_enetcache.php',
 	'tx_enetcache_hook' => $extensionPath . 'classes/class.tx_enetcache_hook.php',
 	'tx_enetcache_tcahandler' => $extensionPath . 'classes/class.tx_enetcache_tcaHandler.php',
+	'tx_enetcache_cache_backend_compresseddbbackend' => $extensionPath . 'classes/class.tx_enetcache_cache_backend_compresseddbbackend.php',
 	'tx_enetcache_backendcontentcacheaction' => $extensionPath . 'hooks/class.tx_enetcache_backendContentCacheAction.php',
 	'tx_enetcache_tcemain' => $extensionPath . 'hooks/class.tx_enetcache_tcemain.php',
 	'tx_enetcache_hookable' => $extensionPath . 'interfaces/interface.tx_enetcache_hookable.php',
