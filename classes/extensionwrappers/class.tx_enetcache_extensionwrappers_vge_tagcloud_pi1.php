@@ -148,7 +148,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Get identifier from plugin configuration
+	 * Get identifier of cache entry
 	 *
 	 * @return array Identifier parameters
 	 */
@@ -161,7 +161,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Initialize cache identifier by given plugin configuration
+	 * Initialize cache identifier using given plugin configuration
 	 *
 	 * @return array Identifier parameters
 	 */
@@ -176,11 +176,15 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * @return array Cache tags
 	 */
 	protected function getCacheTags() {
+			// No tags used for now
+			// Overwrite this method in an own class to add own tagging
 		return array();
 	}
 
 	/**
 	 * Return lifetime if given by TS, else default
+	 * Lifetime can be set via TS:
+	 * plugin.tx_vgetagcloud_pi1.cachetime = 1234
 	 *
 	 * @return integer Lifetime
 	 */
