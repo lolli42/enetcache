@@ -22,7 +22,15 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
- * A cache implementation as stupid wrapper for vge_tagcloud
+ * enetcache implementation as stupid wrapper for vge_tagcloud
+ *
+ * Enable transparently for a working vge_tagcloud_pi1 with TS:
+ * plugin.tx_vgetagcloud_pi1.userFunc = tx_enetcache_extensionwrappers_vge_tagcloud_pi1->main
+ *
+ * Set cache lifetime with TS:
+ * plugin.tx_vgetagcloud_pi1.cachetime = 1234
+ *
+ * Feel free to extend this with an own class to add better tagging or other fancy stuff
  *
  * @package TYPO3
  * @subpackage enetcache
@@ -71,7 +79,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Get content from cache of vge_tagcloud, or render content and set to cache
+	 * Get content of vge_tagcloud from cache, or render content and set to cache
 	 *
 	 * @return string HTML Content of vge_tagcloud_pi1
 	 */
