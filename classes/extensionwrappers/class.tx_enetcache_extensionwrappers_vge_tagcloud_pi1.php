@@ -93,7 +93,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Instantiates and renders tag cloud content by given $conf
+	 * Instantiates and renders tag cloud content
 	 *
 	 * @return string Tag cloud content
 	 */
