@@ -124,6 +124,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * @return void
 	 */
 	protected function instantiateTagCloudObject() {
+			// Require is needed as long as vge_tagcloud does not come with an ext_autoload.php file of this class
 		require_once(t3lib_extMgm::extPath('vge_tagcloud', 'pi1/class.tx_vgetagcloud_pi1.php'));
 		$this->tagCloudObject = t3lib_div::makeInstance('tx_vgetagcloud_pi1');
 	}
