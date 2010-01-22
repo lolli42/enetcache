@@ -43,16 +43,6 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	public $conf = array();
 
 	/**
-	 * @var array Cache identifier
-	 */
-	protected $cacheIndentifier = FALSE;
-
-	/**
-	 * @var object tx_vgetagcloud_pi1
-	 */
-	protected $tagCloudObject = NULL;
-
-	/**
 	 * @var integer Default lifetime 1 hour if not set
 	 */
 	protected $defaultCacheLifetime = 3600;
@@ -87,7 +77,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 		if ($content = $this->getCachedTagCloudContent()) {
 			return $content;
 		}
-		return $this->setCachedTagCloudContent($this->getUncachedTagCloudContent());
+		return $this->setTagCloudContentCache($this->getUncachedTagCloudContent());
 	}
 
 	/**
@@ -106,9 +96,9 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * @return string Tag cloud content
 	 */
 	protected function getUncachedTagCloudContent() {
-		$this->instantiateTagCloudObject();
-		$this->initializeTagCloudObject();
-		return $this->renderTagCloudContent();
+		$tagCloudObject = $this->instantiateTagCloudObject();
+		$tagCloudObject = $this->initializeTagCloudObject($tagCloudObject);
+		return $this->renderTagCloudContent($tagCloudObject);
 	}
 
 	/**
@@ -117,7 +107,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * @param string HTML of tag cloud content
 	 * @return string HTML of tag cloud content
 	 */
-	protected function setCachedTagCloudContent($content) {
+	protected function setTagCloudContentCache($content) {
 		return t3lib_div::makeInstance('tx_enetcache')->set(
 			$this->getCacheIdentifier(),
 			$content,
@@ -129,30 +119,33 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	/**
 	 * Instantiate vge_tagcloud_pi1 object
 	 *
-	 * @return void
+	 * @return tx_vgetagcloud_pi1
 	 */
 	protected function instantiateTagCloudObject() {
 			// Require is needed as long as vge_tagcloud does not come with an ext_autoload.php file of this class
 		require_once(t3lib_extMgm::extPath('vge_tagcloud', 'pi1/class.tx_vgetagcloud_pi1.php'));
-		$this->tagCloudObject = t3lib_div::makeInstance('tx_vgetagcloud_pi1');
+		return t3lib_div::makeInstance('tx_vgetagcloud_pi1');
 	}
 
 	/**
 	 * Initialize vge_tagcloud_pi1 object
 	 *
-	 * @return void
+	 * @param tx_vgetagcloud_pi1
+	 * @return tx_vgetagcloud_pi1
 	 */
-	protected function initializeTagCloudObject() {
-		$this->tagCloudObject->cObj = &$this->cObj;
+	protected function initializeTagCloudObject(tx_vgetagcloud_pi1 $tagCloudObject) {
+		$tagCloudObject->cObj = &$this->cObj;
+		return $tagCloudObject;
 	}
 
 	/**
 	 * Render content of vge_tagcloud_pi1
 	 *
-	 * @return strin HTML content
+	 * @param tx_vgetagcloud_pi1	The fully initialized tagcloud object
+	 * @return string HTML content
 	 */
-	protected function renderTagCloudContent() {
-		return $this->tagCloudObject->main('', $this->conf);
+	protected function renderTagCloudContent(tx_vgetagcloud_pi1 $tagCloudObject) {
+		return $tagCloudObject->main('', $this->conf);
 	}
 
 	/**
@@ -161,21 +154,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * @return array Identifier parameters
 	 */
 	protected function getCacheIdentifier() {
-		if ($this->cacheIdentifier) {
-			return $this->cacheIdentifier;
-		} else {
-			return $this->initializeCacheIdentifier();
-		}
-	}
-
-	/**
-	 * Initialize cache identifier using given plugin configuration
-	 *
-	 * @return array Identifier parameters
-	 */
-	protected function initializeCacheIdentifier() {
-		$this->cacheIdentifier = $this->conf;
-		return $this->cacheIdentifier;
+		return $this->conf;
 	}
 
 	/**
