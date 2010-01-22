@@ -48,7 +48,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	protected $defaultCacheLifetime = 3600;
 
 	/**
-	 * This is the main method of the plugin. It returns the content to display
+	 * Main method. It returns HTML content of vge_tagcloud_pi1 plugin
 	 *
 	 * @param string Plugin content
 	 * @param array Plugin configuration
@@ -86,8 +86,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * @return mixed Content string on successfull get, FALSE on cache miss
 	 */
 	protected function getCachedTagCloudContent() {
-		$cacheIdentifier = $this->getCacheIdentifier();
-		return t3lib_div::makeInstance('tx_enetcache')->get($cacheIdentifier);
+		return t3lib_div::makeInstance('tx_enetcache')->get($this->getCacheIdentifier());
 	}
 
 	/**
@@ -173,7 +172,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * Lifetime can be set via TS:
 	 * plugin.tx_vgetagcloud_pi1.cachetime = 1234
 	 *
-	 * @return integer Lifetime of cache entry
+	 * @return integer Lifetime of cache entry in seconds
 	 */
 	protected function getCacheLifetime() {
 		if ((int) $this->conf['cachetime'] > 0) {
