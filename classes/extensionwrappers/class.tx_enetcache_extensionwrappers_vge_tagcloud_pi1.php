@@ -77,7 +77,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 		if ($content = $this->getCachedTagCloudContent()) {
 			return $content;
 		}
-		return $this->setTagCloudContentCache($this->getUncachedTagCloudContent());
+		return $this->setTagCloudContentCache($this->getNewTagCloudContent());
 	}
 
 	/**
@@ -95,7 +95,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 *
 	 * @return string Tag cloud content
 	 */
-	protected function getUncachedTagCloudContent() {
+	protected function getNewTagCloudContent() {
 		$tagCloudObject = $this->instantiateTagCloudObject();
 		$tagCloudObject = $this->initializeTagCloudObject($tagCloudObject);
 		return $this->renderTagCloudContent($tagCloudObject);
@@ -119,7 +119,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	/**
 	 * Instantiate vge_tagcloud_pi1 object
 	 *
-	 * @return tx_vgetagcloud_pi1
+	 * @return tx_vgetagcloud_pi1 Instance of tx_vgetagcloud_pi1
 	 */
 	protected function instantiateTagCloudObject() {
 			// Require is needed as long as vge_tagcloud does not come with an ext_autoload.php file of this class
@@ -130,8 +130,8 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	/**
 	 * Initialize vge_tagcloud_pi1 object
 	 *
-	 * @param tx_vgetagcloud_pi1
-	 * @return tx_vgetagcloud_pi1
+	 * @param tx_vgetagcloud_pi1 Instance of tx_vgetagcloud_pi1
+	 * @return tx_vgetagcloud_pi1 Initialized tx_vgetagcloud_pi1
 	 */
 	protected function initializeTagCloudObject(tx_vgetagcloud_pi1 $tagCloudObject) {
 		$tagCloudObject->cObj = &$this->cObj;
@@ -141,7 +141,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	/**
 	 * Render content of vge_tagcloud_pi1
 	 *
-	 * @param tx_vgetagcloud_pi1	The fully initialized tagcloud object
+	 * @param tx_vgetagcloud_pi1 Fully initialized tagcloud object
 	 * @return string HTML content
 	 */
 	protected function renderTagCloudContent(tx_vgetagcloud_pi1 $tagCloudObject) {
@@ -173,14 +173,13 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * Lifetime can be set via TS:
 	 * plugin.tx_vgetagcloud_pi1.cachetime = 1234
 	 *
-	 * @return integer Lifetime
+	 * @return integer Lifetime of cache entry
 	 */
 	protected function getCacheLifetime() {
 		if ((int) $this->conf['cachetime'] > 0) {
 			return (int) $this->conf['cachetime'];
-		} else {
-			return $this->defaultCacheLifetime;
 		}
+		return $this->defaultCacheLifetime;
 	}
 }
 
