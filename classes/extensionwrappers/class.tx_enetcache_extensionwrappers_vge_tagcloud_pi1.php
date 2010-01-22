@@ -66,6 +66,7 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 */
 	protected function init($conf) {
 		$this->conf = $conf;
+		$this->pi_initPIflexForm();
 	}
 
 	/**
@@ -153,7 +154,10 @@ class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tslib_pibase {
 	 * @return array Identifier parameters
 	 */
 	protected function getCacheIdentifier() {
-		return $this->conf;
+		$cacheIdentifier = array();
+		$cacheIdentifier[] = $this->conf;
+		$cacheIdentifier[] = $this->cObj->data['pi_flexform']['data'];
+		return $cacheIdentifier;
 	}
 
 	/**
