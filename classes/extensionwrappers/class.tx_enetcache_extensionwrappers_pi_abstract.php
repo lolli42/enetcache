@@ -67,9 +67,13 @@ abstract class tx_enetcache_extensionwrappers_pi_abstract extends tslib_pibase {
 	 */
 	protected function getContent() {
 		if ($content = $this->getCachedContent()) {
+			$content = $this->successfulCacheGetAction($content);
 			return $content;
 		}
-		return $this->setContentToCache($this->getNewContent());
+		$content = $this->getNewContent();
+		$cacheEntry = $this->manipulateCacheEntry($content);
+		$this->setContentToCache($cacheEntry);
+		return $content;
 	}
 
 	/**
@@ -79,6 +83,16 @@ abstract class tx_enetcache_extensionwrappers_pi_abstract extends tslib_pibase {
 	 */
 	protected function getCachedContent() {
 		return t3lib_div::makeInstance('tx_enetcache')->get($this->getCacheIdentifier());
+	}
+
+	/**
+	 * Actions to be calculated right after successul cache get
+	 *
+	 * @param mixed cache entry
+	 * @param string HTML content
+	 */
+	protected function successfulCacheGetAction($cacheEntry) {
+		return $cacheEntry;
 	}
 
 	/**
@@ -105,6 +119,16 @@ abstract class tx_enetcache_extensionwrappers_pi_abstract extends tslib_pibase {
 			$this->getCacheTags(),
 			$this->getCacheLifetime()
 		);
+	}
+
+	/**
+	 * Actions to be done before setting calculated content to cache
+	 *
+	 * @param string HTML content
+	 * @param mixed cache entry
+	 */
+	protected function manipulateCacheEntry($content) {
+		return $content;
 	}
 
 	/**
