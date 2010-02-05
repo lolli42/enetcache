@@ -16,5 +16,9 @@ return array(
 	'tx_enetcache_gccachebackends_additionalfieldprovider' => $extensionPath . 'tasks/class.tx_enetcache_gccachebackends_additionalfieldprovider.php',
 	'tx_enetcache_extensionwrappers_pi_abstract' => $extensionPath . 'classes/extensionwrappers/class.tx_enetcache_extensionwrappers_pi_abstract.php',
 	'tx_enetcache_extensionwrappers_vge_tagcloud_pi1' => $extensionPath . 'classes/extensionwrappers/class.tx_enetcache_extensionwrappers_vge_tagcloud_pi1.php',
+	'tx_enetcache_extensionwrappers_wec_map_pi_abstract' => $extensionPath . 'classes/extensionwrappers/class.tx_enetcache_extensionwrappers_wec_map_pi_abstract.php',
+	'tx_enetcache_extensionwrappers_wec_map_pi1' => $extensionPath . 'classes/extensionwrappers/class.tx_enetcache_extensionwrappers_wec_map_pi1.php',
+	'tx_enetcache_extensionwrappers_wec_map_pi2' => $extensionPath . 'classes/extensionwrappers/class.tx_enetcache_extensionwrappers_wec_map_pi2.php',
+	'tx_enetcache_extensionwrappers_wec_map_pi3' => $extensionPath . 'classes/extensionwrappers/class.tx_enetcache_extensionwrappers_wec_map_pi3.php',
 );
 ?>
