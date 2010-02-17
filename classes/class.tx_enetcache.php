@@ -301,7 +301,7 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @return void
 	 */
 	protected function createContentCache() {
-		$GLOBALS['typo3CacheFactory']->create(
+		t3lib_div::makeInstance('t3lib_cache_Factory')->create(
 			'cache_enetcache_contentcache',
 			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'],
 			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['backend'],
