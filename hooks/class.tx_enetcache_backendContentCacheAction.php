@@ -23,8 +23,6 @@
  ***************************************************************/
 /**
  * Register a new item in top toolbar to clear plugin cache
- * Add additional method to clear plugin cache on click on "Clear all caches" in top toolbar
- * Add additional method to clear plugin cache on clear all cache event
  *
  * @author  Michael Knabe <mk@e-netconsulting.de>
  * @author  Christian Kuhn <lolli@schwarzbu.ch>
@@ -54,28 +52,6 @@ class tx_enetcache_backendContentCacheAction implements backend_cacheActionsHook
 		$optionValues[] = 'clearContentCache';
 	}
 
-	/**
-	 * Flush (empty) cache backend of enetcache (eg. db table or memcached)
-	 * Helper method called by "Clear plugin cache" flash icon
-	 *
-	 * @return void
-	 */
-	public function clearContentCache() {
-		t3lib_div::makeInstance('tx_enetcache')->flush();
-	}
-
-	/*
-	 * This hook method is called by clearCacheCmd
-	 * Will flush enetcache if "clear all cache" is called
-	 * Works for pageTS clearAllCacheCMD actions and for flash icon "Clear all caches" in top toolbar
-	 *
-	 * @return void
-	 */
-	public function clearCachePostProc($params, $pObj) {
-		if ($params['cacheCmd'] === 'all') {
-			t3lib_div::makeInstance('tx_enetcache')->flush();
-		}
-	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/enetcache/hooks/class.tx_enetcache_backendContentCacheAction.php'])  {

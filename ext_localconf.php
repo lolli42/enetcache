@@ -33,13 +33,13 @@ $TYPO3_CONF_VARS['EXTCONF']['enetcache']['hooks']['tx_enetcache'] = array();
 if (TYPO3_MODE == 'BE') {
 		// Add the "Delete plugin cache" button and its functionality
 	$TYPO3_CONF_VARS['BE']['AJAX']['enetcache::clearContentCache'] =
-		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheAction.php:tx_enetcache_backendContentCacheAction->clearContentCache';
+		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheMethods.php:tx_enetcache_backendContentCacheMethods->clearContentCache';
 	$TYPO3_CONF_VARS['SC_OPTIONS']['additionalBackendItems']['cacheActions'][] =
 		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheAction.php:tx_enetcache_backendContentCacheAction';
 
 		// Clear our cache table on "Clear all cache" click and "TCEMAIN.clearCacheCmd = all"
 	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
-		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheAction.php:tx_enetcache_backendContentCacheAction->clearCachePostProc';
+		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheMethods.php:tx_enetcache_backendContentCacheMethods->clearCachePostProc';
 
 		// Drop cache tag handling in tcemain on changing / inserting / adding records
 	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['enetcache'] =
