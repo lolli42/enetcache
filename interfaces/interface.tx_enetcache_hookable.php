@@ -1,9 +1,8 @@
 <?php
 /***************************************************************
- * 
  *  Copyright notice
  *
- *  (c) 2009 Michael Knabe <mk@e-netconsulting.de>
+ *  (c) 2009-2010 Michael Knabe <mk@e-netconsulting.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
