@@ -31,17 +31,22 @@
  */
 class tx_enetcache_gccachebackends extends tx_scheduler_Task {
 	/**
+	 * Selected backends to do garbage collection for.
+	 * Feeded by additional field provider
+	 *
 	 * @var array Selected backends to do garbage collection for
 	 */
 	public $selectedBackends = array();
 
 	/**
-	 * Function executed from the Scheduler.
+	 * Method called by scheduler
 	 *
-	 * @return	void
+	 * @return void
 	 */
 	public function execute() {
 		$cacheConfigurations = $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'];
+
+		$cacheConfigurations = $this->fixExtbaseCacheConfiguration($cacheConfigurations);
 
 			// Iterate through configured cache configurations and call garbageCollection if
 			// backend is within selected backends in additonal fields of task
@@ -66,6 +71,24 @@ class tx_enetcache_gccachebackends extends tx_scheduler_Task {
 
 		$success = TRUE;
 		return($success);
+	}
+
+	/**
+	 * Hack to fix "Class not found" issue if extbase is installed
+	 * This was fixed in extbase rev. 2320, for 1.2.0beta3 (included in 4.4.0)
+	 *
+	 * This method will only do something if extabase is loaded and TYPO3
+	 * version is smaller than 4.3.0 - 4.3.999
+	 *
+	 * @see http://forge.typo3.org/issues/show/7968
+	 * @see http://forge.typo3.org/issues/8094
+	 * @deprecated Method will be removed if version requirement of enetcache is raised to 4.4
+	 */
+	protected function fixExtbaseCacheConfiguration($cacheConfigurations) {
+		if (t3lib_extMgm::isloaded('extbase') && (t3lib_div::int_from_ver(TYPO3_version) < 4030999)) {
+			$cacheConfigurations['cache_extbase_reflection']['frontend'] = 't3lib_cache_frontend_VariableFrontend';
+		}
+		return $cacheConfigurations;
 	}
 } // End of class
 
