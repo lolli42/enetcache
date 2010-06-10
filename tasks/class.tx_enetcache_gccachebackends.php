@@ -77,7 +77,7 @@ class tx_enetcache_gccachebackends extends tx_scheduler_Task {
 	 * Hack to fix "Class not found" issue if extbase is installed
 	 * This was fixed in extbase rev. 2320, for 1.2.0beta3 (included in 4.4.0)
 	 *
-	 * This method will only do something if extabase is loaded and TYPO3
+	 * This method will only do something if extbase is loaded and TYPO3
 	 * version is smaller than 4.3.0 - 4.3.999
 	 *
 	 * @see http://forge.typo3.org/issues/show/7968
