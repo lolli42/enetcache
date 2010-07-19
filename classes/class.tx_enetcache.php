@@ -265,8 +265,12 @@ class tx_enetcache implements t3lib_Singleton {
 	 * The page cache lifetime will be as long as the shortest content element lifetime
 	 *
 	 * @param integer Lifetime of content element
+	 * @return void
 	 */
 	protected function setCachePageLifetime($lifetime) {
+		if (!$GLOBALS['TSFE'] instanceof tslib_fe) {
+			return;
+		}
 			// 0 doesn't really mean 0 seconds but it tells TSFE to use the default configured elsewhere.
 			// So we filter that out.
 		if ($lifetime) {
@@ -290,6 +294,9 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @return void
 	 */
 	protected function addTagsToPageCache(array $tags) {
+		if (!$GLOBALS['TSFE'] instanceof tslib_fe) {
+			return;
+		}
 		$GLOBALS['TSFE']->addCacheTags($tags);
 	}
 
