@@ -212,7 +212,7 @@ class tx_enetcache implements t3lib_Singleton {
 			'endtime' => (time() + $lifetime),
 		);
 		$this->setCachePageLifetime($lifetime);
-		$this->contentCache->set($hash, serialize($cacheData), $tags, $lifetime);
+		$this->contentCache->set($hash, serialize($cacheData), $tags, (int)$lifetime);
 
 		return $data;
 	}
