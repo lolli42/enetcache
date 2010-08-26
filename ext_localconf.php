@@ -54,5 +54,18 @@ if (TYPO3_MODE == 'BE') {
 		'description' => 'LLL:EXT:enetcache/locallang.xml:scheduler.gccachebackends.description',
 		'additionalFields' => 'tx_enetcache_gccachebackends_additionalfieldprovider',
 	);
+
+		// Scheduler task to drop cache entries by tags
+	$TYPO3_CONF_VARS['SC_OPTIONS']['scheduler']['tasks']['tx_enetcache_task_DropTags'] = array(
+		'extension' => $_EXTKEY,
+		'title' => 'LLL:EXT:enetcache/locallang.xml:scheduler.droptags.name',
+		'description' => 'LLL:EXT:enetcache/locallang.xml:scheduler.droptags.description',
+		'additionalFields' => 'tx_enetcache_task_droptags_additionalfieldprovider',
+	);
+
+		// CLI script to drop cache entries by tags
+	$TYPO3_CONF_VARS['SC_OPTIONS']['GLOBAL']['cliKeys'][$_EXTKEY] = array(
+		'EXT:enetcache/cli/class.tx_enetcache_cli.php', '_CLI_enetcache'
+	);
 }
 ?>

@@ -9,6 +9,10 @@
 			<label index="scheduler.gccachebackends.name">Garbage collection for cache backends</label>
 			<label index="scheduler.gccachebackends.description">Iterate over configured cache backends do garbage collection</label>
 			<label index="scheduler.gccachebackends.availableBackends">Select cache backends for garbage collection</label>
+			<label index="scheduler.droptags.name">Delete cache entries by tags</label>
+			<label index="scheduler.droptags.description">Deletes cache entries by a given list of tags</label>
+			<label index="scheduler.droptags.tagList">Enter a comma separated list of tags</label>
+			<label index="scheduler.droptags.invalidTagList">Invalid tags. Please enter a comma separated valid list of tags to drop</label>
 		</languageKey>
 	</data>
 </T3locallang>

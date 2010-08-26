@@ -1,8 +1,8 @@
 <?php
 /***************************************************************
 *  Copyright notice
-*
-*  (c) 2009-2010 Christian Kuhn <lolli@schwarzbu.ch>
+*  (c) 2009 Christian Kuhn <lolli@schwarzbu.ch>
+*  (c) 2010 Markus Guenther <markus.guenther@e-netconsulting.com>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,15 +22,15 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
- * Additional BE fields for cache backend garbage collection
+ * Add an additional text input field for drop-by-tags task, to gain tags to be dropped.
  *
- * @author		Christian Kuhn <lolli@schwarzbu.ch>
- * @package		TYPO3
- * @subpackage	enetcache
+ * @author Markus Guenther <markus.guenther@e-netconsulting.com>
+ * @package TYPO3
+ * @subpackage enetcache
  */
-class tx_enetcache_gccachebackends_additionalfieldprovider implements tx_scheduler_AdditionalFieldProvider {
+class tx_enetcache_task_DropTags_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider {
 	/**
-	 * Add a multiple select box for cache backends for which garbage collection should be called
+	 * Add a Textfield
 	 *
 	 * @param	array					$taskInfo: reference to the array containing the info used in the add/edit form
 	 * @param	object					$task: when editing, reference to the current task object. Null when adding.
@@ -44,55 +44,31 @@ class tx_enetcache_gccachebackends_additionalfieldprovider implements tx_schedul
 	 *										['cshLabel']	=> The code of the CSH label
 	 */
 	public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $parentObject) {
-			// Initialize selectedfeeds field value
-		if (empty($taskInfo['selectedBackends'])) {
-			if ($parentObject->CMD == 'add') {
-			} elseif ($parentObject->CMD == 'edit') {
-					// In case of edit, and editing a test task, set to internal value if no data was submitted already
-				$taskInfo['selectedBackends'] = $task->selectedBackends;
+			// Initialize selected feeds field value
+		if (empty($taskInfo['tags'])) {
+			if ($parentObject->CMD == 'edit') {
+					// In case of edit, set to internal value if no data was submitted already
+				$taskInfo['tags'] = implode(',', $task->tags);
 			} else {
 					// Otherwise set an empty value, as it will not be used anyway
-				$taskInfo['selectedBackends'] = '';
+				$taskInfo['tags'] = '';
 			}
 		}
 
-		$fieldID = 'enetcache_task_selectedBackends';
-		$fieldCode = '<select name="tx_scheduler[selectedBackends][]" id="' . $fieldID .
-			'" size="10" style="width: 250px;" multiple="multiple">' . $this->getCacheBackendOptions($taskInfo['selectedBackends']) .
-			'</select>';
-
+		// Write the code for the field
+		$fieldID = 'enetcache_task_droptags';
+		$fieldCode = '<textarea rows="5" cols="35" name="tx_scheduler[tags]" id="' . $fieldID . '" class="wide" >' . $taskInfo['tags'] . '</textarea>';
+		$additionalFields = array();
 		$additionalFields[$fieldID] = array(
-			'code'     => $fieldCode,
-			'label'    => 'LLL:EXT:enetcache/locallang.xml:scheduler.gccachebackends.availableBackends',
-			'cshKey'   => '_MOD_tools_txschedulerM1',
+			'code' => $fieldCode,
+			'label' => 'LLL:EXT:enetcache/locallang.xml:scheduler.droptags.tagList',
+			'cshKey' => '_MOD_tools_txschedulerM1',
 			'cshLabel' => $fieldID
 		);
 
 		return $additionalFields;
 	}
 
-	/**
-	 * Build select options of available backends
-	 *
-	 * @param	array Selected backends
-	 * @return	string HTML of selectorbox options
-	 */
-	protected function getCacheBackendOptions($selectedBackends) {
-		$availableBackends = $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheBackends'];
-
-		$options = array();
-		foreach ($availableBackends as $backendName => $backendClass) {
-			if (in_array($backendName, (array)$selectedBackends)) {
-				$selected = ' selected="selected"';
-			} else {
-				$selected = '';
-			}
-			$options[] = '<option value="' . $backendName .  '"' . $selected .
-				'>' . $backendName . '</option>';
-		}
-
-		return implode($options);
-	}
 
 	/**
 	 * This method checks any additional data that is relevant to the specific task
@@ -103,7 +79,12 @@ class tx_enetcache_gccachebackends_additionalfieldprovider implements tx_schedul
 	 * @return	boolean					True if validation was ok (or selected class is not relevant), false otherwise
 	 */
 	public function validateAdditionalFields(array &$submittedData, tx_scheduler_Module $parentObject) {
-		return true;
+		$tags = trim($submittedData['tags']);
+		$isValid = $this->isValidTagList(explode(',', $tags));
+		if (!$isValid) {
+			$parentObject->addMessage($GLOBALS['LANG']->sL('LLL:EXT:enetcache/locallang.xml:scheduler.droptags.invalidTagList'), t3lib_FlashMessage::ERROR);
+		}
+		return $isValid;
 	}
 
 	/**
@@ -115,12 +96,30 @@ class tx_enetcache_gccachebackends_additionalfieldprovider implements tx_schedul
 	 * @return	void
 	 */
 	public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
-		$task->selectedBackends = $submittedData['selectedBackends'];
+		$tags = trim($submittedData['tags']);
+		$task->tags = explode(',', $tags);
+	}
+
+	/**
+	 * Sanitize tag list
+	 *
+	 * @param array Tag list
+	 * @return boolean TRUE if tag list validates
+	 */
+	protected function isValidTagList(array $tags = array()) {
+		$isValid = TRUE;
+		foreach ($tags as $tag) {
+			if (!preg_match(t3lib_cache_frontend_Frontend::PATTERN_TAG, $tag)) {
+				$isValid = FALSE;
+			}
+		}
+
+		return $isValid;
 	}
 } // End of class
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/enetcache/tasks/class.tx_enetcache_gccachebackends_additionalfieldprovider.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/enetcache/tasks/class.tx_enetcache_gccachebackends_additionalfieldprovider.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/enetcache/tasks/class.tx_enetcache_task_droptags_additionalfieldprovider.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/enetcache/tasks/class.tx_enetcache_task_droptags_additionalfieldprovider.php']);
 }
 
 ?>
