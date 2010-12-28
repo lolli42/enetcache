@@ -1,5 +1,5 @@
 #
-# Table structure for table 'tx_enetcache_content'
+# Table structure for table 'tx_enetcache_contentcache'
 #
 CREATE TABLE tx_enetcache_contentcache (
 	id int(11) unsigned NOT NULL auto_increment,
@@ -12,7 +12,7 @@ CREATE TABLE tx_enetcache_contentcache (
 ) ENGINE=InnoDB;
 
 #
-# Table structure for table 'cachingframework_cache_pages_tags'
+# Table structure for table 'tx_enetcache_contentcache_tags'
 #
 CREATE TABLE tx_enetcache_contentcache_tags (
 	id int(11) unsigned NOT NULL auto_increment,
