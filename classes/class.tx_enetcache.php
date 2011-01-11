@@ -117,12 +117,13 @@ class tx_enetcache implements t3lib_Singleton {
 	 * Example usage: t3lib_div::makeInstance('tx_enetcache')->set(array($this->piVars, $this->conf));
 	 *
 	 * @param array	Data that is used to identify this unique content element. I.e. piVars and fe_users group
+	 * @param boolean Wether or not to respect the no_cache parameter. Defaults to true: If no_cache is set, cache entry will not be fetched
 	 * @return mixed Cache data if found, otherwise FALSE
 	 */
-	public function get(array $identifiers) {
+	public function get(array $identifiers, $respectNoCache = TRUE) {
 			// Caches are neither read nor written when no_cache is set.
 			// Do an early return if so.
-		if ($this->noCache) {
+		if ($this->noCache && $respectNoCache) {
 			return FALSE;
 		}
 
@@ -174,12 +175,13 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @param mixed content that is added to the cache, usually a string but could be an array as well
 	 * @param array List of tags. Usually contains "tablename_uid" of all records used in your cache entry.
 	 * @param int Lifetime of cache entry, will default to $this->defaultLifetime if not set
+	 * @param boolean Wether or not to respect the no_cache parameter. Defaults to true: If no_cache is set, cache entry will not be set
 	 * @return string $data for direct return after set()
 	 */
-	public function set(array $identifiers, $data, array $tags = array(), $lifetime = null) {
+	public function set(array $identifiers, $data, array $tags = array(), $lifetime = null, $respectNoCache = TRUE) {
 			// Caches are neither read nor written when no_cache is set.
 			// Do an early return if so.
-		if ($this->noCache) {
+		if ($this->noCache && $respectNoCache) {
 			return $data;
 		}
 
