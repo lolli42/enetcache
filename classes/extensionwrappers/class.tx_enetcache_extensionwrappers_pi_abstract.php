@@ -28,6 +28,7 @@
  * @subpackage enetcache
  */
 abstract class tx_enetcache_extensionwrappers_pi_abstract extends tslib_pibase {
+
 	/**
 	 * @var array Plugin config array
 	 */

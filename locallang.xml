@@ -7,7 +7,7 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="scheduler.gccachebackends.name">Garbage collection for cache backends</label>
-			<label index="scheduler.gccachebackends.description">Iterate over configured cache backends do garbage collection</label>
+			<label index="scheduler.gccachebackends.description">Iterate over configured cache backends to delete old entries which exceeded lifetime</label>
 			<label index="scheduler.gccachebackends.availableBackends">Select cache backends for garbage collection</label>
 			<label index="scheduler.droptags.name">Delete cache entries by tags</label>
 			<label index="scheduler.droptags.description">Deletes cache entries by a given list of tags</label>

@@ -24,7 +24,7 @@
 /**
  * tx_enetcache
  *
- * Provides a simple api to manage the caching of plugin content elements
+ * Provides a simple API to manage the caching of plugin content elements
  *
  * @author  Michael Knabe <mk@e-netconsulting.de>
  * @author  Christian Kuhn <lolli@schwarzbu.ch>
@@ -32,6 +32,7 @@
  * @subpackage enetcache
  */
 class tx_enetcache implements t3lib_Singleton {
+
 	/**
 	 * @const The extension key
 	 */
@@ -50,7 +51,7 @@ class tx_enetcache implements t3lib_Singleton {
 	/**
 	 * @var array Hook objects
 	 */
-	protected $hookObjects=array();
+	protected $hookObjects = array();
 
 	/**
 	 * @var boolean Wether or not no_cache is set on this page
@@ -140,6 +141,7 @@ class tx_enetcache implements t3lib_Singleton {
 			if (array_key_exists('endtime', $cacheData)) {
 				$this->setCachePageLifetime($cacheData['endtime'] - $GLOBALS['EXEC_TIME']);
 			}
+
 				// Assign our actual content.
 				// This might also be an array with content and further information
 			$result =  $cacheData['data'];
@@ -220,7 +222,7 @@ class tx_enetcache implements t3lib_Singleton {
 	
 	/**
 	 * Drops all cache entries tagged with given tags.
-	 * Depending on your configuration, this will drop flush multiple caches.
+	 * Depending on your configuration, this will drop multiple caches.
 	 * Defaults are cache_pages and cache_enetcache_contentcache.
 	 * So if you drop a tag, your content element elements with this tags and all
 	 * of their page cache entries will be invalid.
@@ -271,6 +273,7 @@ class tx_enetcache implements t3lib_Singleton {
 		if (!$GLOBALS['TSFE'] instanceof tslib_fe) {
 			return;
 		}
+
 			// 0 doesn't really mean 0 seconds but it tells TSFE to use the default configured elsewhere.
 			// So we filter that out.
 		if ($lifetime) {
@@ -307,7 +310,7 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @return void
 	 */
 	protected function createContentCache() {
-		t3lib_div::makeInstance('t3lib_cache_Factory')->create(
+		$GLOBALS['typo3CacheFactory']->create(
 			'cache_enetcache_contentcache',
 			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'],
 			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['backend'],

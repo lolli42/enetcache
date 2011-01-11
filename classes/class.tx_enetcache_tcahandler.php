@@ -32,6 +32,7 @@
  * @see tx_enetcache_tcemain
  */
 class tx_enetcache_tcaHandler {
+
 	/**
 	 * Returns an array containing all database records that are referenced by a given record
 	 *

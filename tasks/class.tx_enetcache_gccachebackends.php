@@ -25,6 +25,8 @@
  * Collect garbage of cache backends.
  * This iterates through configured cache framework backends and call the garbage collection
  *
+ * @obsolete Since TYPO3 version 4.5
+ *
  * @author		Christian Kuhn <lolli@schwarzbu.ch>
  * @package		TYPO3
  * @subpackage	enetcache

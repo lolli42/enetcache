@@ -24,6 +24,8 @@
 /**
  * Additional BE fields for cache backend garbage collection
  *
+ * @obsolete Since TYPO3 version 4.5
+ *
  * @author		Christian Kuhn <lolli@schwarzbu.ch>
  * @package		TYPO3
  * @subpackage	enetcache

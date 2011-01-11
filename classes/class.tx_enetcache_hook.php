@@ -34,14 +34,14 @@
  * @see interface tx_enetcache_hookable
  */
 abstract class tx_enetcache_hook implements tx_enetcache_hookable {
-	public function get($params) {
-	}
-	public function set(&$params) {	
-	}
-	public function flush() {
-	}
-	public function drop(&$params) {
-	}
+
+	public function get($params) {}
+
+	public function set(&$params) {}
+
+	public function flush() {}
+
+	public function drop(&$params) {}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/enetcache/class.tx_enetcache_hook.php']) {

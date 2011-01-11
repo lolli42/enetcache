@@ -24,12 +24,15 @@
 /**
  * A caching backend which stores compressed cache entries in database tables
  *
- * @depends: This backend depends on core patch #12858!
+ * @depends: If using TYPO3 4.3, core patch #12858 from the patches directory must be applied
+ * @obsolete This backend was merged with the default core database backend since TYPO3 4.5 with the 'compress' option
+ * 		This backend can only be used with 4.4 and 4.3
  *
  * @package TYPO3
  * @subpackage enetcache
  */
 class tx_enetcache_cache_backend_CompressedDbBackend extends t3lib_cache_backend_DbBackend {
+
 	/**
 	 * Constructs this backend
 	 *
@@ -98,7 +101,6 @@ class tx_enetcache_cache_backend_CompressedDbBackend extends t3lib_cache_backend
 				$tagRows[] = $tagRow;
 			}
 
-				// @depends Core patch 12858
 			$GLOBALS['TYPO3_DB']->exec_INSERTmultipleRows(
 				$this->tagsTable,
 				$fields,
@@ -144,7 +146,7 @@ class tx_enetcache_cache_backend_CompressedDbBackend extends t3lib_cache_backend
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * Uncompress data with php's built in zlib
 	 *
@@ -158,7 +160,6 @@ class tx_enetcache_cache_backend_CompressedDbBackend extends t3lib_cache_backend
 		return $data;
 	}
 }
-
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/enetcache/class.tx_enetcache_cache_backend_compresseddbbackend.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/enetcache/class.tx_enetcache_cache_backend_compresseddbbackend.php']);

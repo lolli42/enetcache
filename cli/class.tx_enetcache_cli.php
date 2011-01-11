@@ -25,9 +25,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
- * This script offers a cli task. You can enter some tags from cache entries you
- * want to delete. The script calls a class which drops the cache entries by
- * this tags.
+ * This script offers a cli task to drop content and page caches of cached content
+ * elements which are tagged with one of the given tags.
  *
  * @author Markus Guenther <markus.guenther@e-netconsulting.com>
  * @package TYPO3
@@ -74,7 +73,7 @@ class tx_enetcache_cli extends t3lib_cli {
 			exit;
 		}
 
-		if ($task == 'dropTags') {
+		if ($task === 'dropTags') {
 			$this->dropTags((string)$this->cli_args['_DEFAULT'][2]);
 		}
 	}
