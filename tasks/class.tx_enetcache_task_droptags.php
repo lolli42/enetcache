@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Markus Guenther <markus.guenther@e-netconsulting.com>
+*  (c) 2010-2011 Markus Guenther <markus.guenther@e-netconsulting.com>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
