@@ -3,10 +3,12 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-	// Register new compressed db backend
-	// @TODO: Solve core bug #13304 to use 'EXT:enetcache' like syntax
-$TYPO3_CONF_VARS['SYS']['caching']['cacheBackends']['tx_enetcache_cache_backend_CompressedDbBackend']
-	= 'typo3conf/ext/enetcache/classes/class.tx_enetcache_cache_backend_compresseddbbackend.php:tx_enetcache_cache_backend_CompressedDbBackend';
+	// Register own implementation of a compressed db backend for TYPO3 versions 4.3 and 4.4.
+	// @obsolete since TYPO3 4.5: Use compress option of core database backend instead
+if (t3lib_div::int_from_ver(TYPO3_version) <= '4004999') {
+	$TYPO3_CONF_VARS['SYS']['caching']['cacheBackends']['tx_enetcache_cache_backend_CompressedDbBackend']
+		= 'typo3conf/ext/enetcache/classes/class.tx_enetcache_cache_backend_compresseddbbackend.php:tx_enetcache_cache_backend_CompressedDbBackend';
+}
 
 	// Add a new cache configuration if not already set in localconf.php
 if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'])) {
@@ -26,8 +28,10 @@ $TYPO3_CONF_VARS['EXTCONF']['enetcache']['TAG_CACHES'] = array(
 	'cache_pages',
 );
 
-	// Array for hooks. Other extensions can register here (like enetcacheanalytics)
-$TYPO3_CONF_VARS['EXTCONF']['enetcache']['hooks']['tx_enetcache'] = array();
+	// Initialize array for hooks. Other extensions can register here (like enetcacheanalytics)
+if (!isset($TYPO3_CONF_VARS['EXTCONF']['enetcache']['hooks']['tx_enetcache'])) {
+	$TYPO3_CONF_VARS['EXTCONF']['enetcache']['hooks']['tx_enetcache'] = array();
+}
 
 	// Configure BE hooks
 if (TYPO3_MODE == 'BE') {
@@ -48,12 +52,15 @@ if (TYPO3_MODE == 'BE') {
 		'EXT:enetcache/hooks/class.tx_enetcache_tcemain.php:tx_enetcache_tcemain';
 
 		// Scheduler task for garbage collection of cache backends (especially db- and fileBackend)
-	$TYPO3_CONF_VARS['SC_OPTIONS']['scheduler']['tasks']['tx_enetcache_gccachebackends'] = array(
-		'extension' => $_EXTKEY,
-		'title' => 'LLL:EXT:enetcache/locallang.xml:scheduler.gccachebackends.name',
-		'description' => 'LLL:EXT:enetcache/locallang.xml:scheduler.gccachebackends.description',
-		'additionalFields' => 'tx_enetcache_gccachebackends_additionalfieldprovider',
-	);
+		// @obsolete since TYPO3 4.5, use the core task instead
+	if (t3lib_div::int_from_ver(TYPO3_version) <= '4004999') {
+		$TYPO3_CONF_VARS['SC_OPTIONS']['scheduler']['tasks']['tx_enetcache_gccachebackends'] = array(
+			'extension' => $_EXTKEY,
+			'title' => 'LLL:EXT:enetcache/locallang.xml:scheduler.gccachebackends.name',
+			'description' => 'LLL:EXT:enetcache/locallang.xml:scheduler.gccachebackends.description',
+			'additionalFields' => 'tx_enetcache_gccachebackends_additionalfieldprovider',
+		);
+	}
 
 		// Scheduler task to drop cache entries by tags
 	$TYPO3_CONF_VARS['SC_OPTIONS']['scheduler']['tasks']['tx_enetcache_task_DropTags'] = array(
