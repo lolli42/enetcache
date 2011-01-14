@@ -312,6 +312,11 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @return void
 	 */
 	protected function createContentCache() {
+		if (!isset($GLOBALS['typo3CacheFactory'])) {
+			throw new Exception('Caching framework not enabled. Please set $TYPO3_CONF_VARS[\'SYS\'][\'useCachingFramework\'] = \'1\'; in your localconf.php to use enetcache',
+				1295009896
+			);
+		}
 		$GLOBALS['typo3CacheFactory']->create(
 			'cache_enetcache_contentcache',
 			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'],
