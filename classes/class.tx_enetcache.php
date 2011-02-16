@@ -72,6 +72,9 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @return void
 	 */
 	public function __construct() {
+			// Early exception if core caching framework is disabled
+		$this->checkEnabledCachingFramework();
+
 		$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][self::EXTkey]);
 
 			// Set default element lifetime from extension config
@@ -305,6 +308,19 @@ class tx_enetcache implements t3lib_Singleton {
 		$GLOBALS['TSFE']->addCacheTags($tags);
 	}
 
+	/**
+	 * Throw an exception if core caching framework is not enabled.
+	 *
+	 * @throw RuntimeException if caching framework is not enabled
+	 * @return void
+	 */
+	protected function checkEnabledCachingFramework() {
+		if (TYPO3_UseCachingFramework === FALSE) {
+			throw new RuntimeException('enetcache error: Caching framework not enabled. Please set $TYPO3_CONF_VARS[\'SYS\'][\'useCachingFramework\'] = TRUE; in your localconf.php to use enetcache.',
+				1295009896
+			);
+		}
+	}
 
 	/**
 	 * Call cache factory to create a new cache instance for our element cache
@@ -312,11 +328,6 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @return void
 	 */
 	protected function createContentCache() {
-		if (!isset($GLOBALS['typo3CacheFactory'])) {
-			throw new Exception('Caching framework not enabled. Please set $TYPO3_CONF_VARS[\'SYS\'][\'useCachingFramework\'] = \'1\'; in your localconf.php to use enetcache',
-				1295009896
-			);
-		}
 		$GLOBALS['typo3CacheFactory']->create(
 			'cache_enetcache_contentcache',
 			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'],
