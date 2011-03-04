@@ -36,7 +36,7 @@ class tx_enetcache implements t3lib_Singleton {
 	/**
 	 * @const The extension key
 	 */
-	const EXTkey = enetcache;
+	const EXTkey = 'enetcache';
 
 	/**
 	 * @var t3lib_cache_frontend_AbstractFrontend Plugin content element cache frontend instance
