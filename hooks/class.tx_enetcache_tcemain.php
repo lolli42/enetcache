@@ -37,7 +37,8 @@ class tx_enetcache_tcemain {
 	 * - table_name_command (command one of move, copy, localize, delete, undelete)
 	 * - table_name_uid
 	 *
-	 * This hook is called for example by list module.
+	 * This hook is called for example by list module if deleting a record.
+	 * At this point the action is not yet done, so for example deleted is still 0.
 	 *
 	 * @param string new, delete, ...
 	 * @param string Table we are working on
@@ -46,7 +47,7 @@ class tx_enetcache_tcemain {
 	 * @param t3lib_TCEmain Unused reference to parent object
 	 * @return	void
 	 */
-	public function processCmdmap_postProcess($command, $table, $id, $value, &$pObj) {
+	public function processCmdmap_preProcess($command, $table, $id, $value, &$pObj) {
 		$tagsToDrop = array(
 				// This table name (tt_news)
 			$table,
@@ -55,6 +56,12 @@ class tx_enetcache_tcemain {
 				// Table name with id (tt_news_4711)
 			$table . '_' . $id,
 		);
+
+			// Handle referenced fields (mm relations and stuff)
+		if (strlen($table) > 0 && t3lib_div::testInt($id)) {
+			$tagsToDrop = array_merge($tagsToDrop, tx_enetcache_tcaHandler::findReferedDatabaseEntries($table, array(), $id));
+		}
+
 		$this->dropCacheTags($tagsToDrop);
 	}
 
