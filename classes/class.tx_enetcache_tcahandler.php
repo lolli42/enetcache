@@ -58,17 +58,22 @@ class tx_enetcache_tcaHandler {
 				if ($config['MM']) {
 						// @TODO: Rename query to result, rename res to row(s)
 						// @TODO: Sanitize tablenames, might not always given
+						// If this is a reference with mm table, fetch the mm relations and add tags-to-drop
 					$query = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid_foreign, tablenames', $config['MM'], 'uid_local='.$id);
-					while($res = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($query)) {
+					while ($res = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($query)) {
 						$tableName = self::getTableNameFromConfig($config, $res['tablenames']);
 						$result[] = $tableName . '_' . $res['uid_foreign'];
 					}
+					$GLOBALS['TYPO3_DB']->sql_free_result($res);
 				} else {
+						// If there is no mm table, the reference field is a comma separated list
 					foreach (t3lib_div::trimExplode(',', $fields[$localFieldName], 1) as $uid) {
 						if (!ctype_digit($uid)) {
+								// It is a list of ints (23,42,216)
 							$uidArray = t3lib_div::revExplode('_', $fields['localFieldName']);
 							$uid = $uidArray[1];
 						} else {
+								// It is a list of tablename_int (foo_23,foo_42,foo_216)
 							$tableName = self::getTableNameFromConfig($config, $uidArray[0]);
 							$result[] = $tableName . '_' . $uid;
 						}

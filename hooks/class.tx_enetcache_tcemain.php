@@ -36,6 +36,8 @@ class tx_enetcache_tcemain {
 	 * - table_name_command (command one of move, copy, localize, delete, undelete)
 	 * - table_name_uid
 	 *
+	 * This hook is called for example by list module.
+	 *
 	 * @param string new, delete, ...
 	 * @param string Table we are working on
 	 * @param int Record uid
@@ -57,8 +59,11 @@ class tx_enetcache_tcemain {
 
 
 	/**
-	 * Forward dropping of referenced table records
+	 * Forward dropping of referenced table records.
 	 * Additional to the above method we find all referenced table records of this entry and drop their tag, too.
+	 *
+	 * Warning: At this point new mm relations are _not_ already written, so this hook will drop all
+	 * tags to relations which where connected _before_ changing the record.
 	 *
 	 * Example: A tt_news record was added (new id 4711), and the record was in category with uid 4.
 	 * tt_news_cat_4 tag will be dropped. This is usefull for new records. The tt_news list will not have the tag tt_news_4711,
@@ -76,6 +81,11 @@ class tx_enetcache_tcemain {
 		$tagsToDrop[] = $table;
 		$tagsToDrop[] = $table . '_' . $status;
 
+			// Substitute NEW with real ID
+		if (t3lib_div::isFirstPartOfStr($id, 'NEW')) {
+			$id = $pObj->substNEWwithIDs[$id];
+		}
+
 		if (strlen($table) > 0 && intval($id) > 0) {
 			$tagsToDrop[] = $table . '_' . $id;
 			$tagsFromReferences = tx_enetcache_tcaHandler::findReferedDatabaseEntries($table, $fieldArray, $id);
@@ -84,6 +94,33 @@ class tx_enetcache_tcemain {
 		$this->dropCacheTags($tagsToDrop);
 	}
 
+	/**
+	 * Forward dropping of referenced table records - after new relations where written.
+	 * This is basically the same for finding referenced records as in postProcessFieldArray,
+	 * but now for _new_ relations.
+	 *
+	 * @param t3lib_TCEmain Unused reference to parent object
+	 * @return void
+	 */
+	public function processDatamap_afterAllOperations(&$pObj) {
+		if (count($pObj->dbAnalysisStore) > 0) {
+			$table = $pObj->dbAnalysisStore[0][4];
+
+				// Substitute NEW with real ID
+			$id = $pObj->dbAnalysisStore[0][2];
+			if (t3lib_div::isFirstPartOfStr($id, 'NEW')) {
+				$id = $pObj->substNEWwithIDs[$id];
+			}
+
+			if (strlen($table) > 0 && intval($id) > 0) {
+				$tagsFromReferences = tx_enetcache_tcaHandler::findReferedDatabaseEntries($table, array(), $id);
+			}
+
+			if (count($tagsFromReferences) > 0) {
+				$this->dropCacheTags($tagsFromReferences);
+			}
+		}
+	}
 
 	/**
 	 * Call enetcache to drop tags
