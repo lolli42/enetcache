@@ -69,11 +69,15 @@ class tx_enetcache_tcaHandler {
 						// If there is no mm table, the reference field is a comma separated list
 					foreach (t3lib_div::trimExplode(',', $fields[$localFieldName], 1) as $uid) {
 						if (!ctype_digit($uid)) {
-								// It is a list of ints (23,42,216)
+								// It is a list of tablename_int (foo_23,foo_42,foo_216)
 							$uidArray = t3lib_div::revExplode('_', $fields['localFieldName']);
 							$uid = $uidArray[1];
 						} else {
-								// It is a list of tablename_int (foo_23,foo_42,foo_216)
+								// Check this relation is not 0 (default's in table field)
+							if (intval($uid) === 0) {
+								continue;
+							}
+								// It is a list of ints (23,42,216)
 							$tableName = self::getTableNameFromConfig($config, $uidArray[0]);
 							$result[] = $tableName . '_' . $uid;
 						}

@@ -30,6 +30,7 @@
  * @subpackage enetcache
  */
 class tx_enetcache_tcemain {
+
 	/**
 	 * Call enetcache and clear cache entries tagged with this item:
 	 * - table_name
@@ -57,13 +58,33 @@ class tx_enetcache_tcemain {
 		$this->dropCacheTags($tagsToDrop);
 	}
 
+	/**
+	 * Forward dropping of referenced table records.
+	 *
+	 * Warning: This hook takes care to find relations of existing records (status updated & friends)
+	 * for relations which are deleted afterwards.
+	 *
+	 * @param array Changed fields
+	 * @param string The table we are working on
+	 * @param integer Uid of record
+	 * @param t3lib_TCEmain Unused reference to parent object
+	 * @return void
+	 */
+	public function processDatamap_preProcessFieldArray($fieldArray, $table, $id, &$pObj) {
+		if (strlen($table) > 0 && t3lib_div::testInt($id)) {
+			$tagsToDrop = tx_enetcache_tcaHandler::findReferedDatabaseEntries($table, $fieldArray, $id);
+			if (count($tagsToDrop) > 0) {
+				$this->dropCacheTags($tagsToDrop);
+			}
+		}
+	}
 
 	/**
 	 * Forward dropping of referenced table records.
-	 * Additional to the above method we find all referenced table records of this entry and drop their tag, too.
 	 *
-	 * Warning: At this point new mm relations are _not_ already written, so this hook will drop all
-	 * tags to relations which where connected _before_ changing the record.
+	 * Warning: At this point new mm relations are _not_ already written _if_ this is a _newN record,
+	 * so this hook will drop all tags to relations which where connected _before_ changing the record.
+	 * Otherwise dropping of old relations is handled in preProcess hook above.
 	 *
 	 * Example: A tt_news record was added (new id 4711), and the record was in category with uid 4.
 	 * tt_news_cat_4 tag will be dropped. This is usefull for new records. The tt_news list will not have the tag tt_news_4711,
@@ -91,13 +112,14 @@ class tx_enetcache_tcemain {
 			$tagsFromReferences = tx_enetcache_tcaHandler::findReferedDatabaseEntries($table, $fieldArray, $id);
 			$tagsToDrop = array_merge($tagsToDrop, $tagsFromReferences);
 		}
+
 		$this->dropCacheTags($tagsToDrop);
 	}
 
 	/**
 	 * Forward dropping of referenced table records - after new relations where written.
 	 * This is basically the same for finding referenced records as in postProcessFieldArray,
-	 * but now for _new_ relations.
+	 * but now for _new_ relations of _new_ records
 	 *
 	 * @param t3lib_TCEmain Unused reference to parent object
 	 * @return void
