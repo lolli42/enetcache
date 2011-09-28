@@ -12,14 +12,26 @@ if (t3lib_div::int_from_ver(TYPO3_version) <= '4004999') {
 
 	// Add a new cache configuration if not already set in localconf.php
 if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'])) {
-	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'] = array(
-		'frontend' => 't3lib_cache_frontend_StringFrontend',
-		'backend' => 't3lib_cache_backend_DbBackend',
-		'options' => array(
-			'cacheTable' => 'tx_enetcache_contentcache',
-			'tagsTable' => 'tx_enetcache_contentcache_tags',
-		),
-	);
+	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'] = array();
+}
+	// Use StringFrontend if not set otherwise, if not set, core would choose variable frontend
+if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'])) {
+	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'] = 't3lib_cache_frontend_StringFrontend';
+}
+	// Add cache settings for core versions below 4.6
+if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
+	if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['backend'])) {
+		$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['backend'] = 't3lib_cache_backend_DbBackend';
+	}
+	if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options'])) {
+		$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options'] = array();
+	}
+	if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['cacheTable'])) {
+		$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['cacheTable'] = 'tx_enetcache_contentcache';
+	}
+	if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['tagTable'])) {
+		$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['tagTable'] = 'tx_enetcache_contentcache_tags';
+	}
 }
 
 	// Define caches that have to be tagged and dropped
@@ -42,8 +54,11 @@ if (TYPO3_MODE == 'BE') {
 		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheAction.php:tx_enetcache_backendContentCacheAction';
 
 		// Clear our cache table on "Clear all cache" click and "TCEMAIN.clearCacheCmd = all"
-	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
-		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheMethods.php:tx_enetcache_backendContentCacheMethods->clearCachePostProc';
+		// Done by core automatically since 4.6
+	if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
+		$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
+			'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheMethods.php:tx_enetcache_backendContentCacheMethods->clearCachePostProc';
+	}
 
 		// Drop cache tag handling in tcemain on changing / inserting / adding records
 	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['enetcache'] =

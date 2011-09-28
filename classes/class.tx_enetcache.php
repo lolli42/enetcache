@@ -21,6 +21,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
  * tx_enetcache
  *
@@ -72,16 +73,21 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @return void
 	 */
 	public function __construct() {
-			// Early exception if core caching framework is disabled
-		$this->checkEnabledCachingFramework();
+			// Caching framework must be explicitly enabled for TYPO3 4.5 and below
+		if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
+			$this->checkEnabledCachingFramework();
+		}
 
 		$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][self::EXTkey]);
 
 			// Set default element lifetime from extension config
 		$this->setDefaultLifetime($extConf['defaultLifetime']);
 
-			// Create content cache instance
-		$this->createContentCache();
+			// Create content cache instance in TYPO3 4.5 and below:
+			// Done by core cache manager in getCache since 4.6
+		if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
+			$this->createContentCache();
+		}
 
 			// Set cache instances for element and page cache
 		$this->contentCache = $GLOBALS['typo3CacheManager']->getCache('cache_enetcache_contentcache');
