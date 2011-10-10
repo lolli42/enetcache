@@ -29,8 +29,8 @@ if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
 	if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['cacheTable'])) {
 		$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['cacheTable'] = 'tx_enetcache_contentcache';
 	}
-	if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['tagTable'])) {
-		$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['tagTable'] = 'tx_enetcache_contentcache_tags';
+	if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['tagsTable'])) {
+		$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['options']['tagsTable'] = 'tx_enetcache_contentcache_tags';
 	}
 }
 
