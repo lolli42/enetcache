@@ -56,10 +56,12 @@ class tx_enetcache_tcaHandler {
 			if (self::isReferenceField($config)) {
 					// Handle reference fields
 				if ($config['MM']) {
-						// @TODO: Sanitize tablenames, might not always given
 						// If this is a reference with mm table, fetch the mm relations and add tags-to-drop
-					$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid_foreign, tablenames', $config['MM'], 'uid_local='.$id);
-					foreach($rows as $row) {
+					$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', $config['MM'], 'uid_local='.$id);
+					foreach ($rows as $row) {
+						if (!isset($row['tablenames'])) {
+							$row['tablenames'] = 0;
+						}
 						$tableName = self::getTableNameFromConfig($config, $row['tablenames']);
 						$result[] = $tableName . '_' . $row['uid_foreign'];
 					}
