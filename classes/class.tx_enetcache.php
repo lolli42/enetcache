@@ -256,7 +256,9 @@ class tx_enetcache implements t3lib_Singleton {
 			// Iterate through to be dropped caches and flush entries by tag array
 		foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][self::EXTkey]['TAG_CACHES'] as $cache) {
 			$cacheFE = $GLOBALS['typo3CacheManager']->getCache($cache);
-			$cacheFE->flushByTags($tags);
+			foreach($tags as $tag) {
+				$cacheFE->flushByTag($tag);
+			}
 		}
 	}
 
