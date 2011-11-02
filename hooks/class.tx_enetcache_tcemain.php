@@ -78,7 +78,7 @@ class tx_enetcache_tcemain {
 	 * @param t3lib_TCEmain Unused reference to parent object
 	 * @return void
 	 */
-	public function processDatamap_preProcessFieldArray($fieldArray, $table, $id, &$pObj) {
+	public function processDatamap_preProcessFieldArray(array $fieldArray, $table, $id, &$pObj) {
 		$isIdInteger = (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') ? t3lib_div::testInt($id) : t3lib_utility_Math::canBeInterpretedAsInteger($id);
 		if (strlen($table) > 0 && $isIdInteger) {
 			$tagsToDrop = tx_enetcache_tcaHandler::findReferedDatabaseEntries($table, $fieldArray, $id);
@@ -106,7 +106,7 @@ class tx_enetcache_tcemain {
 	 * @param t3lib_TCEmain Unused reference to parent object
 	 * @return void
 	 */
-	public function processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, &$pObj) {
+	public function processDatamap_postProcessFieldArray($status, $table, $id, array $fieldArray, &$pObj) {
 		$tagsToDrop = array();
 		$tagsToDrop[] = $table;
 		$tagsToDrop[] = $table . '_' . $status;
