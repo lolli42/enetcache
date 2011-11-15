@@ -199,7 +199,7 @@ class tx_enetcache_tcaHandler {
 	protected static function getAllFields($table, array $fields, $id) {
 		$result = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'*',
-			$GLOBALS['TYPO3_DB']->fullQuoteStr($table, $table),
+			$GLOBALS['TYPO3_DB']->quoteStr($table, $table),
 			'uid=' . intval($id)
 		);
 		$row = (array)$GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
