@@ -57,7 +57,7 @@ class tx_enetcache_tcemain {
 		);
 
 			// Handle referenced fields (mm relations and stuff)
-		$isIdInteger = (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') ? t3lib_div::testInt($id) : t3lib_utility_Math::canBeInterpretedAsInteger($id);
+		$isIdInteger = Tx_Enetcache_Utility_Compatibility::canBeInterpretedAsInteger($id);
 		if (strlen($table) > 0 && $isIdInteger) {
 			$tagsToDrop = array_merge($tagsToDrop, tx_enetcache_tcaHandler::findReferedDatabaseEntries($table, array(), $id));
 		}
@@ -78,7 +78,7 @@ class tx_enetcache_tcemain {
 	 * @return void
 	 */
 	public function processDatamap_preProcessFieldArray(array $fieldArray, $table, $id, &$pObj) {
-		$isIdInteger = (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') ? t3lib_div::testInt($id) : t3lib_utility_Math::canBeInterpretedAsInteger($id);
+		$isIdInteger = Tx_Enetcache_Utility_Compatibility::canBeInterpretedAsInteger($id);
 		if (strlen($table) > 0 && $isIdInteger) {
 			$tagsToDrop = tx_enetcache_tcaHandler::findReferedDatabaseEntries($table, $fieldArray, $id);
 			if (count($tagsToDrop) > 0) {

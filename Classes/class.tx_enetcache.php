@@ -72,7 +72,7 @@ class tx_enetcache implements t3lib_Singleton {
 	 */
 	public function __construct() {
 			// Caching framework must be explicitly enabled for TYPO3 4.5 and below
-		if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
+		if (Tx_Enetcache_Utility_Compatibility::convertVersionNumberToInteger(TYPO3_version) <= '4005999') {
 			$this->checkEnabledCachingFramework();
 		}
 
@@ -83,7 +83,7 @@ class tx_enetcache implements t3lib_Singleton {
 
 			// Create content cache instance in TYPO3 4.5 and below:
 			// Done by core cache manager in getCache since 4.6
-		if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
+		if (Tx_Enetcache_Utility_Compatibility::convertVersionNumberToInteger(TYPO3_version) <= '4005999') {
 			$this->createContentCache();
 		}
 

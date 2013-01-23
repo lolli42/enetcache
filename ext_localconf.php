@@ -12,7 +12,7 @@ if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enet
 	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'] = 't3lib_cache_frontend_StringFrontend';
 }
 	// Add cache settings for core versions below 4.6
-if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
+if (Tx_Enetcache_Utility_Compatibility::convertVersionNumberToInteger(TYPO3_version) <= '4005999') {
 	if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['backend'])) {
 		$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['backend'] = 't3lib_cache_backend_DbBackend';
 	}
@@ -48,7 +48,7 @@ if (TYPO3_MODE == 'BE') {
 
 		// Clear our cache table on "Clear all cache" click and "TCEMAIN.clearCacheCmd = all"
 		// Done by core automatically since 4.6
-	if (t3lib_div::int_from_ver(TYPO3_version) <= '4005999') {
+	if (Tx_Enetcache_Utility_Compatibility::convertVersionNumberToInteger(TYPO3_version) <= '4005999') {
 		$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
 			'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheMethods.php:tx_enetcache_backendContentCacheMethods->clearCachePostProc';
 	}
