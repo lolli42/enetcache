@@ -185,7 +185,7 @@ class tx_enetcache implements t3lib_Singleton {
 	 * @param boolean Wether or not to respect the no_cache parameter. Defaults to true: If no_cache is set, cache entry will not be set
 	 * @return string $data for direct return after set()
 	 */
-	public function set(array $identifiers, $data, array $tags = array(), $lifetime = null, $respectNoCache = TRUE) {
+	public function set(array $identifiers, $data, array $tags = array(), $lifetime = NULL, $respectNoCache = TRUE) {
 			// Caches are neither read nor written when no_cache is set.
 			// Do an early return if so.
 		if ($this->noCache && $respectNoCache) {
@@ -195,8 +195,8 @@ class tx_enetcache implements t3lib_Singleton {
 			// Build hash tag
 		$hash = $this->calculateIdentifiersHash($identifiers);
 
-			// Set lifetime of content element to default lifetime if not set
-		if (!$lifetime) {
+			// Set lifetime of content element to default lifetime if lifetime is null
+		if ($lifetime === NULL) {
 			$lifetime = $this->getDefaultLifetime();
 		}
 
@@ -215,7 +215,7 @@ class tx_enetcache implements t3lib_Singleton {
 
 			// Add all tags of this element to page cache entry
 		$this->addTagsToPageCache($tags);
-		
+
 		$cacheData = array(
 			'data' => $data,
 			'tags' => $tags,
@@ -228,7 +228,7 @@ class tx_enetcache implements t3lib_Singleton {
 		return $data;
 	}
 
-	
+
 	/**
 	 * Drops all cache entries tagged with given tags.
 	 * Depending on your configuration, this will drop multiple caches.
