@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2011 Christian Kuhn (lolli@schwarzbu.ch)
+ *  (c) 2009-2013 Christian Kuhn (lolli@schwarzbu.ch)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,13 +21,12 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
 /**
  * Hooks to TCEmain for automagic cache clearing by tags
  *
  * @author  Michael Knabe <mk@e-netconsulting.de>
  * @author	Christian Kuhn <lolli@schwarzbu.ch>
- * @package TYPO3
- * @subpackage enetcache
  */
 class tx_enetcache_tcemain {
 

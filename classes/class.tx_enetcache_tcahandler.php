@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2011 Michael Knabe <mk@e-netconsulting.de>
+ *  (c) 2009-2013 Michael Knabe <mk@e-netconsulting.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,8 +28,6 @@
  *
  * @author Michael Knabe <mk@e-netconsulting.de>
  * @author  Christian Kuhn <lolli@schwarzbu.ch>
- * @package TYPO3
- * @subpackage enetcache
  * @see tx_enetcache_tcemain
  */
 class tx_enetcache_tcaHandler {

@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011 Michael Knabe <mk@e-netconsulting.de>
+ *  (c) 2009-2013 Michael Knabe <mk@e-netconsulting.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,6 +24,8 @@
 
 /**
  * Test cases for class tx_enetcache_tcahandler
+ *
+ * @author Michael Knabe <mk@e-netconsulting.de>
  */
 class tx_enetcache_tcahandlerTest extends Tx_Phpunit_TestCase {
 

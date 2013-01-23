@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2011 Markus Guenther <markus.guenther@e-netconsulting.com>
+*  (c) 2010-2013 Markus Guenther <markus.guenther@e-netconsulting.com>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,12 +21,11 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
  * Scheduler task to delete cache entries by tag
  *
  * @author Markus Guenther <markus.guenther@e-netconsulting.com>
- * @package TYPO3
- * @subpackage enetcache
  */
 class tx_enetcache_task_DropTags extends tx_scheduler_Task {
 	/**

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2011 Christian Kuhn <lolli@schwarzbu.ch>
+*  (c) 2009-2013 Christian Kuhn <lolli@schwarzbu.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,14 +21,13 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
  * Additional BE fields for cache backend garbage collection
  *
  * @obsolete Since TYPO3 version 4.5
  *
  * @author		Christian Kuhn <lolli@schwarzbu.ch>
- * @package		TYPO3
- * @subpackage	enetcache
  */
 class tx_enetcache_gccachebackends_additionalfieldprovider implements tx_scheduler_AdditionalFieldProvider {
 	/**

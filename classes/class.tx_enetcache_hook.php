@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2011 Michael Knabe <mk@e-netconsulting.de>
+ *  (c) 2009-2013 Michael Knabe <mk@e-netconsulting.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,6 +21,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
  * tx_enetcache_hook
  *
@@ -29,8 +30,6 @@
  *
  * @author  Michael Knabe <mk@e-netconsulting.de>
  * @author  Christian Kuhn <lolli@schwarzbu.ch>
- * @package TYPO3
- * @subpackage enetcache
  * @see interface tx_enetcache_hookable
  */
 abstract class tx_enetcache_hook implements tx_enetcache_hookable {

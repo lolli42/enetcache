@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2011 Christian Kuhn <lolli@schwarzbu.ch>
+*  (c) 2009-2013 Christian Kuhn <lolli@schwarzbu.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,8 +28,6 @@
  * @obsolete Since TYPO3 version 4.5
  *
  * @author		Christian Kuhn <lolli@schwarzbu.ch>
- * @package		TYPO3
- * @subpackage	enetcache
  */
 class tx_enetcache_gccachebackends extends tx_scheduler_Task {
 	/**

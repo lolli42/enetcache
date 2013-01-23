@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2011 Markus Guenther <markus.guenther@e-netconsulting.com>
+*  (c) 2010-2013 Markus Guenther <markus.guenther@e-netconsulting.com>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,13 +24,12 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
  * This script offers a cli task to drop content and page caches of cached content
  * elements which are tagged with one of the given tags.
  *
  * @author Markus Guenther <markus.guenther@e-netconsulting.com>
- * @package TYPO3
- * @subpackage enetcache
  */
 if (!defined('TYPO3_cliMode')) {
 	die('You cannot run this script directly!');

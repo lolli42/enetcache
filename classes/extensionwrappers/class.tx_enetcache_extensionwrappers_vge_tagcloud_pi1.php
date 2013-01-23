@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2011 Christian Kuhn <lolli@schwarzbu.ch>
+*  (c) 2010-2013 Christian Kuhn <lolli@schwarzbu.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -32,8 +32,6 @@
  *
  * Feel free to extend this with an own class to add better tagging or other fancy stuff
  *
- * @package TYPO3
- * @subpackage enetcache
  * @depends vge_tagcloud
  */
 class tx_enetcache_extensionwrappers_vge_tagcloud_pi1 extends tx_enetcache_extensionwrappers_pi_abstract {

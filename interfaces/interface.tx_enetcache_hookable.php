@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2011 Michael Knabe <mk@e-netconsulting.de>
+ *  (c) 2009-2013 Michael Knabe <mk@e-netconsulting.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,14 +21,13 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
  * tx_enetcache_hookable
  *
  * Describes methods hooks must implement
  *
  * @author  Michael Knabe <mk@e-netconsulting.de>
- * @package TYPO3
- * @subpackage enetcache
  */
 interface tx_enetcache_hookable {
 	public function get($params);
