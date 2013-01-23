@@ -1,5 +1,6 @@
 #
 # Table structure for table 'tx_enetcache_contentcache'
+# @obsolete since TYPO3 4.6
 #
 CREATE TABLE tx_enetcache_contentcache (
 	id int(11) unsigned NOT NULL auto_increment,
@@ -13,6 +14,7 @@ CREATE TABLE tx_enetcache_contentcache (
 
 #
 # Table structure for table 'tx_enetcache_contentcache_tags'
+# @obsolete since TYPO3 4.6
 #
 CREATE TABLE tx_enetcache_contentcache_tags (
 	id int(11) unsigned NOT NULL auto_increment,
