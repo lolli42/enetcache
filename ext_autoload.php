@@ -17,5 +17,6 @@ return array(
 	'tx_enetcache_extensionwrappers_wec_map_pi1' => $extensionPath . 'Classes/extensionwrappers/class.tx_enetcache_extensionwrappers_wec_map_pi1.php',
 	'tx_enetcache_extensionwrappers_wec_map_pi2' => $extensionPath . 'Classes/extensionwrappers/class.tx_enetcache_extensionwrappers_wec_map_pi2.php',
 	'tx_enetcache_extensionwrappers_wec_map_pi3' => $extensionPath . 'Classes/extensionwrappers/class.tx_enetcache_extensionwrappers_wec_map_pi3.php',
+	'tx_enetcache_utility_compatibility' => $extensionPath . 'Classes/Utility/Compatibility.php',
 );
 ?>
