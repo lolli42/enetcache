@@ -28,8 +28,10 @@
  * @author  Christian Kuhn <lolli@schwarzbu.ch>
  */
 
-	// @TODO: Test if autoloader handles this
-require_once($GLOBALS['BACK_PATH'] . 'interfaces/interface.backend_cacheActionsHook.php');
+// @deprecated With core versions < 6.0, the interface must be required manually
+if (Tx_Enetcache_Utility_Compatibility::convertVersionNumberToInteger(TYPO3_version) <= '4007999' && !class_exists('backend_cacheActionsHook')) {
+	require_once($GLOBALS['BACK_PATH'] . 'interfaces/interface.backend_cacheActionsHook.php');
+}
 
 class tx_enetcache_backendContentCacheAction implements backend_cacheActionsHook {
 	/**
