@@ -1,0 +1,41 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+
+env:
+  - DB=mysql
+
+notifications:
+  email:
+    recipients:
+      - lolli@schwarzbu.ch
+    on_success: change
+    on_failure: change
+
+before_script:
+  - sudo apt-get install parallel
+  - composer self-update
+  - cd ..
+  - cp enetcache/composer.json .
+  - composer --dev install
+  - mkdir -p uploads typo3temp typo3conf/ext
+  - mv enetcache typo3conf/ext
+
+script:
+  - >
+    echo;
+    echo "Running unit tests";
+    ./bin/phpunit --colors -c typo3conf/ext/enetcache/Build/UnitTests.xml
+  - >
+    echo;
+    echo "Running php lint";
+    /bin/bash -c "
+        if ! find typo3conf/ext/enetcache/ -name \*.php | parallel --gnu 'php -l {}' > /tmp/errors 2>&1; then
+            grep -v \"No syntax errors detected in\" /tmp/errors;
+            exit 99;
+        fi
+    "
