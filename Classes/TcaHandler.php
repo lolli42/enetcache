@@ -1,55 +1,43 @@
 <?php
-/***************************************************************
- *  Copyright notice
+namespace Lolli\Enetcache;
+
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2009-2013 Michael Knabe <mk@e-netconsulting.de>
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * This class provides some features that are needed by the backend hooks
- * in order to find references between entries in the database
- *
- * @author Michael Knabe <mk@e-netconsulting.de>
- * @author  Christian Kuhn <lolli@schwarzbu.ch>
- * @see tx_enetcache_tcemain
+ * in order to find references between entries in the database.
  */
-class tx_enetcache_tcaHandler {
+class TcaHandler {
 
 	/**
 	 * Returns an array containing all database records that are referenced by a given record
 	 *
 	 * @param string $table Name of the table of current record
 	 * @param array $fields All fields that where changed for the record
-	 * @param integer $id Uid of record
+	 * @param int $id Uid of record
 	 * @return array An array with arrays containing uid and table as keys with the coresponding values
 	 */
 	public static function findReferedDatabaseEntries($table, array $fields, $id) {
-			// Get all available fields and values
+		// Get all available fields and values
 		$fields = self::getAllFields($table, $fields, $id);
 
-		self::loadTcaForTable($table);
-
-		$result = array();
+		$result = [];
 		$referenceFields = self::findReferenceFieldsForTable($table);
 		foreach ($referenceFields as $localFieldName => $config) {
-				// Handle reference fields
+			// Handle reference fields
 			if ($config['MM']) {
 				$result = array_merge(
 					$result,
@@ -70,10 +58,10 @@ class tx_enetcache_tcaHandler {
 	 *
 	 * @param int $uidLocal The UID of the local record
 	 * @param array $fieldConfig The configuration of the mm relation from TCA
-	 * @return array The refered records in the form $tableName_$uid
+	 * @return array The referenced records in the form $tableName_$uid
 	 */
 	protected static function findReferencedRowsForMMField($uidLocal, array $fieldConfig) {
-		$result = array();
+		$result = [];
 
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			'*',
@@ -100,20 +88,20 @@ class tx_enetcache_tcaHandler {
 	 * @return array A list of referenced fields in the form array('table_uid', 'table2_uid2', ...)
 	 */
 	protected static function findReferencedRowsForCSVField($fieldValue, array $fieldConfig) {
-		$result = array();
+		$result = [];
 			// If there is no mm table, the reference field is a comma separated list
-		foreach (t3lib_div::trimExplode(',', $fieldValue, TRUE) as $uid) {
+		foreach (GeneralUtility::trimExplode(',', $fieldValue, TRUE) as $uid) {
 			if (!ctype_digit($uid)) {
-					// It is a list of tablename_uid (foo_23,bar_42,foo_216)
-				$uidArray = t3lib_div::revExplode('_', $uid, 2);
+				// It is a list of tablename_uid (foo_23,bar_42,foo_216)
+				$uidArray = GeneralUtility::revExplode('_', $uid, 2);
 				$uid = $uidArray[1];
 				$tableName = $uidArray[0];
 			} else {
-					// Check this relation is not 0 (default's in table field)
+				// Check this relation is not 0 (default's in table field)
 				if (intval($uid) === 0) {
 					continue;
 				}
-					// It is a list of ints (23,42,216)
+				// It is a list of ints (23,42,216)
 				$tableName = self::getTableNameFromConfig($fieldConfig, $uidArray[0]);
 			}
 			$result[] = $tableName . '_' . $uid;
@@ -129,7 +117,7 @@ class tx_enetcache_tcaHandler {
 	 * @return array The configuration of the fields
 	 */
 	protected static function findReferenceFieldsForTable($table) {
-		$result = array();
+		$result = [];
 		foreach ($GLOBALS['TCA'][$table]['columns'] as $localFieldName => $field) {
 			$config = $field['config'];
 			if (self::isReferenceField($config)) {
@@ -139,25 +127,11 @@ class tx_enetcache_tcaHandler {
 		return $result;
 	}
 	
-	
 	/**
-	 * Loads TCA configuration for the given table.
+	 * Returns true if the TCA/columns field type is a DB reference field
 	 *
-	 * @param string $table The table whose TCA shall be loaded
-	 * @return void
-	 */
-	protected static function loadTcaForTable($table) {
-		if (!$GLOBALS['TCA'][$table]['colums']) {
-			t3lib_div::loadTCA($table);
-		}
-	}
-	
-	
-	/**
-	 * Returns TRUE if the TCA/columns field type is a DB reference field
-	 *
-	 * @param array Config array for TCA/columns field
-	 * @return boolean TRUE if DB reference field (group/db or select with foreign-table)
+	 * @param array $conf Config array for TCA/columns field
+	 * @return bool true if DB reference field (group/db or select with foreign-table)
 	 */
 	protected static function isReferenceField(array $conf) {
 		return (
@@ -166,12 +140,12 @@ class tx_enetcache_tcaHandler {
 		);
 	}
 
-
 	/**
 	 * Returns the name of referenced table, which can be either in foreign_table or in allowed
 	 *
 	 * @param array $config Field configuration
-	 * @param boolean $defaultTableName Default table name
+	 * @param bool $defaultTableName Default table name
+	 * @return string Name of referenced table
 	 */
 	protected static function getTableNameFromConfig(array $config, $defaultTableName = FALSE) {
 		if ($defaultTableName) {
@@ -185,13 +159,12 @@ class tx_enetcache_tcaHandler {
 		return $result;
 	}
 
-
 	/**
 	 * Get all field values of this record
 	 *
-	 * @param string Table to find fields for
-	 * @param array Changed fields
-	 * @param integer uid of entry
+	 * @param string $table Table to find fields for
+	 * @param array $fields Changed fields
+	 * @param int $id uid of entry
 	 * @return array All fields given, plus the fields that have not changed
 	 */
 	protected static function getAllFields($table, array $fields, $id) {
@@ -204,4 +177,3 @@ class tx_enetcache_tcaHandler {
 		return array_merge($row, $fields);
 	}
 }
-?>
