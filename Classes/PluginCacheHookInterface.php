@@ -18,7 +18,7 @@ namespace Lolli\Enetcache;
  * Describes methods hooks must implement if hooking into FrontendCache::class,
  * see that class for details on what the methods do and provide.
  */
-interface FrontendCacheHookInterface {
+interface PluginCacheHookInterface {
 	public function get($params);
 	public function set(&$params);
 	public function flush();

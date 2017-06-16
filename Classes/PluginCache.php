@@ -308,7 +308,7 @@ class PluginCache implements SingletonInterface {
 	 */
 	protected function initHooks() {
 		foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['hooks']['tx_enetcache'] as $classname) {
-		    /** @var FrontendCacheHookInterface $hookInstance */
+		    /** @var PluginCacheHookInterface $hookInstance */
 		    $hookInstance = GeneralUtility::makeInstance($classname);
 			$this->registerHook($hookInstance);
 		}
@@ -317,10 +317,10 @@ class PluginCache implements SingletonInterface {
 	/**
 	 * Register a hook instance to class array
 	 *
-	 * @param FrontendCacheHookInterface $hook Hook classes must implement this interface
+	 * @param PluginCacheHookInterface $hook Hook classes must implement this interface
 	 * @return void
 	 */
-	protected function registerHook(FrontendCacheHookInterface $hook) {
+	protected function registerHook(PluginCacheHookInterface $hook) {
 		$this->hookObjects[] = $hook;
 	}
 }
