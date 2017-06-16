@@ -26,16 +26,8 @@ if (!isset($TYPO3_CONF_VARS['EXTCONF']['enetcache']['hooks']['tx_enetcache'])) {
 // Configure BE hooks
 if (TYPO3_MODE == 'BE') {
 	// Add the "Delete plugin cache" button and its functionality
-	$TYPO3_CONF_VARS['BE']['AJAX']['enetcache::clearContentCache'] =
-		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheMethods.php:tx_enetcache_backendContentCacheMethods->clearContentCache';
+	$TYPO3_CONF_VARS['BE']['AJAX']['enetcache::clearContentCache'] = Lolli\Enetcache\Hooks\BackendContentCacheMethods::class . '->clearContentCache';
 	$TYPO3_CONF_VARS['SC_OPTIONS']['additionalBackendItems']['cacheActions'][] = Lolli\Enetcache\Hooks\BackendToolbarClearContentCache::class;
-
-	// Clear our cache table on "Clear all cache" click and "TCEMAIN.clearCacheCmd = all"
-	// Done by core automatically since 4.6
-	if (Tx_Enetcache_Utility_Compatibility::convertVersionNumberToInteger(TYPO3_version) <= '4005999') {
-		$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
-			'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheMethods.php:tx_enetcache_backendContentCacheMethods->clearCachePostProc';
-	}
 
 	// Drop cache tag handling in tcemain on changing / inserting / adding records
 	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['enetcache'] =
