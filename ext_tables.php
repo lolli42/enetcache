@@ -8,6 +8,6 @@ t3lib_extMgm::addLLrefForTCAdescr('_MOD_tools_txschedulerM1', 'EXT:enetcache/loc
 
 // Use sprite icon API for clearContentCache icon in BE cache top Menu
 $enetcacheIcons = [
-	'clearcontentcache' => t3lib_extMgm::extRelPath('enetcache') . 'res/delete_pi.png',
+	'clearcontentcache' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('enetcache') . 'Resources/Public/Icons/FlushPluginCache.png',
 ];
 t3lib_SpriteManager::addSingleIcons($enetcacheIcons, 'enetcache');
