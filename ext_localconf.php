@@ -29,11 +29,9 @@ if (TYPO3_MODE == 'BE') {
 	$TYPO3_CONF_VARS['BE']['AJAX']['enetcache::clearContentCache'] = Lolli\Enetcache\Hooks\BackendContentCacheMethods::class . '->clearContentCache';
 	$TYPO3_CONF_VARS['SC_OPTIONS']['additionalBackendItems']['cacheActions'][] = Lolli\Enetcache\Hooks\BackendToolbarClearContentCache::class;
 
-	// Drop cache tag handling in tcemain on changing / inserting / adding records
-	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['enetcache'] =
-		'EXT:enetcache/hooks/class.tx_enetcache_tcemain.php:tx_enetcache_tcemain';
-	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['enetcache'] =
-		'EXT:enetcache/hooks/class.tx_enetcache_tcemain.php:tx_enetcache_tcemain';
+	// Drop cache tag handling in DataHandler on changing / inserting / adding records
+	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['enetcache'] = Lolli\Enetcache\Hooks\DataHandlerFlushByTag::class;
+	$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['enetcache'] = Lolli\Enetcache\Hooks\DataHandlerFlushByTag::class;
 
 	// Scheduler task to drop cache entries by tags
 	$TYPO3_CONF_VARS['SC_OPTIONS']['scheduler']['tasks']['tx_enetcache_task_DropTags'] = [
