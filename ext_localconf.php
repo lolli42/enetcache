@@ -28,8 +28,7 @@ if (TYPO3_MODE == 'BE') {
 	// Add the "Delete plugin cache" button and its functionality
 	$TYPO3_CONF_VARS['BE']['AJAX']['enetcache::clearContentCache'] =
 		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheMethods.php:tx_enetcache_backendContentCacheMethods->clearContentCache';
-	$TYPO3_CONF_VARS['SC_OPTIONS']['additionalBackendItems']['cacheActions'][] =
-		'EXT:enetcache/hooks/class.tx_enetcache_backendContentCacheAction.php:tx_enetcache_backendContentCacheAction';
+	$TYPO3_CONF_VARS['SC_OPTIONS']['additionalBackendItems']['cacheActions'][] = Lolli\Enetcache\Hooks\BackendToolbarClearContentCache::class;
 
 	// Clear our cache table on "Clear all cache" click and "TCEMAIN.clearCacheCmd = all"
 	// Done by core automatically since 4.6
