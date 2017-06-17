@@ -1,5 +1,5 @@
 <?php
-namespace Enet\Enetcache\Tests\Unit;
+namespace Lolli\Enetcache\Tests\Unit;
 
 /***************************************************************
  *  Copyright notice
