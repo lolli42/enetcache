@@ -15,11 +15,12 @@ namespace Lolli\Enetcache\Tests\Unit;
  */
 
 use Lolli\Enetcache\TcaHandler;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
  * Test case
  */
-class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class TcaHandlerTest extends UnitTestCase
 {
 
     /**
