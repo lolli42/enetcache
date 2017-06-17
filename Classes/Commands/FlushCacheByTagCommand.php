@@ -23,7 +23,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
   * Description
   */
 class FlushCacheByTagCommand extends CommandLineController {
-/**
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -41,9 +42,6 @@ class FlushCacheByTagCommand extends CommandLineController {
 
     /**
      * CLI engine
-     *
-     * @param array $argv Command line arguments
-     * @return string
      */
     public function cli_main()
     {
@@ -79,7 +77,7 @@ class FlushCacheByTagCommand extends CommandLineController {
 
         $isValid = $this->isValidTagList($tags);
         if (!$isValid) {
-            $this->cli_echo($GLOBALS['LANG']->sL('LLL:EXT:enetcache/locallang.xml:scheduler.droptags.invalidTagList') . "\n");
+            $this->cli_echo($GLOBALS['LANG']->sL('LLL:EXT:enetcache/Resources/Private/Language/locallang.xml:scheduler.droptags.invalidTagList') . "\n");
             exit;
         }
         GeneralUtility::makeInstance(PluginCache::class)->drop($tags);
