@@ -314,9 +314,9 @@ class PluginCache implements SingletonInterface
      */
     protected function initHooks()
     {
-        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['hooks']['tx_enetcache'] as $classname) {
+        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['hooks']['tx_enetcache'] as $className) {
             /** @var PluginCacheHookInterface $hookInstance */
-            $hookInstance = GeneralUtility::makeInstance($classname);
+            $hookInstance = GeneralUtility::makeInstance($className);
             $this->registerHook($hookInstance);
         }
     }
