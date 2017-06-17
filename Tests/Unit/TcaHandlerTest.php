@@ -1,33 +1,23 @@
 <?php
 namespace Lolli\Enetcache\Tests\Unit;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2009-2013 Michael Knabe <mk@e-netconsulting.de>
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use Lolli\Enetcache\TcaHandler;
 
 /**
- * Test cases for class tx_enetcache_tcahandler
- *
- * @author Michael Knabe <mk@e-netconsulting.de>
+ * Test case
  */
 class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
@@ -37,7 +27,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function setUp()
     {
-        $GLOBALS['TYPO3_DB'] = $this->getMock('t3lib_DB', []);
+        $GLOBALS['TYPO3_DB'] = $this->getMock('t3lib_DB', ['exec_SELECTquery', 'quoteStr', 'sql_fetch_assoc', 'exec_SELECTgetRows']);
     }
 
     /**
@@ -48,7 +38,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_without_references.php');
         $this->assertEquals(
             [],
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', [], 23)
+            TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
         );
     }
 
@@ -73,7 +63,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $GLOBALS['TCA']['testtable'] = $tca;
         $this->assertEquals(
             [],
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', [], 23)
+            TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
         );
     }
 
@@ -86,7 +76,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $GLOBALS['TCA']['testtable'] = $tca;
         $this->assertEquals(
             [],
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' =>'0'], 23)
+            TcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' =>'0'], 23)
         );
     }
 
@@ -99,7 +89,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $GLOBALS['TCA']['testtable'] = $tca;
         $this->assertEquals(
             ['foo_21', 'bar_42'],
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' => 'foo_21, bar_42'], 23)
+            TcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' => 'foo_21, bar_42'], 23)
         );
     }
 
@@ -112,7 +102,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $GLOBALS['TCA']['testtable'] = $tca;
         $this->assertEquals(
             ['fe_users_21', 'fe_users_42'],
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', ['cust_fe_user' => '21, 42'], 23)
+            TcaHandler::findReferedDatabaseEntries('testtable', ['cust_fe_user' => '21, 42'], 23)
         );
     }
 
@@ -146,7 +136,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ));
         $this->assertEquals(
             ['tx_commerce_products_123', 'tx_commerce_products_4711'],
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', [], 23)
+            TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
         );
     }
 
@@ -168,7 +158,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ));
         $this->assertEquals(
             ['foo_123', 'bar_4711'],
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', [], 23)
+            TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
         );
     }
 }
