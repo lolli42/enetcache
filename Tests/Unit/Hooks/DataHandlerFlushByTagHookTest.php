@@ -28,10 +28,10 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
      */
     public function setUp()
     {
-        $GLOBALS['TYPO3_DB'] = $this->getMock(
-            'stdClass',
-            ['exec_SELECTquery', 'quoteStr', 'sql_fetch_assoc', 'exec_SELECTgetRows']
-        );
+        $dbMock = $this->getMockBuilder(\stdClass::class)
+            ->setMethods(['exec_SELECTquery', 'quoteStr', 'sql_fetch_assoc', 'exec_SELECTgetRows'])
+            ->getMock();
+        $GLOBALS['TYPO3_DB'] = $dbMock;
     }
 
     /**
