@@ -19,4 +19,4 @@ and / or define a dependency in your consuming extensions.
 
 API usage documentation can be found at (docs.typo3.org)[1]
 
-[1] https://docs.typo3.org/typo3cms/extensions/enetcache/
+[1]: https://docs.typo3.org/typo3cms/extensions/enetcache/
