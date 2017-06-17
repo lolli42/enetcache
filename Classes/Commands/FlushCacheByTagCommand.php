@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Lolli\Enetcache\Command;
 
 /*
@@ -15,73 +16,69 @@ namespace Lolli\Enetcache\Command;
  * The TYPO3 project - inspiring people to share!
  */
 use Lolli\Enetcache\PluginCache;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
-use TYPO3\CMS\Core\Controller\CommandLineController;
+use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
-  * Description
-  */
-class FlushCacheByTagCommand extends CommandLineController {
+ * Description
+ */
+class FlushCacheByTagCommand extends Command
+{
 
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function configure()
     {
-        // Running parent class constructor
-        parent::__construct();
-        // Adding options to help archive:
-        // Setting help texts:
-        $this->cli_help['name'] = 'enetcache flush cache entries by tags';
-        $this->cli_help['description'] = 'Flush cache by given keys';
-        $this->cli_help['examples'] = '/.../cli_dispatch.phpsh enetcache dropTags foo,bar';
-        $this->cli_help['synopsis'] = '###OPTIONS###';
-        $this->cli_help['author'] = 'Christian Kuhn';
+        $this->setHelp('NAME:
+    enetcache flush cache entries by tags
+
+DESCRIPTION:
+    Flush cache by given keys
+
+EXAMPLES:
+    - several tags as comma separated list with spaces need to be passed in quotation marks
+    ./typo3/sysext/core/bin/typo3 enetcache:dropTags \'foo, bar\'
+    - no spaces allowed for non quoted input
+    ./typo3/sysext/core/bin/typo3 enetcache:dropTags foo,bar
+    - single tag
+    ./typo3/sysext/core/bin/typo3 enetcache:dropTags foo
+
+LICENSE:
+    GNU GPL - free software!
+
+AUTHOR:
+    Christian Kuhn
+');
+        $this->setDescription('Flush cache by given keys');
+        $this->addArgument('tags', InputOption::VALUE_REQUIRED, 'comma separated list of tags to be dropped');
+
     }
 
-    /**
-     * CLI engine
-     */
-    public function cli_main()
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // get task (function)
-        $task = (string)$this->cli_args['_DEFAULT'][1];
+        // Make sure the _cli_ user is loaded
+        Bootstrap::getInstance()->initializeBackendAuthentication();
 
-        if (!$task) {
-            $this->cli_validateArgs();
-            $this->cli_help();
-            exit;
-        }
+        $io = new SymfonyStyle($input, $output);
+        $io->title($this->getDescription());
 
-        if ($task === 'dropTags') {
-            $this->dropTags((string)$this->cli_args['_DEFAULT'][2]);
-        }
-    }
+        if ($input->hasArgument('tags') && $tags = $input->getArgument('tags')) {
+            $tags = array_map('trim', explode(',', $tags));
 
-    /**
-     * Drop cache entries by tag
-     *
-     * @param string $tags comma separated tag list
-     */
-    protected function dropTags($tags = '')
-    {
-        // Get tag list from user input if none given as argument
-        if (strlen($tags) === 0) {
-            // Output
-            $this->cli_echo('Enter a list of comma separated tags: ');
-            // Input
-            $tags = $this->cli_keyboardInput();
+            $isValid = $this->isValidTagList($tags);
+            if (!$isValid) {
+                $io->writeln($GLOBALS['LANG']->sL('LLL:EXT:enetcache/Resources/Private/Language/locallang.xml:scheduler.droptags.invalidTagList') . "\n");
+                exit;
+            }
+            GeneralUtility::makeInstance(PluginCache::class)->drop($tags);
+            $io->writeln("The entries with this tags where dropped: " . implode(', ', $tags) . "\n");
+        } else {
+            $io->writeln('No tags have been provided. Restart the command with a list of comma separated tags to be dropped.');
         }
-        $tags = array_map('trim', explode(',', $tags));
-
-        $isValid = $this->isValidTagList($tags);
-        if (!$isValid) {
-            $this->cli_echo($GLOBALS['LANG']->sL('LLL:EXT:enetcache/Resources/Private/Language/locallang.xml:scheduler.droptags.invalidTagList') . "\n");
-            exit;
-        }
-        GeneralUtility::makeInstance(PluginCache::class)->drop($tags);
-        $this->cli_echo("The entries with this tags where dropped: " . implode(', ',$tags) . "\n");
     }
 
     /**
