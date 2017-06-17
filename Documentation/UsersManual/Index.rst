@@ -118,12 +118,12 @@ Usually called by GeneralUtility::makeInstance(PluginCache::class)->method();
 |                                         | Returns either data entry, or FALSE on cache miss. |
 +-----------------------------------------+----------------------------------------------------+
 | set(array $identifier, $data,           | Set an entry in enetcache.                         |
-|   array $tags, $lifetime,               |                                                    |
-|   $respectNoCache)                      |                                                    |
+| array $tags, $lifetime,                 |                                                    |
+| $respectNoCache)                        |                                                    |
 +-----------------------------------------+----------------------------------------------------+
 | drop(array $tags)                       | Drop all cache entries in page cache and enetcache |
-|                                         |  which are tagged with one of the tags.            |
+|                                         | which are tagged with one of the tags.             |
 +-----------------------------------------+----------------------------------------------------+
 | flush()                                 | Delete enetcache entries. This is rarely used,     |
-|                                         |  page cache is not flushed!                        |
+|                                         | page cache is not flushed!                         |
 +-----------------------------------------+----------------------------------------------------+
