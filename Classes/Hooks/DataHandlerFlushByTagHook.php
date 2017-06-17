@@ -15,6 +15,7 @@ namespace Lolli\Enetcache\Hooks;
  */
 
 use Lolli\Enetcache\PluginCache;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -198,11 +199,15 @@ class DataHandlerFlushByTagHook
     {
         $result = [];
 
-        $rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-            '*',
-            $fieldConfig['MM'],
-            'uid_local=' . intval($uidLocal)
-        );
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($fieldConfig['MM']);
+        $queryBuilder->getRestrictions()->removeAll();
+        $rows = $queryBuilder->select('*')
+            ->from($fieldConfig['MM'])
+            ->where(
+                $queryBuilder->expr()->eq('uid_local', $queryBuilder->createNamedParameter($uidLocal, \PDO::PARAM_INT))
+            )
+            ->execute()
+            ->fetchAll();
         foreach ($rows as $row) {
             if (!isset($row['tablenames'])) {
                 $row['tablenames'] = 0;
@@ -308,12 +313,13 @@ class DataHandlerFlushByTagHook
      */
     protected function getAllFields($table, array $fields, $id)
     {
-        $result = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-            '*',
-            $GLOBALS['TYPO3_DB']->quoteStr($table, $table),
-            'uid=' . intval($id)
-        );
-        $row = (array)$GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+        $queryBuilder->getRestrictions()->removeAll();
+        $row = $queryBuilder->select('*')
+            ->from($table)
+            ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)))
+            ->execute()
+            ->fetch();
         return array_merge($row, $fields);
     }
 }
