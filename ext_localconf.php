@@ -4,17 +4,24 @@ if (!defined('TYPO3_MODE')) {
 }
 
 // Add a new cache configuration if not already set in localconf.php
-if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache'] = [];
+if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent'] = [];
 }
 // Use StringFrontend if not set otherwise, if not set, core would choose variable frontend
-if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'] = \TYPO3\CMS\Core\Cache\Frontend\StringFrontend::class;
+if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent']['frontend'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent']['frontend'] = \TYPO3\CMS\Core\Cache\Frontend\StringFrontend::class;
+}
+// Add plugin cache to 'pages' and 'all' group if not set otherwise yet
+if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent']['groups'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent']['groups'] = [
+        'pages',
+        'all'
+    ];
 }
 
 // Define caches that have to be tagged and dropped
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['TAG_CACHES'] = [
-    'cache_enetcache_contentcache',
+    'enetcachecontent',
     'cache_pages',
 ];
 
@@ -25,10 +32,6 @@ if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['hooks']['tx_enet
 
 // Configure BE hooks
 if (TYPO3_MODE == 'BE') {
-    // Add the "Delete plugin cache" button and its functionality
-    $GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['enetcache::clearContentCache'] = \Lolli\Enetcache\Hooks\BackendContentCacheMethods::class . '->clearContentCache';
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['additionalBackendItems']['cacheActions'][] = \Lolli\Enetcache\Hooks\BackendToolbarClearContentCache::class;
-
     // Drop cache tag handling in DataHandler on changing / inserting / adding records
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['enetcache'] = \Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['enetcache'] = \Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook::class;

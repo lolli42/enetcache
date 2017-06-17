@@ -65,7 +65,7 @@ class PluginCache implements SingletonInterface
 
         // Set cache instances for element and page cache
         $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
-        $this->contentCache = $cacheManager->getCache('cache_enetcache_contentcache');
+        $this->contentCache = $cacheManager->getCache('enetcachecontent');
         $this->pageCache = $cacheManager->getCache('cache_pages');
 
         // Initialize hook objects
@@ -206,7 +206,7 @@ class PluginCache implements SingletonInterface
     /**
      * Drops all cache entries tagged with given tags.
      * Depending on your configuration, this will drop multiple caches.
-     * Defaults are cache_pages and cache_enetcache_contentcache.
+     * Defaults are cache_pages and enetcachecontent.
      * So if you drop a tag, your content element elements with this tags and all
      * of their page cache entries will be invalid.
      * It's no problem if a tag with this name doesn't exist
