@@ -14,7 +14,7 @@ Plugin cache engine
 :Version:
     |release|
 
-Language:
+:Language:
     en
 
 :Keywords:
