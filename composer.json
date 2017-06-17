@@ -36,6 +36,12 @@
     "enetcache": "self.version",
     "typo3-ter/enetcache": "self.version"
   },
+  "scripts": {
+    "post-autoload-dump": [
+      "mkdir -p .Build/Web/typo3conf/ext/",
+      "[ -L .Build/Web/typo3conf/ext/enetcache ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/enetcache"
+    ]
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.x-dev"
