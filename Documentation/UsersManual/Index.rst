@@ -1,21 +1,6 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../Includes.txt
-
+﻿.. include:: ../Includes.txt
 
 .. _userManual:
-
-
-.. only:: html
-
-	This chapter describes how to use the extension.
-
-.. toctree::
-	:maxdepth: 5
-	:titlesonly:
 
 Basic caching knowledge Know-How
 ================================
@@ -142,4 +127,3 @@ Usually called by GeneralUtility::makeInstance(PluginCache::class)->method();
 | flush()                                 | Delete enetcache entries. This is rarely used,     |
 |                                         |  page cache is not flushed!                        |
 +-----------------------------------------+----------------------------------------------------+
-

@@ -1,20 +1,11 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
+﻿.. include:: Includes.txt
 
 .. _introduction:
 
 Introduction
 ============
 
-.. only:: html
-
-	This chapter gives you a basic introduction about the TYPO3 CMS extension "*enetcache*".
-
-.. toctree::
-	:maxdepth: 5
-	:titlesonly:
+This chapter gives a basic introduction about the TYPO3 CMS extension "*enetcache*".
 
 Target Audience
 ---------------
@@ -50,7 +41,6 @@ Features
 - Flexible lifetime handling of cache entries.
 - Cached plugin content can be re-used on different pages.
 - Automagic clearing of dirty cache entries if records have been changed in the backend.
-- Hooks into “Clear all cache” to enable administrators to manually clear content element caches together with the regular page cache.
 - Hooks in it's main frontend class allow other extensions to manipulate the cache handling.
 
 See also
@@ -58,6 +48,7 @@ See also
 
 - The link section at the end of this document for further documentation.
 - enetcache is pretty well documented inline. Please take a look to the source.
+- The official caching framework documentation in TYPO3 Core API docs
 
 Thanks
 ------

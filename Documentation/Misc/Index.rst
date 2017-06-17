@@ -1,18 +1,6 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../Includes.txt
-
+﻿.. include:: ../Includes.txt
 
 .. _misc:
-
-.. only:: html
-
-.. toctree::
-	:maxdepth: 5
-	:titlesonly:
 
 Hints and Pitfalls
 ==================
@@ -90,4 +78,3 @@ Links
 
 Core Caching Framework documentation:
 https://docs.typo3.org/typo3cms/CoreApiReference/ApiOverview/CachingFramework/Index.html?highlight=caching%20framework#
-
