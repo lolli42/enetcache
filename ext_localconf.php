@@ -20,36 +20,41 @@ if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][
 }
 
 // Define caches that have to be tagged and dropped
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['TAG_CACHES'] = [
-    'enetcachecontent',
-    'cache_pages',
-];
+if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['TAG_CACHES'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['TAG_CACHES'] = [
+        'enetcachecontent',
+        'cache_pages',
+    ];
+}
 
 // Initialize array for hooks. Other extensions can register here
 if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['hooks']['tx_enetcache'])) {
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['hooks']['tx_enetcache'] = [];
 }
 
-// Configure BE hooks
-if (TYPO3_MODE == 'BE') {
-    // Drop cache tag handling in DataHandler on changing / inserting / adding records
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['enetcache'] = \Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook::class;
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['enetcache'] = \Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook::class;
+// Drop cache tag handling in DataHandler on changing / inserting / adding records
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['enetcache'] = \Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook::class;
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['enetcache'] = \Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook::class;
 
-    // Scheduler task to drop cache entries by tags
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Lolli\Enetcache\Tasks\DropTagsTask::class] = [
-        'extension' => 'enetcache',
-        'title' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.name',
-        'description' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.description',
-        'additionalFields' => \Lolli\Enetcache\Tasks\DropTagsAdditionalFieldProvider::class,
-    ];
+// Scheduler task to drop cache entries by tags
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Lolli\Enetcache\Tasks\DropTagsTask::class] = [
+    'extension' => 'enetcache',
+    'title' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.name',
+    'description' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.description',
+    'additionalFields' => \Lolli\Enetcache\Tasks\DropTagsAdditionalFieldProvider::class,
+];
 
-    // CLI script to drop cache entries by tags
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['GLOBAL']['cliKeys']['enetcache'] = [
-        function () {
-            $adminObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Lolli\Enetcache\Command\FlushCacheByTagCommand::class);
-            $adminObj->cli_main();
-        },
-        '_CLI_enetcache'
-    ];
-}
+// CLI script to drop cache entries by tags
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['GLOBAL']['cliKeys']['enetcache'] = [
+    function () {
+        $adminObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Lolli\Enetcache\Command\FlushCacheByTagCommand::class);
+        $adminObj->cli_main();
+    },
+    '_CLI_enetcache'
+];
+
+// Add context sensitive help (csh) to the backend module (used for the scheduler tasks)
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+    '_MOD_tools_txschedulerM1',
+    'EXT:enetcache/Resources/Private/Language/locallang_csh.xlf'
+);
