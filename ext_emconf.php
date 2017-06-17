@@ -13,8 +13,8 @@ $EM_CONF['enetcache'] = [
     'author_email' => 'lolli@schwarzbu.ch',
     'constraints' => [
         'depends' => [
-            'typo3' => '7.6.0-7.6.99',
-            'php' => '5.5.0-7.1.99',
+            'typo3' => '8.7.0-9.99.99',
+            'php' => '7.0.0-7.1.99',
         ],
         'conflicts' => [
         ],
