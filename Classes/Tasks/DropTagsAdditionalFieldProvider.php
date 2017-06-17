@@ -59,7 +59,7 @@ class DropTagsAdditionalFieldProvider implements AdditionalFieldProviderInterfac
         $additionalFields = array();
         $additionalFields[$fieldID] = array(
             'code' => $fieldCode,
-            'label' => 'LLL:EXT:enetcache/locallang.xml:scheduler.droptags.tagList',
+            'label' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.tagList',
             'cshKey' => '_MOD_tools_txschedulerM1',
             'cshLabel' => $fieldID
         );
@@ -80,7 +80,7 @@ class DropTagsAdditionalFieldProvider implements AdditionalFieldProviderInterfac
         $tags = trim($submittedData['tags']);
         $isValid = $this->isValidTagList(explode(',', $tags));
         if (!$isValid) {
-            $parentObject->addMessage($GLOBALS['LANG']->sL('LLL:EXT:enetcache/locallang.xml:scheduler.droptags.invalidTagList'), FlashMessage::ERROR);
+            $parentObject->addMessage($GLOBALS['LANG']->sL('LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.invalidTagList'), FlashMessage::ERROR);
         }
         return $isValid;
     }

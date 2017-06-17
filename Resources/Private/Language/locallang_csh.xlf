@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file t3:id="1497698302" source-language="en" datatype="plaintext" original="messages" date="2017-06-17T10:10:11Z" product-name="lang">
+        <header/>
+        <body>
+            <trans-unit id="enetcache_task_droptags.alttitle">
+                <source>Drop tags</source>
+            </trans-unit>
+            <trans-unit id="enetcache_task_droptags.description">
+                <source>Enter a comma separated list of tags connected to cache entries to delete.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

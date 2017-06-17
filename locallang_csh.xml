@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<T3locallang>
-	<data type="array">
-		<languageKey index="default" type="array">
-			<label index="enetcache_task_droptags.alttitle">Drop tags</label>
-			<label index="enetcache_task_droptags.description">Enter a comma separated list of tags connected to cache entries to delete.</label>
-		</languageKey>
-	</data>
-</T3locallang>

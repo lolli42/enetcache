@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file t3:id="1497698301" source-language="en" datatype="plaintext" original="messages" date="2017-06-17T10:10:10Z" product-name="lang">
+        <header/>
+        <body>
+            <trans-unit id="scheduler.droptags.name">
+                <source>Delete cache entries by tags</source>
+            </trans-unit>
+            <trans-unit id="scheduler.droptags.description">
+                <source>Deletes cache entries by a given list of tags</source>
+            </trans-unit>
+            <trans-unit id="scheduler.droptags.tagList">
+                <source>Enter a comma separated list of tags</source>
+            </trans-unit>
+            <trans-unit id="scheduler.droptags.invalidTagList">
+                <source>Invalid tags. Please enter a comma separated valid list of tags to drop</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

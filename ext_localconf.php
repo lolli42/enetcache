@@ -36,8 +36,8 @@ if (TYPO3_MODE == 'BE') {
     // Scheduler task to drop cache entries by tags
     $TYPO3_CONF_VARS['SC_OPTIONS']['scheduler']['tasks'][\Lolli\Enetcache\Tasks\DropTagsTask::class] = [
         'extension' => 'enetcache',
-        'title' => 'LLL:EXT:enetcache/locallang.xml:scheduler.droptags.name',
-        'description' => 'LLL:EXT:enetcache/locallang.xml:scheduler.droptags.description',
+        'title' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.name',
+        'description' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.description',
         'additionalFields' => \Lolli\Enetcache\Tasks\DropTagsAdditionalFieldProvider::class,
     ];
 
