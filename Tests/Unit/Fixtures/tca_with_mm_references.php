@@ -26,20 +26,19 @@
  * Test TCA for a table with external mm references to other table
  */
 return array(
-	'columns' => array(
-		'relatedproducts' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_products.relatedproducts',
-			'config' => array(
-				'type' => 'group',
-				'internal_type' => 'db',
-				'allowed' => 'tx_commerce_products',
-				'size' => 10,
-				'minitems' => 0,
-				'maxitems' => 20,
-				'MM' => 'tx_commerce_products_related_mm',
-			),
-		),
-	),
+    'columns' => array(
+        'relatedproducts' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_products.relatedproducts',
+            'config' => array(
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_commerce_products',
+                'size' => 10,
+                'minitems' => 0,
+                'maxitems' => 20,
+                'MM' => 'tx_commerce_products_related_mm',
+            ),
+        ),
+    ),
 );
-?>

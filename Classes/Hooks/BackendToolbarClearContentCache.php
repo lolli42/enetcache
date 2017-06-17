@@ -19,24 +19,26 @@ use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 /**
  * Register a new item in top toolbar to clear plugin cache
  */
-class BackendToolbarClearContentCache implements ClearCacheActionsHookInterface {
+class BackendToolbarClearContentCache implements ClearCacheActionsHookInterface
+{
 
-	/**
-	 * Clear plugin cache item in top toolbar
-	 * This hook method is called by the cache action (the flash in top toolbar) with click on "Clear plugin cache"
-	 *
-	 * @param array $cacheActions Given cache actions
-	 * @param array $optionValues Given option values
-	 * @return void
-	 */
-	public function manipulateCacheActions(&$cacheActions, &$optionValues) {
-		$title = 'Clear plugin cache';
-		$cacheActions[] = array(
-			'id' => 'clearContentCache',
-			'title' => $title,
-			'href' => $GLOBALS['BACK_PATH'] . 'ajax.php?ajaxID=enetcache::clearContentCache',
-			'icon' => \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIcon('extensions-enetcache-clearcontentcache', array('title' => $title)),
-		);
-		$optionValues[] = 'clearContentCache';
-	}
+    /**
+     * Clear plugin cache item in top toolbar
+     * This hook method is called by the cache action (the flash in top toolbar) with click on "Clear plugin cache"
+     *
+     * @param array $cacheActions Given cache actions
+     * @param array $optionValues Given option values
+     * @return void
+     */
+    public function manipulateCacheActions(&$cacheActions, &$optionValues)
+    {
+        $title = 'Clear plugin cache';
+        $cacheActions[] = array(
+            'id' => 'clearContentCache',
+            'title' => $title,
+            'href' => $GLOBALS['BACK_PATH'] . 'ajax.php?ajaxID=enetcache::clearContentCache',
+            'icon' => \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIcon('extensions-enetcache-clearcontentcache', array('title' => $title)),
+        );
+        $optionValues[] = 'clearContentCache';
+    }
 }

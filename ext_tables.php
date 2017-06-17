@@ -1,6 +1,6 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
+if (!defined('TYPO3_MODE')) {
+    die('Access denied.');
 }
 
 // Add context sensitive help (csh) to the backend module (used for the scheduler tasks)
@@ -8,6 +8,6 @@ if (!defined ('TYPO3_MODE')) {
 
 // Use sprite icon API for clearContentCache icon in BE cache top Menu
 $enetcacheIcons = [
-	'clearcontentcache' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('enetcache') . 'Resources/Public/Icons/FlushPluginCache.png',
+    'clearcontentcache' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('enetcache') . 'Resources/Public/Icons/FlushPluginCache.png',
 ];
 \TYPO3\CMS\Backend\Sprite\SpriteManager::addSingleIcons($enetcacheIcons, 'enetcache');

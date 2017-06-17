@@ -27,93 +27,92 @@
  * no references to other tables. It is a copy of some commerce definition
  */
 return array(
-	'columns' => array(
-		'cust_deliveryaddress' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.cust_deliveryaddress',
-			'config' => array(
-				'type' => 'user',
-				'userFunc' => 'user_orderedit_func->delivery_adress',
-			)
-		),
-		'order_id' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.order_id',
-			'config' => array(
-				'type' => 'none',
-				'pass_content' => 1,
-			)
-		),
-		'crdate' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.crdate',
-			'config' => array(
-				'type' => 'none',
-				'format' => 'date',
-				'eval' => 'date',
-			)
-		),
-		'cust_invoice' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.cust_invoice',
-			'config' => array(
-				'type' => 'user',
-				'userFunc' => 'user_orderedit_func->invoice_adress',
-			)
-		),
-		'sum_price_net' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.sum_price_net',
-			'config' => array(
-				'type' => 'user',
-				'userFunc' => 'user_orderedit_func->order_articles',
-			)
-		),
-		'sum_price_gross' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.sum_price_gross',
-			'config' => array(
-				'type' => 'user',
-				'userFunc' => 'user_orderedit_func->sum_price_gross_format',
-			)
-		),
-		'payment_ref_id' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.payment_ref_id',
-			'config' => array(
-				'type' => 'none',
-				'pass_content' => 1,
-			),
-		),
-		'comment' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.comment',
-			'config' => array(
-				'type' => 'text',
-				'cols' => '30',
-				'rows' => '5',
-			),
-		),
-		'internalcomment' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.internalcomment',
-			'config' => array(
-				'type' => 'text',
-				'cols' => '30',
-				'rows' => '5',
-			),
-		),
-		'pricefromnet' => array(
-			'exclude' => 0,
-			'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.pricefromnet',
-			'config' => array(
-				'type' => 'select',
-				'items' => Array(
-					Array('LLL:EXT:commerce/locallang_be.xml:no',0),
-					Array('LLL:EXT:commerce/locallang_be.xml:yes',1)
-				)
-			),
-		),
-	),
+    'columns' => array(
+        'cust_deliveryaddress' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.cust_deliveryaddress',
+            'config' => array(
+                'type' => 'user',
+                'userFunc' => 'user_orderedit_func->delivery_adress',
+            )
+        ),
+        'order_id' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.order_id',
+            'config' => array(
+                'type' => 'none',
+                'pass_content' => 1,
+            )
+        ),
+        'crdate' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.crdate',
+            'config' => array(
+                'type' => 'none',
+                'format' => 'date',
+                'eval' => 'date',
+            )
+        ),
+        'cust_invoice' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.cust_invoice',
+            'config' => array(
+                'type' => 'user',
+                'userFunc' => 'user_orderedit_func->invoice_adress',
+            )
+        ),
+        'sum_price_net' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.sum_price_net',
+            'config' => array(
+                'type' => 'user',
+                'userFunc' => 'user_orderedit_func->order_articles',
+            )
+        ),
+        'sum_price_gross' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.sum_price_gross',
+            'config' => array(
+                'type' => 'user',
+                'userFunc' => 'user_orderedit_func->sum_price_gross_format',
+            )
+        ),
+        'payment_ref_id' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.payment_ref_id',
+            'config' => array(
+                'type' => 'none',
+                'pass_content' => 1,
+            ),
+        ),
+        'comment' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.comment',
+            'config' => array(
+                'type' => 'text',
+                'cols' => '30',
+                'rows' => '5',
+            ),
+        ),
+        'internalcomment' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.internalcomment',
+            'config' => array(
+                'type' => 'text',
+                'cols' => '30',
+                'rows' => '5',
+            ),
+        ),
+        'pricefromnet' => array(
+            'exclude' => 0,
+            'label' => 'LLL:EXT:commerce/locallang_db.xml:tx_commerce_orders.pricefromnet',
+            'config' => array(
+                'type' => 'select',
+                'items' => array(
+                    array('LLL:EXT:commerce/locallang_be.xml:no',0),
+                    array('LLL:EXT:commerce/locallang_be.xml:yes',1)
+                )
+            ),
+        ),
+    ),
 );
-?>
