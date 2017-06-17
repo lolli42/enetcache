@@ -21,15 +21,17 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Add additional method to clear plugin cache on click on "Clear all caches" in top toolbar
  * Add additional method to clear plugin cache on clear all cache event
  */
-class BackendContentCacheMethods {
+class BackendContentCacheMethods
+{
 
-	/**
-	 * Flush (empty) cache backend of enetcache (eg. db table or memcached)
-	 * Helper method called by "Clear plugin cache" flash icon
-	 *
-	 * @return void
-	 */
-	public function clearContentCache() {
-		GeneralUtility::makeInstance(PluginCache::class)->flush();
-	}
+    /**
+     * Flush (empty) cache backend of enetcache (eg. db table or memcached)
+     * Helper method called by "Clear plugin cache" flash icon
+     *
+     * @return void
+     */
+    public function clearContentCache()
+    {
+        GeneralUtility::makeInstance(PluginCache::class)->flush();
+    }
 }

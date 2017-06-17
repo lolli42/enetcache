@@ -21,19 +21,21 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
 /**
  * Scheduler task to delete cache entries by tag
  */
-class DropTagsTask extends AbstractTask {
-	/**
-	 * @var array Tags to be dropped, given by additional fields provider
-	 */
-	public $tags = [];
+class DropTagsTask extends AbstractTask
+{
+    /**
+     * @var array Tags to be dropped, given by additional fields provider
+     */
+    public $tags = [];
 
-	/**
-	 * API Method executed by scheduler
-	 *
-	 * @return bool true
-	 */
-	public function execute() {
-		GeneralUtility::makeInstance(PluginCache::class)->drop($this->tags);
-		return(TRUE);
-	}
+    /**
+     * API Method executed by scheduler
+     *
+     * @return bool true
+     */
+    public function execute()
+    {
+        GeneralUtility::makeInstance(PluginCache::class)->drop($this->tags);
+        return(true);
+    }
 }

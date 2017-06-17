@@ -1,5 +1,5 @@
 {
-	"name": "enet/enetcache",
+	"name": "lolli/enetcache",
 	"type": "typo3-cms-extension",
 	"description": "Enetcache cache extension",
 	"homepage": "http://forge.typo3.org/projects/extension-enetcache/",
@@ -15,5 +15,15 @@
 	"require-dev": {
 		"mikey179/vfsStream": "1.3.*@dev",
 		"phpunit/phpunit": "4.1.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Lolli\\Enetcache\\": "Classes"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Lolli\\Enetcache\\Tests\\": "Tests"
+		}
 	}
 }
