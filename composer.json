@@ -1,29 +1,48 @@
 {
-	"name": "lolli/enetcache",
-	"type": "typo3-cms-extension",
-	"description": "Enetcache cache extension",
-	"homepage": "http://forge.typo3.org/projects/extension-enetcache/",
-	"license": ["GPL-2.0+"],
-	"version": "1.1.2",
-	"require": {
-		"typo3/cms": "*"
-	},
-	"config": {
-		"vendor-dir": "Packages/Libraries",
-		"bin-dir": "bin"
-	},
-	"require-dev": {
-		"mikey179/vfsStream": "1.3.*@dev",
-		"phpunit/phpunit": "4.1.*"
-	},
-	"autoload": {
-		"psr-4": {
-			"Lolli\\Enetcache\\": "Classes"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Lolli\\Enetcache\\Tests\\": "Tests"
-		}
-	}
+  "name": "lolli/enetcache",
+  "type": "typo3-cms-extension",
+  "description": "Enetcache cache extension",
+  "homepage": "http://forge.typo3.org/projects/extension-enetcache/",
+  "authors": [
+    {
+      "name": "Christian Kuhn",
+      "role": "Developer"
+    }
+  ],
+  "license": [
+    "GPL-2.0+"
+  ],
+  "require": {
+    "typo3/cms": "^7.6.13"
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lolli\\Enetcache\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lolli\\Enetcache\\Tests\\": "Tests"
+    }
+  },
+  "replace": {
+    "enetcache": "self.version",
+    "typo3-ter/enetcache": "self.version"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.x-dev"
+    },
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web"
+    }
+  }
 }
