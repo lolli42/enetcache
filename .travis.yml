@@ -6,8 +6,11 @@ php:
   - 7.0
   - 7.1
 
-env:
-  - DB=mysql
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 notifications:
   email:
@@ -16,19 +19,19 @@ notifications:
     on_success: change
     on_failure: change
 
-before_script:
-  - sudo apt-get install parallel
+before_install:
   - composer self-update
-  - cd ..
-  - cp enetcache/composer.json .
-  - composer --dev install
-  - mkdir -p uploads typo3temp typo3conf/ext
-  - mv enetcache typo3conf/ext
+  - composer --version
+
+before_script:
+  - composer install
+  - export TYPO3_PATH_WEB=$PWD/.Build/Web
 
 script:
   - >
     echo "Running unit tests";
-    ./bin/phpunit --colors -c typo3conf/ext/enetcache/Build/UnitTests.xml
+    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+
   - >
     echo "Running php lint";
     find . -name \*.php ! -path "./.Build/*" -exec php -l {} >/dev/null \;
