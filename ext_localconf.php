@@ -43,6 +43,10 @@ if (TYPO3_MODE == 'BE') {
 
     // CLI script to drop cache entries by tags
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['GLOBAL']['cliKeys']['enetcache'] = [
-        'EXT:enetcache/cli/class.tx_enetcache_cli.php', '_CLI_enetcache'
+        function () {
+            $adminObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Lolli\Enetcache\Command\FlushCacheByTagCommand::class);
+            $adminObj->cli_main();
+        },
+        '_CLI_enetcache'
     ];
 }
