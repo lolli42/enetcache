@@ -9,7 +9,7 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_e
 }
 // Use StringFrontend if not set otherwise, if not set, core would choose variable frontend
 if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'])) {
-	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'] = 't3lib_cache_frontend_StringFrontend';
+	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_enetcache_contentcache']['frontend'] = \TYPO3\CMS\Core\Cache\Frontend\StringFrontend::class;
 }
 
 // Define caches that have to be tagged and dropped
