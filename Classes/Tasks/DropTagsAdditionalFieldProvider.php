@@ -56,13 +56,13 @@ class DropTagsAdditionalFieldProvider implements AdditionalFieldProviderInterfac
         // Write the code for the field
         $fieldID = 'enetcache_task_droptags';
         $fieldCode = '<textarea rows="5" cols="35" name="tx_scheduler[tags]" id="' . $fieldID . '" class="wide" >' . $taskInfo['tags'] . '</textarea>';
-        $additionalFields = array();
-        $additionalFields[$fieldID] = array(
+        $additionalFields = [];
+        $additionalFields[$fieldID] = [
             'code' => $fieldCode,
             'label' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.tagList',
             'cshKey' => '_MOD_tools_txschedulerM1',
             'cshLabel' => $fieldID
-        );
+        ];
 
         return $additionalFields;
     }
@@ -91,7 +91,6 @@ class DropTagsAdditionalFieldProvider implements AdditionalFieldProviderInterfac
      *
      * @param array $submittedData Array containing the data submitted by the user
      * @param AbstractTask $task Reference to the current task object
-     * @return void
      */
     public function saveAdditionalFields(array $submittedData, AbstractTask $task)
     {
@@ -105,7 +104,7 @@ class DropTagsAdditionalFieldProvider implements AdditionalFieldProviderInterfac
      * @param array $tags Tag list
      * @return bool true if tag list validates
      */
-    protected function isValidTagList(array $tags = array())
+    protected function isValidTagList(array $tags = [])
     {
         $isValid = true;
         foreach ($tags as $tag) {

@@ -40,7 +40,6 @@ class DataHandlerFlushByTag
      * @param int $id Record uid
      * @param mixed $value Unused
      * @param DataHandler $pObj Unused reference to parent object
-     * @return void
      */
     public function processCmdmap_preProcess($command, $table, $id, $value, &$pObj)
     {
@@ -72,7 +71,6 @@ class DataHandlerFlushByTag
      * @param string $table The table we are working on
      * @param int $id Uid of record
      * @param DataHandler $pObj Unused reference to parent object
-     * @return void
      */
     public function processDatamap_preProcessFieldArray(array $fieldArray, $table, $id, &$pObj)
     {
@@ -101,11 +99,10 @@ class DataHandlerFlushByTag
      * @param int $id Uid of record
      * @param array $fieldArray Changed fields
      * @param DataHandler $pObj Unused reference to parent object
-     * @return void
      */
     public function processDatamap_postProcessFieldArray($status, $table, $id, array $fieldArray, &$pObj)
     {
-        $tagsToDrop = array();
+        $tagsToDrop = [];
         $tagsToDrop[] = $table;
         $tagsToDrop[] = $table . '_' . $status;
 
@@ -129,7 +126,6 @@ class DataHandlerFlushByTag
      * but now for _new_ relations of _new_ records
      *
      * @param DataHandler $pObj Unused reference to parent object
-     * @return void
      */
     public function processDatamap_afterAllOperations(&$pObj)
     {
@@ -144,7 +140,7 @@ class DataHandlerFlushByTag
 
             $tagsFromReferences = [];
             if (strlen($table) > 0 && intval($id) > 0) {
-                $tagsFromReferences = TcaHandler::findReferedDatabaseEntries($table, array(), $id);
+                $tagsFromReferences = TcaHandler::findReferedDatabaseEntries($table, [], $id);
             }
 
             if (count($tagsFromReferences) > 0) {
@@ -157,7 +153,6 @@ class DataHandlerFlushByTag
      * Call enetcache to drop tags
      *
      * @param array $tags Tags to drop
-     * @return void
      */
     protected function dropCacheTags(array $tags)
     {

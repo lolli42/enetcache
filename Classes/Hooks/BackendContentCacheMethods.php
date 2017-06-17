@@ -27,8 +27,6 @@ class BackendContentCacheMethods
     /**
      * Flush (empty) cache backend of enetcache (eg. db table or memcached)
      * Helper method called by "Clear plugin cache" flash icon
-     *
-     * @return void
      */
     public function clearContentCache()
     {

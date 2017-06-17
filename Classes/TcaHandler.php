@@ -54,7 +54,7 @@ class TcaHandler
         }
         return $result;
     }
-    
+
     /**
      * Gets a list of records referred by the given mm-table
      *
@@ -81,7 +81,7 @@ class TcaHandler
 
         return $result;
     }
-    
+
     /**
      * Fetches the referenced records from a field containing a csv-list of reverenced records
      * (Like TYPO3 uses when you don't use an MM-Table)
@@ -112,7 +112,7 @@ class TcaHandler
         }
         return $result;
     }
-    
+
     /**
      * Gets an array of all fields that contain references from $table
      * Key is the local field name and value is the TCA-config for that field
@@ -131,7 +131,7 @@ class TcaHandler
         }
         return $result;
     }
-    
+
     /**
      * Returns true if the TCA/columns field type is a DB reference field
      *
@@ -140,10 +140,10 @@ class TcaHandler
      */
     protected static function isReferenceField(array $conf)
     {
-        return (
+        return
             ($conf['type'] == 'group' && $conf['internal_type'] == 'db')
             || ($conf['type'] == 'select' && $conf['foreign_table'])
-        );
+        ;
     }
 
     /**

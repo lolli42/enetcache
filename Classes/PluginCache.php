@@ -214,7 +214,6 @@ class PluginCache implements SingletonInterface
      * Example usage: GeneralUtility::makeInstance(PluginCache::class)->drop(array('tt_news_4711'));
      *
      * @param array $tags List of tags
-     * @return void
      */
     public function drop(array $tags)
     {
@@ -252,7 +251,6 @@ class PluginCache implements SingletonInterface
      * The page cache lifetime will be as long as the shortest content element lifetime
      *
      * @param int $lifetime Lifetime of content element
-     * @return void
      */
     protected function setCachePageLifetime($lifetime)
     {
@@ -279,7 +277,6 @@ class PluginCache implements SingletonInterface
      * Every standard TYPO3 page cache entry has all tags of all content elements on this page
      *
      * @param array $tags Tags of this element
-     * @return void
      */
     protected function addTagsToPageCache(array $tags)
     {
@@ -293,7 +290,6 @@ class PluginCache implements SingletonInterface
      * Set default lifetime
      *
      * @param int $lifetime Default lifetime
-     * @return void
      */
     protected function setDefaultLifetime($lifetime)
     {
@@ -315,8 +311,6 @@ class PluginCache implements SingletonInterface
 
     /**
      * Initialize configured hook classes
-     *
-     * @return void
      */
     protected function initHooks()
     {
@@ -331,7 +325,6 @@ class PluginCache implements SingletonInterface
      * Register a hook instance to class array
      *
      * @param PluginCacheHookInterface $hook Hook classes must implement this interface
-     * @return void
      */
     protected function registerHook(PluginCacheHookInterface $hook)
     {

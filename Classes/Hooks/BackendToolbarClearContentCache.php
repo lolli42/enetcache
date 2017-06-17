@@ -28,17 +28,16 @@ class BackendToolbarClearContentCache implements ClearCacheActionsHookInterface
      *
      * @param array $cacheActions Given cache actions
      * @param array $optionValues Given option values
-     * @return void
      */
     public function manipulateCacheActions(&$cacheActions, &$optionValues)
     {
         $title = 'Clear plugin cache';
-        $cacheActions[] = array(
+        $cacheActions[] = [
             'id' => 'clearContentCache',
             'title' => $title,
             'href' => $GLOBALS['BACK_PATH'] . 'ajax.php?ajaxID=enetcache::clearContentCache',
-            'icon' => \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIcon('extensions-enetcache-clearcontentcache', array('title' => $title)),
-        );
+            'icon' => \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIcon('extensions-enetcache-clearcontentcache', ['title' => $title]),
+        ];
         $optionValues[] = 'clearContentCache';
     }
 }

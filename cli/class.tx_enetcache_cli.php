@@ -101,7 +101,7 @@ class tx_enetcache_cli extends t3lib_cli
         t3lib_div::makeInstance('tx_enetcache')->drop(explode(',', $tags));
 
         if ($keyboardInput) {
-            $this->cli_echo("The entries with this tags where dropped: " . $tags . "\n");
+            $this->cli_echo('The entries with this tags where dropped: ' . $tags . "\n");
         }
     }
 }

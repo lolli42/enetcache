@@ -37,7 +37,7 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function setUp()
     {
-        $GLOBALS['TYPO3_DB'] = $this->getMock('t3lib_DB', array());
+        $GLOBALS['TYPO3_DB'] = $this->getMock('t3lib_DB', []);
     }
 
     /**
@@ -47,8 +47,8 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_without_references.php');
         $this->assertEquals(
-            array(),
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', array(), 23)
+            [],
+            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', [], 23)
         );
     }
 
@@ -57,11 +57,11 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function dataProviderForTcaWithRelations()
     {
-        return array(
-            'Table with relations' => array(
+        return [
+            'Table with relations' => [
                 require(__DIR__ . '/Fixtures/tca_with_references.php')
-            )
-        );
+            ]
+        ];
     }
 
     /**
@@ -72,8 +72,8 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $GLOBALS['TCA']['testtable'] = $tca;
         $this->assertEquals(
-            array(),
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', array(), 23)
+            [],
+            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', [], 23)
         );
     }
 
@@ -85,8 +85,8 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $GLOBALS['TCA']['testtable'] = $tca;
         $this->assertEquals(
-            array(),
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', array('cust_stuff' =>'0'), 23)
+            [],
+            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' =>'0'], 23)
         );
     }
 
@@ -98,8 +98,8 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $GLOBALS['TCA']['testtable'] = $tca;
         $this->assertEquals(
-            array('foo_21', 'bar_42'),
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', array('cust_stuff' => 'foo_21, bar_42'), 23)
+            ['foo_21', 'bar_42'],
+            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' => 'foo_21, bar_42'], 23)
         );
     }
 
@@ -111,8 +111,8 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $GLOBALS['TCA']['testtable'] = $tca;
         $this->assertEquals(
-            array('fe_users_21', 'fe_users_42'),
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', array('cust_fe_user' => '21, 42'), 23)
+            ['fe_users_21', 'fe_users_42'],
+            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', ['cust_fe_user' => '21, 42'], 23)
         );
     }
 
@@ -121,11 +121,11 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function dataProviderForTcaWithMmRelationsAndDb()
     {
-        return array(
-            'Table with relations' => array(
+        return [
+            'Table with relations' => [
                 require(__DIR__ . '/Fixtures/tca_with_mm_references.php')
-            )
-        );
+            ]
+        ];
     }
 
     /**
@@ -139,14 +139,14 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ->method('exec_SELECTgetRows')
             ->with($this->equalTo('*'), $this->equalTo('tx_commerce_products_related_mm'), $this->equalTo('uid_local=23'))
             ->will($this->returnValue(
-                array(
-                    array('uid_local' => 23, 'uid_foreign' => 123),
-                    array('uid_local' => 23, 'uid_foreign' => 4711),
-                )
+                [
+                    ['uid_local' => 23, 'uid_foreign' => 123],
+                    ['uid_local' => 23, 'uid_foreign' => 4711],
+                ]
             ));
         $this->assertEquals(
-            array('tx_commerce_products_123', 'tx_commerce_products_4711'),
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', array(), 23)
+            ['tx_commerce_products_123', 'tx_commerce_products_4711'],
+            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', [], 23)
         );
     }
 
@@ -161,14 +161,14 @@ class TcaHandlerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ->method('exec_SELECTgetRows')
             ->with($this->equalTo('*'), $this->equalTo('tx_commerce_products_related_mm'), $this->equalTo('uid_local=23'))
             ->will($this->returnValue(
-                array(
-                    array('uid_local' => 23, 'uid_foreign' => 123, 'tablenames' => 'foo'),
-                    array('uid_local' => 23, 'uid_foreign' => 4711, 'tablenames' => 'bar'),
-                )
+                [
+                    ['uid_local' => 23, 'uid_foreign' => 123, 'tablenames' => 'foo'],
+                    ['uid_local' => 23, 'uid_foreign' => 4711, 'tablenames' => 'bar'],
+                ]
             ));
         $this->assertEquals(
-            array('foo_123', 'bar_4711'),
-            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', array(), 23)
+            ['foo_123', 'bar_4711'],
+            \tx_enetcache_tcaHandler::findReferedDatabaseEntries('testtable', [], 23)
         );
     }
 }

@@ -36,6 +36,6 @@ class DropTagsTask extends AbstractTask
     public function execute()
     {
         GeneralUtility::makeInstance(PluginCache::class)->drop($this->tags);
-        return(true);
+        return true;
     }
 }
