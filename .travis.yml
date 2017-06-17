@@ -31,4 +31,4 @@ script:
     ./bin/phpunit --colors -c typo3conf/ext/enetcache/Build/UnitTests.xml
   - >
     echo "Running php lint";
-    find typo3conf/ext/enetcache/ -name \*.php -exec php -l {} >/dev/null \;
+    find . -name \*.php ! -path "./.Build/*" -exec php -l {} >/dev/null \;
