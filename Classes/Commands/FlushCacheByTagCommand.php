@@ -22,7 +22,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
-use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -54,15 +53,12 @@ AUTHOR:
     Christian Kuhn
 ');
         $this->setDescription('Flush cache by given keys');
-        $this->addArgument('tags', InputOption::VALUE_REQUIRED, 'comma separated list of tags to be dropped');
+        $this->addArgument('tags', InputOption::VALUE_REQUIRED, 'comma separated list of tags to be dropped.');
 
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Make sure the _cli_ user is loaded
-        Bootstrap::getInstance()->initializeBackendAuthentication();
-
         $io = new SymfonyStyle($input, $output);
         $io->title($this->getDescription());
 
@@ -71,7 +67,7 @@ AUTHOR:
 
             $isValid = $this->isValidTagList($tags);
             if (!$isValid) {
-                $io->writeln($GLOBALS['LANG']->sL('LLL:EXT:enetcache/Resources/Private/Language/locallang.xml:scheduler.droptags.invalidTagList') . "\n");
+                $io->writeln("Invalid tags. Please enter a comma separated valid list of tags to drop.\n");
                 exit;
             }
             GeneralUtility::makeInstance(PluginCache::class)->drop($tags);

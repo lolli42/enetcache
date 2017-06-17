@@ -44,15 +44,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Lolli\Enetcache
     'additionalFields' => \Lolli\Enetcache\Tasks\DropTagsAdditionalFieldProvider::class,
 ];
 
-// CLI script to drop cache entries by tags
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['GLOBAL']['cliKeys']['enetcache'] = [
-    function () {
-        $adminObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Lolli\Enetcache\Command\FlushCacheByTagCommand::class);
-        $adminObj->cli_main();
-    },
-    '_CLI_enetcache'
-];
-
 // Add context sensitive help (csh) to the backend module (used for the scheduler tasks)
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
     '_MOD_tools_txschedulerM1',
