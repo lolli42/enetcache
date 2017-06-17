@@ -1,5 +1,5 @@
 <?php
-namespace Lolli\Enetcache\Tests\Unit;
+namespace Lolli\Enetcache\Tests\Unit\Hooks;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,13 +14,13 @@ namespace Lolli\Enetcache\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Lolli\Enetcache\TcaHandler;
+use Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
  * Test case
  */
-class TcaHandlerTest extends UnitTestCase
+class DataHandlerFlushByTagHookTest extends UnitTestCase
 {
 
     /**
@@ -29,7 +29,7 @@ class TcaHandlerTest extends UnitTestCase
     public function setUp()
     {
         $GLOBALS['TYPO3_DB'] = $this->getMock(
-            't3lib_DB',
+            'stdClass',
             ['exec_SELECTquery', 'quoteStr', 'sql_fetch_assoc', 'exec_SELECTgetRows']
         );
     }
@@ -39,10 +39,11 @@ class TcaHandlerTest extends UnitTestCase
      */
     public function findReferedDatabaseEntriesReturnsEmptyArrayForTcaWithoutRelations()
     {
+        $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_without_references.php');
         $this->assertEquals(
             [],
-            TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
+            $this->callInaccessibleMethod($subject, 'findReferencedDatabaseEntries', 'testtable', [], 23)
         );
     }
 
@@ -51,10 +52,11 @@ class TcaHandlerTest extends UnitTestCase
      */
     public function findReferedDatabaseEntriesReturnsEmptyArrayForTcaWithRelationsAndNoExistingDatabaseEntry()
     {
+        $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
             [],
-            TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
+            $this->callInaccessibleMethod($subject, 'findReferencedDatabaseEntries', 'testtable', [], 23)
         );
     }
 
@@ -63,10 +65,11 @@ class TcaHandlerTest extends UnitTestCase
      */
     public function findReferedDatabaseEntriesReturnsEmptyArrayForTcaWithRelationsAndNoExistingDatabaseEntryWithReferenceToZeroGiven()
     {
+        $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
             [],
-            TcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' =>'0'], 23)
+            $this->callInaccessibleMethod($subject, 'findReferencedDatabaseEntries', 'testtable', ['cust_stuff' =>'0'], 23)
         );
     }
 
@@ -75,10 +78,11 @@ class TcaHandlerTest extends UnitTestCase
      */
     public function findReferedDatabaseEntriesReturnsRelationsForTcaWithRelationsAndDbWithNamedTables()
     {
+        $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
             ['foo_21', 'bar_42'],
-            TcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' => 'foo_21, bar_42'], 23)
+            $this->callInaccessibleMethod($subject, 'findReferencedDatabaseEntries', 'testtable', ['cust_stuff' => 'foo_21, bar_42'], 23)
         );
     }
 
@@ -87,10 +91,11 @@ class TcaHandlerTest extends UnitTestCase
      */
     public function findReferedDatabaseEntriesReturnsRelationsForTcaWithRelationsAndDbWithNumericalReferences()
     {
+        $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
             ['fe_users_21', 'fe_users_42'],
-            TcaHandler::findReferedDatabaseEntries('testtable', ['cust_fe_user' => '21, 42'], 23)
+            $this->callInaccessibleMethod($subject, 'findReferencedDatabaseEntries', 'testtable', ['cust_fe_user' => '21, 42'], 23)
         );
     }
 
@@ -99,6 +104,7 @@ class TcaHandlerTest extends UnitTestCase
      */
     public function findReferedDatabaseEntriesReturnsRelationsForTcaWithMmRelationsAndDb()
     {
+        $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_mm_references.php');
         $GLOBALS['TYPO3_DB']->expects($this->once())
             ->method('exec_SELECTgetRows')
@@ -111,7 +117,7 @@ class TcaHandlerTest extends UnitTestCase
             ));
         $this->assertEquals(
             ['tx_commerce_products_123', 'tx_commerce_products_4711'],
-            TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
+            $this->callInaccessibleMethod($subject, 'findReferencedDatabaseEntries', 'testtable', [], 23)
         );
     }
 
@@ -120,6 +126,7 @@ class TcaHandlerTest extends UnitTestCase
      */
     public function findReferedDatabaseEntriesReturnsRelationsForTcaWithMmRelationsDbAndTablenames()
     {
+        $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_mm_references.php');
         $GLOBALS['TYPO3_DB']->expects($this->once())
             ->method('exec_SELECTgetRows')
@@ -132,7 +139,7 @@ class TcaHandlerTest extends UnitTestCase
             ));
         $this->assertEquals(
             ['foo_123', 'bar_4711'],
-            TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
+            $this->callInaccessibleMethod($subject, 'findReferencedDatabaseEntries', 'testtable', [], 23)
         );
     }
 }
