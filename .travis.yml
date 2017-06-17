@@ -23,12 +23,11 @@ before_install:
 
 before_script:
   - composer install
-  - export TYPO3_PATH_WEB=$PWD/.Build/Web
 
 script:
   - >
     echo "Running unit tests";
-    .Build/bin/phpunit -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/
+    TYPO3_PATH_WEB=$PWD/.Build/Web .Build/bin/phpunit -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/
 
   - >
     echo "Running php lint";
