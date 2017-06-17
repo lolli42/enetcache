@@ -62,8 +62,9 @@ class PluginCache implements SingletonInterface {
 		$this->setDefaultLifetime($extConf['defaultLifetime']);
 
 		// Set cache instances for element and page cache
-		$this->contentCache = GeneralUtility::makeInstance(CacheManager::class)->getCache('cache_enetcache_contentcache');
-		$this->pageCache = $GLOBALS['typo3CacheManager']->getCache('cache_pages');
+        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+        $this->contentCache = $cacheManager->getCache('cache_enetcache_contentcache');
+		$this->pageCache = $cacheManager->getCache('cache_pages');
 
 		// Initialize hook objects
 		$this->initHooks();
