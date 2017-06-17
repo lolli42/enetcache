@@ -28,7 +28,10 @@ class TcaHandlerTest extends UnitTestCase
      */
     public function setUp()
     {
-        $GLOBALS['TYPO3_DB'] = $this->getMock('t3lib_DB', ['exec_SELECTquery', 'quoteStr', 'sql_fetch_assoc', 'exec_SELECTgetRows']);
+        $GLOBALS['TYPO3_DB'] = $this->getMock(
+            't3lib_DB',
+            ['exec_SELECTquery', 'quoteStr', 'sql_fetch_assoc', 'exec_SELECTgetRows']
+        );
     }
 
     /**
@@ -44,24 +47,11 @@ class TcaHandlerTest extends UnitTestCase
     }
 
     /**
-     * Data provider
-     */
-    public function dataProviderForTcaWithRelations()
-    {
-        return [
-            'Table with relations' => [
-                require(__DIR__ . '/Fixtures/tca_with_references.php')
-            ]
-        ];
-    }
-
-    /**
      * @test
-     * @dataProvider dataProviderForTcaWithRelations
      */
-    public function findReferedDatabaseEntriesReturnsEmptyArrayForTcaWithRelationsAndNoExistingDatabaseEntry($tca)
+    public function findReferedDatabaseEntriesReturnsEmptyArrayForTcaWithRelationsAndNoExistingDatabaseEntry()
     {
-        $GLOBALS['TCA']['testtable'] = $tca;
+        $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
             [],
             TcaHandler::findReferedDatabaseEntries('testtable', [], 23)
@@ -70,11 +60,10 @@ class TcaHandlerTest extends UnitTestCase
 
     /**
      * @test
-     * @dataProvider dataProviderForTcaWithRelations
      */
-    public function findReferedDatabaseEntriesReturnsEmptyArrayForTcaWithRelationsAndNoExistingDatabaseEntryWithReferenceToZeroGiven($tca)
+    public function findReferedDatabaseEntriesReturnsEmptyArrayForTcaWithRelationsAndNoExistingDatabaseEntryWithReferenceToZeroGiven()
     {
-        $GLOBALS['TCA']['testtable'] = $tca;
+        $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
             [],
             TcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' =>'0'], 23)
@@ -83,11 +72,10 @@ class TcaHandlerTest extends UnitTestCase
 
     /**
      * @test
-     * @dataProvider dataProviderForTcaWithRelations
      */
-    public function findReferedDatabaseEntriesReturnsRelationsForTcaWithRelationsAndDbWithNamedTables($tca)
+    public function findReferedDatabaseEntriesReturnsRelationsForTcaWithRelationsAndDbWithNamedTables()
     {
-        $GLOBALS['TCA']['testtable'] = $tca;
+        $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
             ['foo_21', 'bar_42'],
             TcaHandler::findReferedDatabaseEntries('testtable', ['cust_stuff' => 'foo_21, bar_42'], 23)
@@ -96,11 +84,10 @@ class TcaHandlerTest extends UnitTestCase
 
     /**
      * @test
-     * @dataProvider dataProviderForTcaWithRelations
      */
-    public function findReferedDatabaseEntriesReturnsRelationsForTcaWithRelationsAndDbWithNumericalReferences($tca)
+    public function findReferedDatabaseEntriesReturnsRelationsForTcaWithRelationsAndDbWithNumericalReferences()
     {
-        $GLOBALS['TCA']['testtable'] = $tca;
+        $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
             ['fe_users_21', 'fe_users_42'],
             TcaHandler::findReferedDatabaseEntries('testtable', ['cust_fe_user' => '21, 42'], 23)
@@ -108,24 +95,11 @@ class TcaHandlerTest extends UnitTestCase
     }
 
     /**
-     * Data provider
-     */
-    public function dataProviderForTcaWithMmRelationsAndDb()
-    {
-        return [
-            'Table with relations' => [
-                require(__DIR__ . '/Fixtures/tca_with_mm_references.php')
-            ]
-        ];
-    }
-
-    /**
      * @test
-     * @dataProvider dataProviderForTcaWithMmRelationsAndDb
      */
-    public function findReferedDatabaseEntriesReturnsRelationsForTcaWithMmRelationsAndDb($tca)
+    public function findReferedDatabaseEntriesReturnsRelationsForTcaWithMmRelationsAndDb()
     {
-        $GLOBALS['TCA']['testtable'] = $tca;
+        $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_mm_references.php');
         $GLOBALS['TYPO3_DB']->expects($this->once())
             ->method('exec_SELECTgetRows')
             ->with($this->equalTo('*'), $this->equalTo('tx_commerce_products_related_mm'), $this->equalTo('uid_local=23'))
@@ -143,11 +117,10 @@ class TcaHandlerTest extends UnitTestCase
 
     /**
      * @test
-     * @dataProvider dataProviderForTcaWithMmRelationsAndDb
      */
-    public function findReferedDatabaseEntriesReturnsRelationsForTcaWithMmRelationsDbAndTablenames($tca)
+    public function findReferedDatabaseEntriesReturnsRelationsForTcaWithMmRelationsDbAndTablenames()
     {
-        $GLOBALS['TCA']['testtable'] = $tca;
+        $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_mm_references.php');
         $GLOBALS['TYPO3_DB']->expects($this->once())
             ->method('exec_SELECTgetRows')
             ->with($this->equalTo('*'), $this->equalTo('tx_commerce_products_related_mm'), $this->equalTo('uid_local=23'))
