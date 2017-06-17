@@ -240,7 +240,7 @@ class PluginCache implements SingletonInterface
      * @param array $identifiers identifiers
      * @return string hash value
      */
-    protected static function calculateIdentifiersHash($identifiers = [])
+    protected function calculateIdentifiersHash($identifiers = [])
     {
         return md5(serialize($identifiers));
     }
