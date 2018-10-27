@@ -18,7 +18,7 @@ notifications:
     on_failure: change
 
 before_script:
-  - Build/Scripts/runTests.sh -s composerInstall -p 7.2
+  - Build/Scripts/runTests.sh -s composerInstall -p $TRAVIS_PHP_VERSION
 
 script:
   - >
