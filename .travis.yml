@@ -27,8 +27,8 @@ before_script:
 script:
   - >
     echo "Running unit tests";
-    Build/Scripts/runTests.sh -s unit
+    Build/Scripts/runTests.sh -s unit -p $TRAVIS_PHP_VERSION
 
   - >
     echo "Running php lint";
-    Build/Scripts/runTests.sh -s lint
+    Build/Scripts/runTests.sh -s lint -p $TRAVIS_PHP_VERSION
