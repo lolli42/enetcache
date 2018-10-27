@@ -3,7 +3,7 @@ language: php
 php:
   - 7.2
 
-sudo: false
+sudo: true
 
 cache:
   directories:

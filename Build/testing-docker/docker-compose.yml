@@ -65,9 +65,6 @@ services:
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
           set -x
         fi
-        pwd
-        ls
-        ls Web/typo3conf/ext/enetcache/Tests/Unit
         php -v | grep '^PHP'
         if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
           php -n -c /etc/php/cli-no-xdebug/php.ini \
