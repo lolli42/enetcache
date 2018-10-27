@@ -25,9 +25,11 @@ before_script:
 
 script:
   - >
+    cd .Build;
     echo "Running unit tests";
-    TYPO3_PATH_WEB=$PWD/.Build/Web .Build/bin/phpunit -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/
+    TYPO3_PATH_WEB=$PWD/Web bin/phpunit -c vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Web/typo3conf/ext/enetcache/Tests/Unit/
 
   - >
+    cd .Build/Web/typo3conf/ext/enetcache;
     echo "Running php lint";
     find . -name \*.php ! -path "./.Build/*" -exec php -l {} >/dev/null \;
