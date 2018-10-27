@@ -17,14 +17,14 @@ notifications:
     on_success: change
     on_failure: change
 
-before_install:
-  - composer self-update
-  - composer --version
-
 before_script:
-  - Build/Scripts/runTests.sh -s composerInstall
+  - Build/Scripts/runTests.sh -s composerInstall -p $TRAVIS_PHP_VERSION
 
 script:
+  - >
+    echo "Running composer validate"
+    Build/Scripts/runTests.sh -s composerValidate -p $TRAVIS_PHP_VERSION
+
   - >
     echo "Running unit tests";
     Build/Scripts/runTests.sh -s unit -p $TRAVIS_PHP_VERSION
