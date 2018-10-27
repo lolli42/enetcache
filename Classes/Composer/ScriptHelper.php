@@ -20,7 +20,7 @@ final class ScriptHelper
             throw new \RuntimeException(
                 'This script needs properties in composer.json:'
                     . '"extra" "typo3/cms" "extension-key"'
-                    . ' and "extra" "typo3/cms" "extension-key"',
+                    . ' and "extra" "typo3/cms" "web-dir"',
                 1540644486
             );
         }

@@ -26,7 +26,8 @@ before_script:
 script:
   - >
     echo "Running unit tests";
-    TYPO3_PATH_WEB=$PWD/Web .Build/bin/phpunit -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml .Build/Web/typo3conf/ext/enetcache/Tests/Unit/
+    Build/Scripts/runTests.sh -s unit
+    # TYPO3_PATH_WEB=$PWD/Web .Build/bin/phpunit -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml .Build/Web/typo3conf/ext/enetcache/Tests/Unit/
 
   - >
     echo "Running php lint";
