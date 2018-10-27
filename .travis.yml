@@ -2,6 +2,7 @@ language: php
 
 php:
   - 7.2
+  - 7.3
 
 sudo: true
 
@@ -21,14 +22,13 @@ before_install:
   - composer --version
 
 before_script:
-  - composer install
+  - Build/Scripts/runTests.sh -s composerInstall
 
 script:
   - >
     echo "Running unit tests";
     Build/Scripts/runTests.sh -s unit
-    # TYPO3_PATH_WEB=$PWD/Web .Build/bin/phpunit -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml .Build/Web/typo3conf/ext/enetcache/Tests/Unit/
 
   - >
     echo "Running php lint";
-    find . -name \*.php ! -path "./.Build/*" -exec php -l {} >/dev/null \;
+    Build/Scripts/runTests.sh -s lint
