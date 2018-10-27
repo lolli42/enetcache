@@ -83,7 +83,7 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
         $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
         $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn([]);
+        $statementProphecy->fetch()->shouldBeCalled()->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
 
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
@@ -114,7 +114,7 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
         $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
         $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn([]);
+        $statementProphecy->fetch()->shouldBeCalled()->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
 
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
@@ -145,7 +145,7 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
         $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
         $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn([]);
+        $statementProphecy->fetch()->shouldBeCalled()->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
 
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
@@ -176,7 +176,7 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
         $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
         $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn([]);
+        $statementProphecy->fetch()->shouldBeCalled()->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
 
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');

@@ -173,7 +173,7 @@ class DataHandlerFlushByTagHook
         $referenceFields = $this->findReferenceFieldsForTable($table);
         foreach ($referenceFields as $localFieldName => $config) {
             // Handle reference fields
-            if ($config['MM']) {
+            if (isset($config['MM']) && $config['MM']) {
                 $result = array_merge(
                     $result,
                     $this->findReferencedRowsForMMField($id, $config)
@@ -278,9 +278,8 @@ class DataHandlerFlushByTagHook
     protected function isReferenceField(array $conf)
     {
         return
-            ($conf['type'] == 'group' && $conf['internal_type'] == 'db')
-            || ($conf['type'] == 'select' && $conf['foreign_table'])
-            ;
+            ($conf['type'] == 'group' && isset($conf['internal_type']) && $conf['internal_type'] == 'db')
+            || ($conf['type'] == 'select' && isset($conf['foreign_table']) && $conf['foreign_table']);
     }
 
     /**
@@ -294,7 +293,7 @@ class DataHandlerFlushByTagHook
     {
         if ($defaultTableName) {
             $result = $defaultTableName;
-        } elseif ($config['foreign_table']) {
+        } elseif (isset($config['foreign_table']) && $config['foreign_table']) {
             $result = $config['foreign_table'];
         } else {
             $result = $config['allowed'];
