@@ -10,7 +10,7 @@
     }
   ],
   "license": [
-    "GPL-2.0+"
+    "GPL-2.0-or-later"
   ],
   "require": {
     "typo3/cms-core": "^9.5"
@@ -20,7 +20,7 @@
     "bin-dir": ".Build/bin"
   },
   "require-dev": {
-    "typo3/testing-framework": "^4.9"
+    "typo3/testing-framework": "^4.10.1"
   },
   "autoload": {
     "psr-4": {
@@ -38,17 +38,17 @@
   },
   "scripts": {
     "post-autoload-dump": [
-      "mkdir -p .Build/Web/typo3conf/ext/",
-      "[ -L .Build/Web/typo3conf/ext/enetcache ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/enetcache"
+      "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
     ]
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.x-dev"
+      "dev-master": "2.x-dev"
     },
     "typo3/cms": {
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "web-dir": ".Build/Web"
+      "web-dir": ".Build/Web",
+      "extension-key": "enetcache"
     }
   }
 }

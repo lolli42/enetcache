@@ -2,8 +2,9 @@ language: php
 
 php:
   - 7.2
+  - 7.3
 
-sudo: false
+sudo: true
 
 cache:
   directories:
@@ -16,18 +17,18 @@ notifications:
     on_success: change
     on_failure: change
 
-before_install:
-  - composer self-update
-  - composer --version
-
 before_script:
-  - composer install
+  - Build/Scripts/runTests.sh -s composerInstall -p $TRAVIS_PHP_VERSION
 
 script:
   - >
+    echo "Running composer validate"
+    Build/Scripts/runTests.sh -s composerValidate -p $TRAVIS_PHP_VERSION
+
+  - >
     echo "Running unit tests";
-    TYPO3_PATH_WEB=$PWD/.Build/Web .Build/bin/phpunit -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/
+    Build/Scripts/runTests.sh -s unit -p $TRAVIS_PHP_VERSION
 
   - >
     echo "Running php lint";
-    find . -name \*.php ! -path "./.Build/*" -exec php -l {} >/dev/null \;
+    Build/Scripts/runTests.sh -s lint -p $TRAVIS_PHP_VERSION
