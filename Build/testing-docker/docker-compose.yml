@@ -41,13 +41,13 @@ services:
     - ${ROOT_DIR}:${ROOT_DIR}
     - /etc/passwd:/etc/passwd:ro
     - /etc/group:/etc/group:ro
-    working_dir: ${ROOT_DIR}/.Build/Web/typo3conf/ext/enetcache
+    working_dir: ${ROOT_DIR}
     command: >
       /bin/sh -c "
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
           set -x
         fi
-        php -v | grep '^PHP'
+        php -v | grep '^PHP';
         find . -name \\*.php ! -path "./.Build/\\*" -print0 | xargs -0 -n1 -P4 php -n -c /etc/php/cli-no-xdebug/php.ini -l >/dev/null
       "
 
