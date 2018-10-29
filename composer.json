@@ -20,7 +20,7 @@
     "bin-dir": ".Build/bin"
   },
   "require-dev": {
-    "typo3/testing-framework": "^4.10"
+    "typo3/testing-framework": "^4.10.1"
   },
   "autoload": {
     "psr-4": {
@@ -38,15 +38,12 @@
   },
   "scripts": {
     "post-autoload-dump": [
-      "@ensure-extension-structure"
-    ],
-    "ensure-extension-structure": [
-      "Lolli\\Enetcache\\Composer\\ScriptHelper::ensureExtensionStructure"
+      "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
     ]
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.x-dev"
+      "dev-master": "2.x-dev"
     },
     "typo3/cms": {
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
