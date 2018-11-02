@@ -106,9 +106,8 @@ cd "$THIS_SCRIPT_DIR" || exit 1
 cd ../testing-docker || exit 1
 
 # Option defaults
-ROOT_DIR="${PWD}/../../"
+ROOT_DIR=`readlink -f ${PWD}/../../`
 TEST_SUITE="unit"
-DBMS="mariadb"
 PHP_VERSION="7.2"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9000
@@ -173,7 +172,15 @@ DOCKER_PHP_IMAGE=`echo "php${PHP_VERSION}" | sed -e 's/\.//'`
 
 # Set $1 to first mass argument, this is the optional test file or test directory to execute
 shift $((OPTIND - 1))
-TEST_FILE="Web/typo3conf/ext/enetcache/Tests/Unit"
+if [ -n "${1}" ]; then
+    TEST_FILE="Web/typo3conf/ext/enetcache/${1}"
+else
+    case ${TEST_SUITE} in
+        unit)
+            TEST_FILE="Web/typo3conf/ext/enetcache/Tests/Unit"
+            ;;
+    esac
+fi
 
 if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
     set -x
