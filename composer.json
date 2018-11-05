@@ -2,7 +2,7 @@
   "name": "lolli/enetcache",
   "type": "typo3-cms-extension",
   "description": "Enetcache cache extension",
-  "homepage": "http://forge.typo3.org/projects/extension-enetcache/",
+  "homepage": "https://github.com/lolli42/enetcache",
   "authors": [
     {
       "name": "Christian Kuhn",
