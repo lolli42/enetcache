@@ -5,6 +5,8 @@
 Introduction
 ============
 
+foo
+
 This chapter gives a basic introduction about the TYPO3 CMS extension "*enetcache*".
 
 Target Audience
