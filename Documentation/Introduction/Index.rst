@@ -7,7 +7,7 @@ Introduction
 
 foo
 
-bar2
+bar3
 
 This chapter gives a basic introduction about the TYPO3 CMS extension "*enetcache*".
 
