@@ -13,7 +13,7 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-core": "^8.7"
+    "typo3/cms-core": "^9.5"
   },
   "config": {
     "vendor-dir": ".Build/vendor",
