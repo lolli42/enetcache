@@ -33,7 +33,6 @@
     }
   },
   "replace": {
-    "enetcache": "self.version",
     "typo3-ter/enetcache": "self.version"
   },
   "scripts": {
