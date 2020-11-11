@@ -3,13 +3,9 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-// Add a new cache configuration if not already set in localconf.php
+// Add a new cache configuration if not already set
 if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent'])) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent'] = [];
-}
-// Use StringFrontend if not set otherwise, if not set, core would choose variable frontend
-if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent']['frontend'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent']['frontend'] = \TYPO3\CMS\Core\Cache\Frontend\StringFrontend::class;
 }
 // Add plugin cache to 'pages' and 'all' group if not set otherwise yet
 if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['enetcachecontent']['groups'])) {
