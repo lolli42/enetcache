@@ -14,7 +14,7 @@ services:
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
           set -x
         fi
-        composer install;
+        composer install --no-progress --no-interaction;
       "
 
   composer_validate:
