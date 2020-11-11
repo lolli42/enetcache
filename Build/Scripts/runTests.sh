@@ -35,8 +35,6 @@ read -r -d '' HELP <<EOF
 enetcache test runner. Execute unit test suite and some other details.
 Also used by github actions for test execution.
 
-Successfully tested with docker version 18.06.1-ce and docker-compose 1.21.2.
-
 Usage: $0 [options] [file]
 
 No arguments: Run all unit tests with PHP 7.2
