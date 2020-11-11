@@ -1,7 +1,5 @@
 # TYPO3 Extension ``enetcache``
 
-[![Build Status](https://api.travis-ci.org/lolli42/enetcache.png)](https://travis-ci.org/lolli42/enetcache)
-
 ## Features
 
 Provides a rather simple API for frontend extensions to put their rendered
