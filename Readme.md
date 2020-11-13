@@ -17,6 +17,5 @@ and / or define a dependency in your consuming extensions.
 
 ## Usage documentation
 
-API usage documentation can be found at (docs.typo3.org)[1]
+Find API documentation at [docs.typo3.org](https://docs.typo3.org/p/lolli/enetcache/3.1/en-us/)
 
-[1]: https://docs.typo3.org/typo3cms/extensions/enetcache/
