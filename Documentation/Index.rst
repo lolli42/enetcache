@@ -21,7 +21,7 @@ Plugin cache engine
     plugin cache, caching framework
 
 :Copyright:
-    2009-2017
+    2009-2020
 
 :Author:
     Christian Kuhn
