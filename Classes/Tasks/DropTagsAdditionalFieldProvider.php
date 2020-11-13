@@ -16,6 +16,7 @@ namespace Lolli\Enetcache\Tasks;
 
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
@@ -23,7 +24,7 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
 /**
  * Add an additional text input field for drop-by-tags task, to gain tags to be dropped.
  */
-class DropTagsAdditionalFieldProvider implements AdditionalFieldProviderInterface
+class DropTagsAdditionalFieldProvider extends AbstractAdditionalFieldProvider implements AdditionalFieldProviderInterface
 {
 
     /**
@@ -80,7 +81,8 @@ class DropTagsAdditionalFieldProvider implements AdditionalFieldProviderInterfac
         $tags = trim($submittedData['tags']);
         $isValid = $this->isValidTagList(explode(',', $tags));
         if (!$isValid) {
-            $parentObject->addMessage($GLOBALS['LANG']->sL('LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.invalidTagList'), FlashMessage::ERROR);
+            // @extensionScannerIgnoreLine - False positive
+            $this->addMessage($GLOBALS['LANG']->sL('LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.invalidTagList'), FlashMessage::ERROR);
         }
         return $isValid;
     }
