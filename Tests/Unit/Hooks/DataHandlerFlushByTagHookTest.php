@@ -30,6 +30,21 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class DataHandlerFlushByTagHookTest extends UnitTestCase
 {
+    /**
+     * Helper function to call protected or private methods
+     *
+     * @param object $object The object to be invoked
+     * @param string $name the name of the method to call
+     * @param mixed $arguments
+     * @return mixed
+     */
+    protected function callInaccessibleMethod($object, $name, ...$arguments)
+    {
+        $reflectionObject = new \ReflectionObject($object);
+        $reflectionMethod = $reflectionObject->getMethod($name);
+        $reflectionMethod->setAccessible(true);
+        return $reflectionMethod->invokeArgs($object, $arguments);
+    }
 
     /**
      * @test

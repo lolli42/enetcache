@@ -10,12 +10,13 @@ jobs:
     strategy:
       matrix:
         php: [ '7.2', '7.3', '7.4' ]
+        minMax: [ 'composerInstallMin', 'composerInstallMax' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Install testing system
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s composerInstall
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s ${{ maxtrix.minMax }}
 
       - name: Composer validate
         run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s composerValidate

@@ -25,6 +25,7 @@ setUpDockerComposeDotEnv() {
     echo "TEST_FILE=${TEST_FILE}" >> .env
     echo "PHP_XDEBUG_ON=${PHP_XDEBUG_ON}" >> .env
     echo "PHP_XDEBUG_PORT=${PHP_XDEBUG_PORT}" >> .env
+    echo "PHP_VERSION=${PHP_VERSION}" >> .env
     echo "DOCKER_PHP_IMAGE=${DOCKER_PHP_IMAGE}" >> .env
     echo "EXTRA_TEST_OPTIONS=${EXTRA_TEST_OPTIONS}" >> .env
     echo "SCRIPT_VERBOSE=${SCRIPT_VERBOSE}" >> .env
@@ -42,7 +43,9 @@ No arguments: Run all unit tests with PHP 7.2
 Options:
     -s <...>
         Specifies which test suite to run
-            - composerInstall: "composer install", handy if host has no PHP, uses composer cache of users home
+            - composerInstall: "composer install"
+            - composerInstallMax: "composer update", with no platform.php config.
+            - composerInstallMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
             - composerValidate: "composer validate"
             - lint: PHP linting
             - unit (default): PHP unit tests
@@ -205,6 +208,18 @@ case ${TEST_SUITE} in
     composerInstall)
         setUpDockerComposeDotEnv
         docker-compose run composer_install
+        SUITE_EXIT_CODE=$?
+        docker-compose down
+        ;;
+    composerInstallMax)
+        setUpDockerComposeDotEnv
+        docker-compose run composer_install_max
+        SUITE_EXIT_CODE=$?
+        docker-compose down
+        ;;
+    composerInstallMin)
+        setUpDockerComposeDotEnv
+        docker-compose run composer_install_min
         SUITE_EXIT_CODE=$?
         docker-compose down
         ;;
