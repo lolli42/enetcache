@@ -13,15 +13,15 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-core": "^9.5 || ^10.4"
+    "typo3/cms-core": "^10.4"
   },
   "config": {
     "vendor-dir": ".Build/vendor",
     "bin-dir": ".Build/bin"
   },
   "require-dev": {
-    "typo3/testing-framework": "^4.11.1 || ^6.4",
-    "phpunit/phpunit": "^7 || ^8"
+    "typo3/testing-framework": "^6.4",
+    "phpunit/phpunit": "^8"
   },
   "autoload": {
     "psr-4": {
@@ -43,7 +43,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.x-dev"
+      "dev-master": "4.x-dev"
     },
     "typo3/cms": {
       "app-dir": ".Build",
