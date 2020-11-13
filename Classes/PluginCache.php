@@ -16,6 +16,7 @@ namespace Lolli\Enetcache;
 
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\AbstractFrontend;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -58,10 +59,10 @@ class PluginCache implements SingletonInterface
      */
     public function __construct()
     {
-        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['enetcache']);
+        $defaultLifetime = (int)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('enetcache', 'defaultLifetime');
 
         // Set default element lifetime from extension config
-        $this->setDefaultLifetime($extConf['defaultLifetime']);
+        $this->setDefaultLifetime($defaultLifetime);
 
         // Set cache instances for element and page cache
         $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
