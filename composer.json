@@ -20,7 +20,8 @@
     "bin-dir": ".Build/bin"
   },
   "require-dev": {
-    "typo3/testing-framework": "^4.11.1 || ^6.4"
+    "typo3/testing-framework": "^4.11.1 || ^6.4",
+    "phpunit/phpunit": "^7 || ^8"
   },
   "autoload": {
     "psr-4": {
