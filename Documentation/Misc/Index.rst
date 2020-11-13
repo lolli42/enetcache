@@ -77,4 +77,4 @@ Links
 =====
 
 Core Caching Framework documentation:
-https://docs.typo3.org/typo3cms/CoreApiReference/ApiOverview/CachingFramework/Index.html
+https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ApiOverview/CachingFramework/Index.html
