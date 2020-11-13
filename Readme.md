@@ -1,3 +1,5 @@
+![CI](https://github.com/lolli42/enetcache/workflows/CI/badge.svg)
+
 # TYPO3 Extension ``enetcache``
 
 ## Features
