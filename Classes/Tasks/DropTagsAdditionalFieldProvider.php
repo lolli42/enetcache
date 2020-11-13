@@ -45,7 +45,7 @@ class DropTagsAdditionalFieldProvider extends AbstractAdditionalFieldProvider im
     {
         // Initialize selected feeds field value
         if (empty($taskInfo['tags'])) {
-            if ($parentObject->CMD == 'edit') {
+            if ($parentObject->getCurrentAction() == 'edit') {
                 // In case of edit, set to internal value if no data was submitted already
                 $taskInfo['tags'] = implode(',', $task->tags);
             } else {
