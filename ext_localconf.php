@@ -19,7 +19,7 @@ if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][
 if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['TAG_CACHES'])) {
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['TAG_CACHES'] = [
         'enetcachecontent',
-        'cache_pages',
+        'pages',
     ];
 }
 
