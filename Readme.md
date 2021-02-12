@@ -19,3 +19,14 @@ and / or define a dependency in your consuming extensions.
 
 Find API documentation at [docs.typo3.org](https://docs.typo3.org/p/lolli/enetcache/3.1/en-us/)
 
+## Development: Release new version
+
+Example release workflow, basically for my own laziness ;)
+
+```
+Build/Scripts/runTests.sh -s composerInstallMax
+.Build/bin/tailor set-version 4.1.1
+git commit -am "[RELEASE] 4.1.1 Bug fixes and improved core v10 / v11 compatibility"
+git tag 4.1.1
+git push origin --tags
+```
