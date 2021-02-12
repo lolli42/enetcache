@@ -255,21 +255,25 @@ class PluginCache implements SingletonInterface
      */
     protected function setCachePageLifetime($lifetime)
     {
-        if (!$GLOBALS['TSFE'] instanceof TypoScriptFrontendController) {
+        if (!$GLOBALS['TSFE'] instanceof TypoScriptFrontendController
+            || !$lifetime
+        ) {
+            // $lifetime 0 doesn't really mean 0 seconds but it tells TSFE to use the default
+            // configured elsewhere. So we filter that out.
             return;
         }
-
-        // 0 doesn't really mean 0 seconds but it tells TSFE to use the default configured elsewhere.
-        // So we filter that out.
-        if ($lifetime) {
-            if (!$GLOBALS['TSFE']->page['cache_timeout']) {
-                // No cache timeout was set yet.
-                // This would cause min to always return 0 so we filter it out.
-                $GLOBALS['TSFE']->page['cache_timeout'] = $lifetime;
-            } else {
-                // Set lifetime to lowest value of given or current lifetime
-                $GLOBALS['TSFE']->page['cache_timeout'] = min($lifetime, $GLOBALS['TSFE']->page['cache_timeout']);
-            }
+        if (!$GLOBALS['TSFE']->page['cache_timeout']
+            && isset($GLOBALS['TSFE']->config['config']['cache_period'])
+            && (int)$GLOBALS['TSFE']->config['config']['cache_period'] > 0
+        ) {
+            // No cache time in page record, but a default config.cache_period configured in TS
+            $GLOBALS['TSFE']->page['cache_timeout'] = min($lifetime, (int)$GLOBALS['TSFE']->config['config']['cache_period']);
+        } elseif(!$GLOBALS['TSFE']->page['cache_timeout']) {
+            // No cache time > 0 in page record, use $lifetime
+            $GLOBALS['TSFE']->page['cache_timeout'] = $lifetime;
+        } else {
+            // Set lifetime to lowest value of page record $lifetime
+            $GLOBALS['TSFE']->page['cache_timeout'] = min($lifetime, $GLOBALS['TSFE']->page['cache_timeout']);
         }
     }
 
