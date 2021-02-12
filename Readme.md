@@ -28,5 +28,6 @@ Build/Scripts/runTests.sh -s composerInstallMax
 .Build/bin/tailor set-version 4.1.1
 git commit -am "[RELEASE] 4.1.1 Bug fixes and improved core v10 / v11 compatibility"
 git tag 4.1.1
-git push origin --tags
+git push
+git push --tags
 ```
