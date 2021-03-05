@@ -59,10 +59,12 @@ Options:
             - postgres: use postgres
             - sqlite: use sqlite
 
-    -p <7.2|7.3|7.4>
+    -p <7.2|7.3|7.4|8.0>
         Specifies the PHP minor version to be used
             - 7.2 (default): use PHP 7.2
             - 7.3: use PHP 7.3
+            - 7.4: use PHP 7.4
+            - 8.0: use PHP 8.0
 
     -e "<phpunit options>"
         Only with -s functional|unit
