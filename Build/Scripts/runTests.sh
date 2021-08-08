@@ -190,15 +190,6 @@ DOCKER_PHP_IMAGE=`echo "php${PHP_VERSION}" | sed -e 's/\.//'`
 shift $((OPTIND - 1))
 if [ -n "${1}" ]; then
     TEST_FILE="Web/typo3conf/ext/enetcache/${1}"
-else
-    case ${TEST_SUITE} in
-        functional)
-            TEST_FILE="Web/typo3conf/ext/enetcache/Tests/Functional"
-            ;;
-        unit)
-            TEST_FILE="Web/typo3conf/ext/enetcache/Tests/Unit"
-            ;;
-    esac
 fi
 
 if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
@@ -271,10 +262,10 @@ case ${TEST_SUITE} in
         docker-compose down
         ;;
     update)
-        # pull typo3gmbh/phpXY:latest versions of those ones that exist locally
-        docker images typo3gmbh/php*:latest --format "{{.Repository}}:latest" | xargs -I {} docker pull {}
-        # remove "dangling" typo3gmbh/phpXY images (those tagged as <none>)
-        docker images typo3gmbh/php* --filter "dangling=true" --format "{{.ID}}" | xargs -I {} docker rmi {}
+        # pull typo3/core-testing-*:latest versions of those ones that exist locally
+        docker images typo3/core-testing-*:latest --format "{{.Repository}}:latest" | xargs -I {} docker pull {}
+        # remove "dangling" typo3/core-testing-* images (those tagged as <none>)
+        docker images typo3/core-testing-* --filter "dangling=true" --format "{{.ID}}" | xargs -I {} docker rmi {}
         ;;
     *)
         echo "Invalid -s option argument ${TEST_SUITE}" >&2
