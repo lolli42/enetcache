@@ -50,7 +50,8 @@
     "typo3/cms": {
       "app-dir": ".Build",
       "web-dir": ".Build/Web",
-      "extension-key": "enetcache"
+      "extension-key": "enetcache",
+      "composer-mode": false
     }
   }
 }
