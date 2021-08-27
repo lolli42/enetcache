@@ -30,6 +30,8 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class DataHandlerFlushByTagHookTest extends UnitTestCase
 {
+    protected $resetSingletonInstances = true;
+
     /**
      * Helper function to call protected or private methods
      *
