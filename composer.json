@@ -18,10 +18,7 @@
   "config": {
     "sort-packages": true,
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin",
-    "platform": {
-      "php": "7.2.0"
-    }
+    "bin-dir": ".Build/bin"
   },
   "require-dev": {
     "phpunit/phpunit": "^8",
