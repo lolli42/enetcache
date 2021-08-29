@@ -13,5 +13,5 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 # TS/JS-Files
-[*.{ts,js,json}]
+[*.{ts,js,json,yml}]
 indent_size = 2
