@@ -1,5 +1,4 @@
 .Build/
 .idea/
 Build/testing-docker/.env
-Build/.phpunit.result.cache
 composer.lock
