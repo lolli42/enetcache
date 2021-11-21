@@ -38,6 +38,11 @@
   "replace": {
     "typo3-ter/enetcache": "self.version"
   },
+  "scripts": {
+    "post-autoload-dump": [
+      "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+    ]
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "4.x-dev"
