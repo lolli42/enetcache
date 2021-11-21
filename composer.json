@@ -23,7 +23,7 @@
   "require-dev": {
     "phpunit/phpunit": "^8",
     "typo3/tailor": "^1.2",
-    "typo3/testing-framework": "^6.11.3"
+    "typo3/testing-framework": "^6.14.0"
   },
   "autoload": {
     "psr-4": {
