@@ -33,9 +33,6 @@ jobs:
       - name: Functional tests with mariadb
         run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d mariadb -s functional
 
-      - name: Functional tests with mssql
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d mssql -s functional
-
       - name: Functional tests with postgres
         run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d postgres -s functional
 
