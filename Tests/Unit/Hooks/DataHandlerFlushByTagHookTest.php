@@ -24,8 +24,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
- * Test case
- *
  * @todo: These tests should be migrated to functional tests.
  */
 class DataHandlerFlushByTagHookTest extends UnitTestCase

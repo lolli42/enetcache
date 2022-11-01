@@ -17,9 +17,6 @@ namespace Lolli\Enetcache\Tests\Functional;
 use Lolli\Enetcache\PluginCache;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
-/**
- * Test case
- */
 class PluginCacheTest extends FunctionalTestCase
 {
     protected $testExtensionsToLoad = [
