@@ -51,11 +51,10 @@ Options:
             - unit (default): PHP unit tests
             - functional: functional tests
 
-    -d <mariadb|mssql|postgres|sqlite>
+    -d <mariadb|postgres|sqlite>
         Only with -s functional
         Specifies on which DBMS tests are performed
             - mariadb (default): use mariadb
-            - mssql: use mssql microsoft sql server
             - postgres: use postgres
             - sqlite: use sqlite
 
@@ -227,10 +226,6 @@ case ${TEST_SUITE} in
         case ${DBMS} in
             mariadb)
                 docker-compose run functional_mariadb10
-                SUITE_EXIT_CODE=$?
-                ;;
-            mssql)
-                docker-compose run functional_mssql2019latest
                 SUITE_EXIT_CODE=$?
                 ;;
             postgres)
