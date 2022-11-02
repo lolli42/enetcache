@@ -14,6 +14,7 @@ namespace Lolli\Enetcache\Tests\Unit\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Doctrine\DBAL\Statement;
 use Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook;
 use Prophecy\Argument;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -51,24 +52,23 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
      */
     public function findReferencedDatabaseEntriesReturnsEmptyArrayForTcaWithoutRelations()
     {
-        $connectionPoolProphecy = $this->prophesize(ConnectionPool::class);
-        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolProphecy->reveal());
-        $queryBuilderProphecy = $this->prophesize(QueryBuilder::class);
-        $connectionPoolProphecy->getQueryBuilderForTable(Argument::cetera())->willReturn($queryBuilderProphecy->reveal());
-        $restrictionContainerProphecy = $this->prophesize(QueryRestrictionContainerInterface::class);
-        $queryBuilderProphecy->getRestrictions()->willReturn($restrictionContainerProphecy->reveal());
-        $restrictionContainerProphecy->removeAll()->shouldBeCalled();
-        $queryBuilderProphecy->select('*')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $queryBuilderProphecy->from('testtable')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $expressionBuilderProphecy = $this->prophesize(ExpressionBuilder::class);
-        $queryBuilderProphecy->expr()->willReturn($expressionBuilderProphecy->reveal());
-        $queryBuilderProphecy->createNamedParameter(Argument::cetera())->willReturnArgument(0);
-        $expressionBuilderProphecy->eq(Argument::cetera())->willReturn('');
-        $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
-        $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn([]);
-
+        $connectionPoolMock = $this->createMock(ConnectionPool::class);
+        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolMock);
+        $queryBuilderMock = $this->createMock(QueryBuilder::class);
+        $connectionPoolMock->expects($this->atLeastOnce())->method('getQueryBuilderForTable')->willReturn($queryBuilderMock);
+        $restrictionContainerMock = $this->createMock(QueryRestrictionContainerInterface::class);
+        $queryBuilderMock->expects($this->any())->method('getRestrictions')->willReturn($restrictionContainerMock);
+        $restrictionContainerMock->expects($this->atLeastOnce())->method('removeAll');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('select')->with('*')->willReturn($queryBuilderMock);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('from')->with('testtable')->willReturn($queryBuilderMock);
+        $expressionBuilderMock = $this->createMock(ExpressionBuilder::class);
+        $queryBuilderMock->expects($this->any())->method('expr')->willReturn($expressionBuilderMock);
+        $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
+        $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
+        $statementMock = $this->createMock(Statement::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn([]);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_without_references.php');
         $this->assertEquals(
@@ -82,24 +82,23 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
      */
     public function findReferencedDatabaseEntriesReturnsEmptyArrayForTcaWithRelationsAndNoExistingDatabaseEntry()
     {
-        $connectionPoolProphecy = $this->prophesize(ConnectionPool::class);
-        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolProphecy->reveal());
-        $queryBuilderProphecy = $this->prophesize(QueryBuilder::class);
-        $connectionPoolProphecy->getQueryBuilderForTable(Argument::cetera())->willReturn($queryBuilderProphecy->reveal());
-        $restrictionContainerProphecy = $this->prophesize(QueryRestrictionContainerInterface::class);
-        $queryBuilderProphecy->getRestrictions()->willReturn($restrictionContainerProphecy->reveal());
-        $restrictionContainerProphecy->removeAll()->shouldBeCalled();
-        $queryBuilderProphecy->select('*')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $queryBuilderProphecy->from('testtable')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $expressionBuilderProphecy = $this->prophesize(ExpressionBuilder::class);
-        $queryBuilderProphecy->expr()->willReturn($expressionBuilderProphecy->reveal());
-        $queryBuilderProphecy->createNamedParameter(Argument::cetera())->willReturnArgument(0);
-        $expressionBuilderProphecy->eq(Argument::cetera())->willReturn('');
-        $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
-        $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
-
+        $connectionPoolMock = $this->createMock(ConnectionPool::class);
+        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolMock);
+        $queryBuilderMock = $this->createMock(QueryBuilder::class);
+        $connectionPoolMock->expects($this->atLeastOnce())->method('getQueryBuilderForTable')->willReturn($queryBuilderMock);
+        $restrictionContainerMock = $this->createMock(QueryRestrictionContainerInterface::class);
+        $queryBuilderMock->expects($this->any())->method('getRestrictions')->willReturn($restrictionContainerMock);
+        $restrictionContainerMock->expects($this->atLeastOnce())->method('removeAll');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('select')->with('*')->willReturn($queryBuilderMock);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('from')->with('testtable')->willReturn($queryBuilderMock);
+        $expressionBuilderMock = $this->createMock(ExpressionBuilder::class);
+        $queryBuilderMock->expects($this->any())->method('expr')->willReturn($expressionBuilderMock);
+        $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
+        $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
+        $statementMock = $this->createMock(Statement::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -113,24 +112,23 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
      */
     public function findReferencedDatabaseEntriesReturnsEmptyArrayForTcaWithRelationsAndNoExistingDatabaseEntryWithReferenceToZeroGiven()
     {
-        $connectionPoolProphecy = $this->prophesize(ConnectionPool::class);
-        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolProphecy->reveal());
-        $queryBuilderProphecy = $this->prophesize(QueryBuilder::class);
-        $connectionPoolProphecy->getQueryBuilderForTable(Argument::cetera())->willReturn($queryBuilderProphecy->reveal());
-        $restrictionContainerProphecy = $this->prophesize(QueryRestrictionContainerInterface::class);
-        $queryBuilderProphecy->getRestrictions()->willReturn($restrictionContainerProphecy->reveal());
-        $restrictionContainerProphecy->removeAll()->shouldBeCalled();
-        $queryBuilderProphecy->select('*')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $queryBuilderProphecy->from('testtable')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $expressionBuilderProphecy = $this->prophesize(ExpressionBuilder::class);
-        $queryBuilderProphecy->expr()->willReturn($expressionBuilderProphecy->reveal());
-        $queryBuilderProphecy->createNamedParameter(Argument::cetera())->willReturnArgument(0);
-        $expressionBuilderProphecy->eq(Argument::cetera())->willReturn('');
-        $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
-        $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
-
+        $connectionPoolMock = $this->createMock(ConnectionPool::class);
+        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolMock);
+        $queryBuilderMock = $this->createMock(QueryBuilder::class);
+        $connectionPoolMock->expects($this->atLeastOnce())->method('getQueryBuilderForTable')->willReturn($queryBuilderMock);
+        $restrictionContainerMock = $this->createMock(QueryRestrictionContainerInterface::class);
+        $queryBuilderMock->expects($this->any())->method('getRestrictions')->willReturn($restrictionContainerMock);
+        $restrictionContainerMock->expects($this->atLeastOnce())->method('removeAll');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('select')->with('*')->willReturn($queryBuilderMock);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('from')->with('testtable')->willReturn($queryBuilderMock);
+        $expressionBuilderMock = $this->createMock(ExpressionBuilder::class);
+        $queryBuilderMock->expects($this->any())->method('expr')->willReturn($expressionBuilderMock);
+        $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
+        $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
+        $statementMock = $this->createMock(Statement::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -144,24 +142,23 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
      */
     public function findReferencedDatabaseEntriesReturnsRelationsForTcaWithRelationsAndDbWithNamedTables()
     {
-        $connectionPoolProphecy = $this->prophesize(ConnectionPool::class);
-        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolProphecy->reveal());
-        $queryBuilderProphecy = $this->prophesize(QueryBuilder::class);
-        $connectionPoolProphecy->getQueryBuilderForTable(Argument::cetera())->willReturn($queryBuilderProphecy->reveal());
-        $restrictionContainerProphecy = $this->prophesize(QueryRestrictionContainerInterface::class);
-        $queryBuilderProphecy->getRestrictions()->willReturn($restrictionContainerProphecy->reveal());
-        $restrictionContainerProphecy->removeAll()->shouldBeCalled();
-        $queryBuilderProphecy->select('*')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $queryBuilderProphecy->from('testtable')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $expressionBuilderProphecy = $this->prophesize(ExpressionBuilder::class);
-        $queryBuilderProphecy->expr()->willReturn($expressionBuilderProphecy->reveal());
-        $queryBuilderProphecy->createNamedParameter(Argument::cetera())->willReturnArgument(0);
-        $expressionBuilderProphecy->eq(Argument::cetera())->willReturn('');
-        $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
-        $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
-
+        $connectionPoolMock = $this->createMock(ConnectionPool::class);
+        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolMock);
+        $queryBuilderMock = $this->createMock(QueryBuilder::class);
+        $connectionPoolMock->expects($this->atLeastOnce())->method('getQueryBuilderForTable')->willReturn($queryBuilderMock);
+        $restrictionContainerMock = $this->createMock(QueryRestrictionContainerInterface::class);
+        $queryBuilderMock->expects($this->any())->method('getRestrictions')->willReturn($restrictionContainerMock);
+        $restrictionContainerMock->expects($this->atLeastOnce())->method('removeAll');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('select')->with('*')->willReturn($queryBuilderMock);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('from')->with('testtable')->willReturn($queryBuilderMock);
+        $expressionBuilderMock = $this->createMock(ExpressionBuilder::class);
+        $queryBuilderMock->expects($this->any())->method('expr')->willReturn($expressionBuilderMock);
+        $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
+        $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
+        $statementMock = $this->createMock(Statement::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -175,24 +172,23 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
      */
     public function findReferencedDatabaseEntriesReturnsRelationsForTcaWithRelationsAndDbWithNumericalReferences()
     {
-        $connectionPoolProphecy = $this->prophesize(ConnectionPool::class);
-        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolProphecy->reveal());
-        $queryBuilderProphecy = $this->prophesize(QueryBuilder::class);
-        $connectionPoolProphecy->getQueryBuilderForTable(Argument::cetera())->willReturn($queryBuilderProphecy->reveal());
-        $restrictionContainerProphecy = $this->prophesize(QueryRestrictionContainerInterface::class);
-        $queryBuilderProphecy->getRestrictions()->willReturn($restrictionContainerProphecy->reveal());
-        $restrictionContainerProphecy->removeAll()->shouldBeCalled();
-        $queryBuilderProphecy->select('*')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $queryBuilderProphecy->from('testtable')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $expressionBuilderProphecy = $this->prophesize(ExpressionBuilder::class);
-        $queryBuilderProphecy->expr()->willReturn($expressionBuilderProphecy->reveal());
-        $queryBuilderProphecy->createNamedParameter(Argument::cetera())->willReturnArgument(0);
-        $expressionBuilderProphecy->eq(Argument::cetera())->willReturn('');
-        $queryBuilderProphecy->where('')->shouldBeCalled()->willReturn($queryBuilderProphecy->reveal());
-        $statementProphecy = $this->prophesize(\Doctrine\DBAL\Statement::class);
-        $queryBuilderProphecy->execute()->shouldBeCalled()->willReturn($statementProphecy->reveal());
-        $statementProphecy->fetch()->shouldBeCalled()->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
-
+        $connectionPoolMock = $this->createMock(ConnectionPool::class);
+        GeneralUtility::addInstance(ConnectionPool::class, $connectionPoolMock);
+        $queryBuilderMock = $this->createMock(QueryBuilder::class);
+        $connectionPoolMock->expects($this->atLeastOnce())->method('getQueryBuilderForTable')->willReturn($queryBuilderMock);
+        $restrictionContainerMock = $this->createMock(QueryRestrictionContainerInterface::class);
+        $queryBuilderMock->expects($this->any())->method('getRestrictions')->willReturn($restrictionContainerMock);
+        $restrictionContainerMock->expects($this->atLeastOnce())->method('removeAll');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('select')->with('*')->willReturn($queryBuilderMock);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('from')->with('testtable')->willReturn($queryBuilderMock);
+        $expressionBuilderMock = $this->createMock(ExpressionBuilder::class);
+        $queryBuilderMock->expects($this->any())->method('expr')->willReturn($expressionBuilderMock);
+        $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
+        $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
+        $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
+        $statementMock = $this->createMock(Statement::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
