@@ -118,7 +118,7 @@ class PluginCache implements SingletonInterface
 
         if (is_array($cacheData)) {
             // Add all tags of this element to page cache entry
-            $this->addTagsToPageCache($cacheData['tags']);
+            $this->addTagsToPageCache($cacheData['tags'] ?? []);
 
             // Calculate new page lifetime
             // This is especially important for element caches that are re-used for several pages
@@ -128,7 +128,7 @@ class PluginCache implements SingletonInterface
 
             // Assign our actual content.
             // This might also be an array with content and further information
-            $result =  $cacheData['data'];
+            $result =  $cacheData['data'] ?? '';
         } else {
             // Return false in case no content cache was found with this identifier
             $result = false;
@@ -227,7 +227,7 @@ class PluginCache implements SingletonInterface
         }
 
         // Iterate through to be dropped caches and flush entries by tag array
-        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['TAG_CACHES'] as $cache) {
+        foreach (($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['TAG_CACHES'] ?? []) as $cache) {
             $cacheFE = GeneralUtility::makeInstance(CacheManager::class)->getCache($cache);
             foreach ($tags as $tag) {
                 $cacheFE->flushByTag($tag);
@@ -255,24 +255,24 @@ class PluginCache implements SingletonInterface
      */
     protected function setCachePageLifetime($lifetime)
     {
-        if (!$GLOBALS['TSFE'] instanceof TypoScriptFrontendController
+        if (!($GLOBALS['TSFE'] ?? false) instanceof TypoScriptFrontendController
             || !$lifetime
         ) {
             // $lifetime 0 doesn't really mean 0 seconds but it tells TSFE to use the default
             // configured elsewhere. So we filter that out.
             return;
         }
-        if (!$GLOBALS['TSFE']->page['cache_timeout']
+        if ((!isset($GLOBALS['TSFE']->page['cache_timeout']) || !$GLOBALS['TSFE']->page['cache_timeout'])
             && isset($GLOBALS['TSFE']->config['config']['cache_period'])
             && (int)$GLOBALS['TSFE']->config['config']['cache_period'] > 0
         ) {
             // No cache time in page record, but a default config.cache_period configured in TS
             $GLOBALS['TSFE']->page['cache_timeout'] = min($lifetime, (int)$GLOBALS['TSFE']->config['config']['cache_period']);
-        } elseif(!$GLOBALS['TSFE']->page['cache_timeout']) {
+        } elseif(!isset($GLOBALS['TSFE']->page['cache_timeout']) || !$GLOBALS['TSFE']->page['cache_timeout']) {
             // No cache time > 0 in page record, use $lifetime
             $GLOBALS['TSFE']->page['cache_timeout'] = $lifetime;
         } else {
-            // Set lifetime to lowest value of page record $lifetime
+            // Set lifetime to the lowest value of page record $lifetime
             $GLOBALS['TSFE']->page['cache_timeout'] = min($lifetime, $GLOBALS['TSFE']->page['cache_timeout']);
         }
     }
@@ -285,7 +285,7 @@ class PluginCache implements SingletonInterface
      */
     protected function addTagsToPageCache(array $tags)
     {
-        if (!$GLOBALS['TSFE'] instanceof TypoScriptFrontendController) {
+        if (!($GLOBALS['TSFE'] ?? false) instanceof TypoScriptFrontendController) {
             return;
         }
         $GLOBALS['TSFE']->addCacheTags($tags);
@@ -319,7 +319,7 @@ class PluginCache implements SingletonInterface
      */
     protected function initHooks()
     {
-        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['hooks']['tx_enetcache'] as $className) {
+        foreach (($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['enetcache']['hooks']['tx_enetcache'] ?? []) as $className) {
             /** @var PluginCacheHookInterface $hookInstance */
             $hookInstance = GeneralUtility::makeInstance($className);
             $this->registerHook($hookInstance);

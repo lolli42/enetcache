@@ -83,7 +83,7 @@ AUTHOR:
      * @param array $tags Tag list
      * @return bool true if tag list validates
      */
-    protected function isValidTagList(array $tags = array())
+    protected function isValidTagList(array $tags =[])
     {
         $isValid = true;
         foreach ($tags as $tag) {
