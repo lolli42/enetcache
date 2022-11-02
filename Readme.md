@@ -24,7 +24,7 @@ Find API documentation at [docs.typo3.org](https://docs.typo3.org/p/lolli/enetca
 Example release workflow, basically for my own laziness ;)
 
 ```
-Build/Scripts/runTests.sh -s composerInstallMax
+Build/Scripts/runTests.sh -s composerUpdate -t 11
 .Build/bin/tailor set-version 4.1.1
 git commit -am "[RELEASE] 4.1.1 Bug fixes and improved core v10 / v11 compatibility"
 git tag 4.1.1
