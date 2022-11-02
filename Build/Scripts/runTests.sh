@@ -38,7 +38,7 @@ Also used by github actions for test execution.
 
 Usage: $0 [options] [file]
 
-No arguments: Run all unit tests with PHP 7.2
+No arguments: Run all unit tests with PHP 7.4
 
 Options:
     -s <...>
@@ -58,11 +58,9 @@ Options:
             - postgres: use postgres
             - sqlite: use sqlite
 
-    -p <7.2|7.3|7.4|8.0|8.1|8.2>
+    -p <7.4|8.0|8.1|8.2>
         Specifies the PHP minor version to be used
-            - 7.2 (default): use PHP 7.2
-            - 7.3: use PHP 7.3
-            - 7.4: use PHP 7.4
+            - 7.4: (default): use PHP 7.4
             - 8.0: use PHP 8.0
             - 8.0: use PHP 8.1
             - 8.0: use PHP 8.2
@@ -96,12 +94,6 @@ Options:
     -h
         Show this help.
 
-Examples:
-    # Run unit tests using PHP 7.2
-    ./Build/Scripts/runTests.sh
-
-    # Run unit tests using PHP 7.3
-    ./Build/Scripts/runTests.sh -p 7.3
 EOF
 
 # Test if docker-compose exists, else exit out with error
@@ -122,7 +114,7 @@ cd ../testing-docker || exit 1
 ROOT_DIR=`readlink -f ${PWD}/../../`
 TEST_SUITE="unit"
 DBMS="mariadb"
-PHP_VERSION="7.2"
+PHP_VERSION="7.4"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 EXTRA_TEST_OPTIONS=""
