@@ -1,0 +1,36 @@
+name: tests core v12
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron:  '27 4 * * *'
+
+jobs:
+  testsuite:
+    name: all tests with core v12
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        php: [ '8.1', '8.2' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Composer
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t 12 -s composerUpdate
+
+      - name: Lint PHP
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s lint
+
+      - name: Unit tests
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s unit
+
+      - name: Functional tests with mariadb
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d mariadb -s functional
+
+      - name: Functional tests with postgres
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d postgres -s functional
+
+      - name: Functional tests with sqlite
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d sqlite -s functional

@@ -23,6 +23,7 @@ setUpDockerComposeDotEnv() {
     echo "ROOT_DIR"=${ROOT_DIR} >> .env
     echo "HOST_USER=${USER}" >> .env
     echo "TEST_FILE=${TEST_FILE}" >> .env
+    echo "TYPO3_VERSION=${TYPO3_VERSION}" >> .env
     echo "PHP_XDEBUG_ON=${PHP_XDEBUG_ON}" >> .env
     echo "PHP_XDEBUG_PORT=${PHP_XDEBUG_PORT}" >> .env
     echo "PHP_VERSION=${PHP_VERSION}" >> .env
@@ -43,10 +44,8 @@ No arguments: Run all unit tests with PHP 7.4
 Options:
     -s <...>
         Specifies which test suite to run
-            - composerInstall: "composer install"
-            - composerInstallMax: "composer update", with no platform.php config.
-            - composerInstallMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
-            - composerValidate: "composer validate"
+            - composerUpdate: "composer update"
+            - clean: clean up build and testing related files
             - lint: PHP linting
             - unit (default): PHP unit tests
             - functional: functional tests
@@ -64,6 +63,12 @@ Options:
             - 8.0: use PHP 8.0
             - 8.0: use PHP 8.1
             - 8.0: use PHP 8.2
+
+    -t <11|12>
+        Only with -s composerUpdate
+        Specifies the TYPO3 core major version to be used
+            - 11 (default): use TYPO3 core v11
+            - 12: Use TYPO3 core v12
 
     -e "<phpunit options>"
         Only with -s functional|unit
@@ -115,6 +120,7 @@ ROOT_DIR=`readlink -f ${PWD}/../../`
 TEST_SUITE="unit"
 DBMS="mariadb"
 PHP_VERSION="7.4"
+TYPO3_VERSION="11"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 EXTRA_TEST_OPTIONS=""
@@ -126,7 +132,7 @@ OPTIND=1
 # Array for invalid options
 INVALID_OPTIONS=();
 # Simple option parsing based on getopts (! not getopt)
-while getopts ":s:d:p:e:xy:huv" OPT; do
+while getopts ":s:d:p:t:e:xy:huv" OPT; do
     case ${OPT} in
         s)
             TEST_SUITE=${OPTARG}
@@ -136,6 +142,9 @@ while getopts ":s:d:p:e:xy:huv" OPT; do
             ;;
         p)
             PHP_VERSION=${OPTARG}
+            ;;
+        t)
+            TYPO3_VERSION=${OPTARG}
             ;;
         e)
             EXTRA_TEST_OPTIONS=${OPTARG}
@@ -191,27 +200,18 @@ fi
 
 # Suite execution
 case ${TEST_SUITE} in
-    composerInstall)
-        setUpDockerComposeDotEnv
-        docker-compose run composer_install
-        SUITE_EXIT_CODE=$?
-        docker-compose down
+    clean)
+        rm -rf ../../composer.lock ../../.Build/ ../../composer.json.testing
         ;;
-    composerInstallMax)
+    composerUpdate)
         setUpDockerComposeDotEnv
-        docker-compose run composer_install_max
-        SUITE_EXIT_CODE=$?
-        docker-compose down
-        ;;
-    composerInstallMin)
-        setUpDockerComposeDotEnv
-        docker-compose run composer_install_min
-        SUITE_EXIT_CODE=$?
-        docker-compose down
-        ;;
-    composerValidate)
-        setUpDockerComposeDotEnv
-        docker-compose run composer_validate
+        cp ../../composer.json ../../composer.json.orig
+        if [ -f "../../composer.json.testing" ]; then
+            cp ../../composer.json ../../composer.json.orig
+        fi
+        docker-compose run composer_update
+        cp ../../composer.json ../../composer.json.testing
+        mv ../../composer.json.orig ../../composer.json
         SUITE_EXIT_CODE=$?
         docker-compose down
         ;;

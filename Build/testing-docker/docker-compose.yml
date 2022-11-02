@@ -15,93 +15,38 @@ services:
     tmpfs:
       - /var/lib/postgresql/data:rw,noexec,nosuid
 
-  composer_install:
+  composer_update:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
-    user: ${HOST_UID}
-    volumes:
-    - ${ROOT_DIR}:${ROOT_DIR}
-    - ${HOST_HOME}:${HOST_HOME}
-    - /etc/passwd:/etc/passwd:ro
-    - /etc/group:/etc/group:ro
-    working_dir: ${ROOT_DIR}
-    command: >
-      /bin/sh -c "
-        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
-          set -x
-        fi
-        composer install --no-progress --no-interaction;
-      "
-  composer_install_max:
-    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
-    user: ${HOST_UID}
+    user: "${HOST_UID}"
     volumes:
       - ${ROOT_DIR}:${ROOT_DIR}
-      - ${HOST_HOME}:${HOST_HOME}
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     working_dir: ${ROOT_DIR}
+    environment:
+      COMPOSER_CACHE_DIR: ".cache/composer"
     command: >
       /bin/sh -c "
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
           set -x
         fi
-        if [[ ${PHP_VERSION} == "8.0" || ${PHP_VERSION} == "7.4" ]]; then
-          composer req typo3/cms-core:"dev-master" \
-            typo3/cms-backend:"dev-master" \
-            typo3/cms-frontend:"dev-master" \
-            typo3/cms-extbase:"dev-master" \
-            typo3/cms-fluid:"dev-master" \
-            typo3/cms-recordlist:"dev-master" \
-            typo3/cms-install:"dev-master"
+        php -v | grep '^PHP';
+        if [ ${TYPO3_VERSION} -eq 11 ]; then
+              composer rem --dev "sbuerk/typo3-cmscomposerinstallers-testingframework-bridge" --no-update
+              composer req --dev --no-update \
+                typo3/cms-composer-installers:^3.0
+              composer req typo3/cms-core:^11.5 --no-update
         fi
-        composer config --unset platform.php;
+        if [ ${TYPO3_VERSION} -eq 12 ]; then
+            composer req --dev --no-update \
+               "typo3/cms-composer-installers:^5.0" \
+               "sbuerk/typo3-cmscomposerinstallers-testingframework-bridge":^0.0.1 \
+                typo3/cms-backend:~12.0@dev \
+                typo3/cms-frontend:~12.0@dev \
+                typo3/cms-extbase:~12.0@dev \
+                typo3/cms-fluid:~12.0@dev \
+                typo3/cms-install:~12.0@dev
+            composer req typo3/cms-core:~12.0@dev -W --no-update
+        fi
         composer update --no-progress --no-interaction;
-        composer dumpautoload;
-      "
-
-  composer_install_min:
-    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
-    user: ${HOST_UID}
-    volumes:
-      - ${ROOT_DIR}:${ROOT_DIR}
-      - ${HOST_HOME}:${HOST_HOME}
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
-    working_dir: ${ROOT_DIR}
-    command: >
-      /bin/sh -c "
-        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
-          set -x
-        fi
-        if [ ${PHP_VERSION} == "8.0" ]; then
-          composer req typo3/cms-core:"dev-master" \
-            typo3/cms-backend:"dev-master" \
-            typo3/cms-frontend:"dev-master" \
-            typo3/cms-extbase:"dev-master" \
-            typo3/cms-fluid:"dev-master" \
-            typo3/cms-recordlist:"dev-master" \
-            typo3/cms-install:"dev-master"
-        fi
-        composer config platform.php ${PHP_VERSION}.0;
-        composer update --prefer-lowest --no-progress --no-interaction;
-        composer dumpautoload;
-      "
-
-  composer_validate:
-    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
-    user: ${HOST_UID}
-    volumes:
-    - ${ROOT_DIR}:${ROOT_DIR}
-    - ${HOST_HOME}:${HOST_HOME}
-    - /etc/passwd:/etc/passwd:ro
-    - /etc/group:/etc/group:ro
-    working_dir: ${ROOT_DIR}
-    command: >
-      /bin/sh -c "
-        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
-          set -x
-        fi
-        composer validate;
       "
 
   functional_mariadb10:
@@ -111,9 +56,6 @@ services:
       - mariadb10
     volumes:
       - ${ROOT_DIR}:${ROOT_DIR}
-      - ${HOST_HOME}:${HOST_HOME}
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     environment:
       typo3DatabaseName: func_test
       typo3DatabaseUsername: root
@@ -150,9 +92,6 @@ services:
       - postgres10
     volumes:
       - ${ROOT_DIR}:${ROOT_DIR}
-      - ${HOST_HOME}:${HOST_HOME}
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     environment:
       typo3DatabaseDriver: pdo_pgsql
       typo3DatabaseName: bamboo
@@ -188,9 +127,6 @@ services:
     user: ${HOST_UID}
     volumes:
       - ${ROOT_DIR}:${ROOT_DIR}
-      - ${HOST_HOME}:${HOST_HOME}
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     tmpfs:
       - ${ROOT_DIR}/.Build/Web/typo3temp/var/tests/functional-sqlite-dbs/:rw,noexec,nosuid,uid=${HOST_UID}
     environment:
@@ -219,8 +155,6 @@ services:
     user: ${HOST_UID}
     volumes:
     - ${ROOT_DIR}:${ROOT_DIR}
-    - /etc/passwd:/etc/passwd:ro
-    - /etc/group:/etc/group:ro
     working_dir: ${ROOT_DIR}
     command: >
       /bin/sh -c "
@@ -236,9 +170,6 @@ services:
     user: ${HOST_UID}
     volumes:
       - ${ROOT_DIR}:${ROOT_DIR}
-      - ${HOST_HOME}:${HOST_HOME}
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     working_dir: ${ROOT_DIR}
     command: >
       /bin/sh -c "

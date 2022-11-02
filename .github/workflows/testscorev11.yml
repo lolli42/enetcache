@@ -1,4 +1,4 @@
-name: tests
+name: tests core v11
 
 on:
   push:
@@ -8,21 +8,17 @@ on:
 
 jobs:
   testsuite:
-    name: all tests
+    name: all tests with core v11
     runs-on: ubuntu-20.04
     strategy:
       matrix:
         php: [ '7.4', '8.0', '8.1', '8.2' ]
-        minMax: [ 'composerInstallMin', 'composerInstallMax' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Composer
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s ${{ matrix.minMax }}
-
-      - name: Composer validate
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s composerValidate
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t 11 -s composerUpdate
 
       - name: Lint PHP
         run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s lint
