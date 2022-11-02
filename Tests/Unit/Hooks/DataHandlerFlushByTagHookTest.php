@@ -16,7 +16,6 @@ namespace Lolli\Enetcache\Tests\Unit\Hooks;
 
 use Doctrine\DBAL\Statement;
 use Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook;
-use Prophecy\Argument;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -29,7 +28,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class DataHandlerFlushByTagHookTest extends UnitTestCase
 {
-    protected $resetSingletonInstances = true;
+    protected bool $resetSingletonInstances = true;
 
     /**
      * Helper function to call protected or private methods
