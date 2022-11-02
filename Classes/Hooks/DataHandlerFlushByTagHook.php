@@ -17,6 +17,7 @@ namespace Lolli\Enetcache\Hooks;
 use Lolli\Enetcache\PluginCache;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -205,9 +206,12 @@ class DataHandlerFlushByTagHook
             ->from($fieldConfig['MM'])
             ->where(
                 $queryBuilder->expr()->eq('uid_local', $queryBuilder->createNamedParameter($uidLocal, \PDO::PARAM_INT))
-            )
-            ->executeQuery()
-            ->fetchAllAssociative();
+            );
+        if ((new Typo3Version())->getMajorVersion() >= 12) {
+            $rows = $rows->executeQuery()->fetchAllAssociative();
+        } else {
+            $rows = $rows->execute()->fetchAll();
+        }
         foreach ($rows as $row) {
             if (!isset($row['tablenames'])) {
                 $row['tablenames'] = 0;
@@ -316,9 +320,12 @@ class DataHandlerFlushByTagHook
         $queryBuilder->getRestrictions()->removeAll();
         $row = $queryBuilder->select('*')
             ->from($table)
-            ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)))
-            ->executeQuery()
-            ->fetchOne();
+            ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)));
+        if ((new Typo3Version())->getMajorVersion() >= 12) {
+            $row = $row->executeQuery()->fetchOne();
+        } else {
+            $row = $row->execute()->fetch();
+        }
         return array_merge($row, $fields);
     }
 }
