@@ -104,7 +104,7 @@ class DataHandlerFlushByTagHook
         $tagsToDrop[] = $table . '_' . $status;
 
         // Substitute NEW with real ID
-        if (GeneralUtility::isFirstPartOfStr($id, 'NEW')) {
+        if (str_starts_with($id, 'NEW')) {
             $id = $pObj->substNEWwithIDs[$id];
         }
 
@@ -131,7 +131,7 @@ class DataHandlerFlushByTagHook
 
             // Substitute NEW with real ID
             $id = $pObj->dbAnalysisStore[0][2];
-            if (GeneralUtility::isFirstPartOfStr($id, 'NEW')) {
+            if (str_starts_with($id, 'NEW')) {
                 $id = $pObj->substNEWwithIDs[$id];
             }
 
