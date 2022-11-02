@@ -37,9 +37,3 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Lolli\Enetcache
     'description' => 'LLL:EXT:enetcache/Resources/Private/Language/locallang.xlf:scheduler.droptags.description',
     'additionalFields' => \Lolli\Enetcache\Tasks\DropTagsAdditionalFieldProvider::class,
 ];
-
-// Add context sensitive help (csh) to the backend module (used for the scheduler tasks)
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
-    '_MOD_tools_txschedulerM1',
-    'EXT:enetcache/Resources/Private/Language/locallang_csh.xlf'
-);
