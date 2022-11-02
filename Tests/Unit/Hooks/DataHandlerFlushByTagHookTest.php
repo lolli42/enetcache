@@ -21,6 +21,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\QueryRestrictionContainerInterface;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -66,9 +67,15 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $resultMock = $this->createMock(Result::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
-        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn([]);
+        if ((new Typo3Version())->getMajorVersion() >= 12) {
+            $resultMock = $this->createMock(Result::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+            $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn([]);
+        } else {
+            $statementMock = $this->createMock(Statement::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+            $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn([]);
+        }
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_without_references.php');
         $this->assertEquals(
@@ -96,9 +103,15 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $resultMock = $this->createMock(Result::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
-        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        if ((new Typo3Version())->getMajorVersion() >= 12) {
+            $resultMock = $this->createMock(Result::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+            $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        } else {
+            $statementMock = $this->createMock(Statement::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+            $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        }
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -126,9 +139,15 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $resultMock = $this->createMock(Result::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
-        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        if ((new Typo3Version())->getMajorVersion() >= 12) {
+            $resultMock = $this->createMock(Result::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+            $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        } else {
+            $statementMock = $this->createMock(Statement::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+            $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        }
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -156,9 +175,15 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $resultMock = $this->createMock(Result::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
-        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        if ((new Typo3Version())->getMajorVersion() >= 12) {
+            $resultMock = $this->createMock(Result::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+            $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        } else {
+            $statementMock = $this->createMock(Statement::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+            $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        }
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -186,9 +211,15 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $resultMock = $this->createMock(Result::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
-        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        if ((new Typo3Version())->getMajorVersion() >= 12) {
+            $resultMock = $this->createMock(Result::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+            $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        } else {
+            $statementMock = $this->createMock(Statement::class);
+            $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
+            $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        }
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
