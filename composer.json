@@ -13,7 +13,7 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-core": "^10.4 || ^11.0"
+    "typo3/cms-core": "^11.0 || ^12.0"
   },
   "config": {
     "sort-packages": true,
@@ -21,13 +21,13 @@
     "bin-dir": ".Build/bin",
     "allow-plugins": {
       "typo3/class-alias-loader": true,
-      "typo3/cms-composer-installers": true
+      "typo3/cms-composer-installers": true,
+      "sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": true
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5.31 || ^9.5.26",
-    "typo3/tailor": "^1.2",
-    "typo3/testing-framework": "^6.14.0"
+    "phpunit/phpunit": "^9.5.26",
+    "typo3/testing-framework": "~7.0@dev"
   },
   "autoload": {
     "psr-4": {
@@ -42,14 +42,9 @@
   "replace": {
     "typo3-ter/enetcache": "self.version"
   },
-  "scripts": {
-    "post-autoload-dump": [
-      "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
-    ]
-  },
   "extra": {
     "branch-alias": {
-      "dev-master": "4.x-dev"
+      "dev-master": "5.x-dev"
     },
     "typo3/cms": {
       "app-dir": ".Build",
