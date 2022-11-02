@@ -206,8 +206,8 @@ class DataHandlerFlushByTagHook
             ->where(
                 $queryBuilder->expr()->eq('uid_local', $queryBuilder->createNamedParameter($uidLocal, \PDO::PARAM_INT))
             )
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
         foreach ($rows as $row) {
             if (!isset($row['tablenames'])) {
                 $row['tablenames'] = 0;
@@ -317,8 +317,8 @@ class DataHandlerFlushByTagHook
         $row = $queryBuilder->select('*')
             ->from($table)
             ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)))
-            ->execute()
-            ->fetch();
+            ->executeQuery()
+            ->fetchOne();
         return array_merge($row, $fields);
     }
 }

@@ -14,6 +14,7 @@ namespace Lolli\Enetcache\Tests\Unit\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Statement;
 use Lolli\Enetcache\Hooks\DataHandlerFlushByTagHook;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -65,9 +66,9 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $statementMock = $this->createMock(Statement::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
-        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn([]);
+        $resultMock = $this->createMock(Result::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn([]);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_without_references.php');
         $this->assertEquals(
@@ -95,9 +96,9 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $statementMock = $this->createMock(Statement::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
-        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        $resultMock = $this->createMock(Result::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -125,9 +126,9 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $statementMock = $this->createMock(Statement::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
-        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        $resultMock = $this->createMock(Result::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -155,9 +156,9 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $statementMock = $this->createMock(Statement::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
-        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        $resultMock = $this->createMock(Result::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
@@ -185,9 +186,9 @@ class DataHandlerFlushByTagHookTest extends UnitTestCase
         $queryBuilderMock->expects($this->any())->method('createNamedParameter')->willReturn('23');
         $expressionBuilderMock->expects($this->any())->method('eq')->willReturn('');
         $queryBuilderMock->expects($this->atLeastOnce())->method('where')->willReturn($queryBuilderMock);
-        $statementMock = $this->createMock(Statement::class);
-        $queryBuilderMock->expects($this->atLeastOnce())->method('execute')->willReturn($statementMock);
-        $statementMock->expects($this->atLeastOnce())->method('fetch')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
+        $resultMock = $this->createMock(Result::class);
+        $queryBuilderMock->expects($this->atLeastOnce())->method('executeQuery')->willReturn($resultMock);
+        $resultMock->expects($this->atLeastOnce())->method('fetchOne')->willReturn(['cust_fe_user' => '', 'cust_stuff' => '']);
         $subject = new DataHandlerFlushByTagHook();
         $GLOBALS['TCA']['testtable'] = require(__DIR__ . '/Fixtures/tca_with_references.php');
         $this->assertEquals(
