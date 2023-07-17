@@ -59,7 +59,7 @@ Options:
 
     -p <7.4|8.0|8.1|8.2>
         Specifies the PHP minor version to be used
-            - 7.4: (default): use PHP 7.4
+            - 7.4: (default) use PHP 7.4
             - 8.0: use PHP 8.0
             - 8.1: use PHP 8.1
             - 8.2: use PHP 8.2
@@ -67,8 +67,8 @@ Options:
     -t <11|12>
         Only with -s composerUpdate
         Specifies the TYPO3 core major version to be used
-            - 11 (default): use TYPO3 core v11
-            - 12: Use TYPO3 core v12
+            - 11: (default) use TYPO3 core v11
+            - 12: use TYPO3 core v12
 
     -e "<phpunit options>"
         Only with -s functional|unit
