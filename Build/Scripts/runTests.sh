@@ -61,8 +61,8 @@ Options:
         Specifies the PHP minor version to be used
             - 7.4: (default): use PHP 7.4
             - 8.0: use PHP 8.0
-            - 8.0: use PHP 8.1
-            - 8.0: use PHP 8.2
+            - 8.1: use PHP 8.1
+            - 8.2: use PHP 8.2
 
     -t <11|12>
         Only with -s composerUpdate
