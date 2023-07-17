@@ -1,4 +1,5 @@
-![CI](https://github.com/lolli42/enetcache/workflows/CI/badge.svg)
+![tests core v11](https://github.com/lolli42/enetcache/actions/workflows/testscorev11.yml/badge.svg)
+![tests core v12](https://github.com/lolli42/enetcache/actions/workflows/testscorev12.yml/badge.svg)
 
 # TYPO3 Extension ``enetcache``
 
