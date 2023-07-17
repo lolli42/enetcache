@@ -116,7 +116,7 @@ cd "$THIS_SCRIPT_DIR" || exit 1
 cd ../testing-docker || exit 1
 
 # Option defaults
-ROOT_DIR=`readlink -f ${PWD}/../../`
+ROOT_DIR=`realpath ${PWD}/../../`
 TEST_SUITE="unit"
 DBMS="mariadb"
 PHP_VERSION="7.4"
