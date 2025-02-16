@@ -3,6 +3,11 @@
 
 # TYPO3 Extension ``enetcache``
 
+> [!NOTE]
+> This extension has been retired and there will not be a TYPO3 v13 compatible version.
+> TYPO3 v13 improved cache tagging API a lot, rendering most remaining parts of this
+> codebase obsolete.
+
 ## Features
 
 Provides a rather simple API for frontend extensions to put their rendered
